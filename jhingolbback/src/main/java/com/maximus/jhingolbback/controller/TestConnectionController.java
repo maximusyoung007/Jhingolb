@@ -29,7 +29,6 @@ public class TestConnectionController {
         JSONObject outJson = new JSONObject();
         List<String> list = testService.getTestName();
         outJson.put("nameList",list);
-        logger.info("日志、热插拔测试");
         return outJson;
     }
 }

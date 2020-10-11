@@ -6,14 +6,12 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupp
 
 @Configuration
 public class CrosConfig extends WebMvcConfigurationSupport {
-
+    static final String ORIGINS[] = new String[] { "GET", "POST", "PUT", "DELETE" };
     //跨域
+
     @Override
-   protected void  addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**")
-                .allowCredentials(true)
-                .allowedHeaders("*")
-                .allowedOrigins("*")
-                .allowedMethods("*");
-   }
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**").allowedOrigins("*").allowCredentials(true).allowedMethods(ORIGINS)
+                .maxAge(3600);
+    }
 }
