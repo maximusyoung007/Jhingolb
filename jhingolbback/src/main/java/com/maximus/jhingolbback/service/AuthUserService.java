@@ -1,9 +1,10 @@
 package com.maximus.jhingolbback.service;
 
-import com.github.pagehelper.PageInfo;
 import com.maximus.jhingolbback.model.AuthUser;
+
+import java.util.List;
 
 
 public interface AuthUserService {
-    PageInfo<AuthUser> getAuthUser();
+    List<AuthUser> getAuthUser(AuthUser user);
 }
