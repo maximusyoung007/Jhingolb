@@ -29,6 +29,6 @@ public class AuthUserController {
         if(result.size() > 0) {
             return Result.success(result,"登录成功");
         }
-        return Result.error(result,"登录失败");
+        return Result.error("登录失败");
     }
 }

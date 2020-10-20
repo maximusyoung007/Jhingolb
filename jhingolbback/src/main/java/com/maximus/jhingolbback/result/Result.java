@@ -12,12 +12,17 @@ public class Result<T> {
     }
 
     //错误
-    public static <T>Result<T> error(T data,String message) {
-        return new Result<T>(data,message,ResultType.ERROR.getType());
+    public static <T>Result<T> error(String message) {
+        return new Result<T>(message,ResultType.ERROR.getType());
     }
 
     private Result(T data,String message,String type) {
         this.data = data;
+        this.msg = message;
+        this.type = type;
+    }
+
+    private Result(String message ,String type) {
         this.msg = message;
         this.type = type;
     }
