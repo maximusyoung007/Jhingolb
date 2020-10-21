@@ -15,6 +15,24 @@ export default new Router({
       component: () => import("@/views/login/Login")
     },
     {
+      path: '/management',
+      name: '/management',
+      component: () => import("@/views/management/management"),
+      redirect: "/editArticle",
+      children: [
+        {
+          path: '/editArticle',
+          name: 'editArticle',
+          component: () => import("@/views/management/editArticle")
+        },
+        {
+          path: '/manageTags',
+          name: 'manageTags',
+          component: () => import("@/views/management/manageTags")
+        }
+      ]
+    },
+    {
       path: '/homePage',
       name: 'homePage',
       component: () => import("@/views/home/homePage"),
