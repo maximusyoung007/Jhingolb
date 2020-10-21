@@ -20,11 +20,11 @@ public class ArticleController {
     @Resource
     private ArticleService articleService;
 
-    @GetMapping("getArticleList")
+    @GetMapping("getFirstPageArticleList")
     @ResponseBody
-    public Result<PageInfo> getArticleList() {
+    public Result<PageInfo> getFirstPageArticleList() {
         try {
-            PageInfo<Article> page = articleService.getArticleList();
+            PageInfo<Article> page = articleService.getFirstPageArticleList();
             return Result.success(page,"获取列表成功");
         } catch(Exception e) {
             logger.error("can not find any information about ");

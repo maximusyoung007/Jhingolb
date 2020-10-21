@@ -4,5 +4,9 @@ import com.github.pagehelper.PageInfo;
 import com.maximus.jhingolbback.model.Article;
 
 public interface ArticleService {
-    PageInfo<Article> getArticleList();
+    /**
+     * @author maximus
+     * @return
+     */
+    PageInfo<Article> getFirstPageArticleList();
 }

@@ -14,23 +14,23 @@
                 {{ item.navItem }}
               </el-menu-item>
               <span id="title" style="color: #222;float: left;padding: 20px;text-decoration: none;line-hieght:1">云溢清寒</span>
-              <!--      <i class="el-icon-menu" style="float:right;font-size: 45px;color: #222;padding-top: 8px"></i>-->
-              <!--            <span style="position: absolute;padding-top: 20px;right: 43%;font-size: 20px;font-weight: bold">-->
-              <!--              White Jotter - Your Mind Palace</span>-->
             </el-menu>
-        <el-row>
-          <el-col :span="19">
+        <el-row style="padding-top: 20px">
+          <el-col :span="18" style="padding-right: 20px">
             <router-view/>
           </el-col>
-          <el-col :span="5">
-            <el-card shadow="hover">
-              <div slot="header" class="clearfix">
-                <span>tags</span>
-              </div>
-              <span v-for="o in 4" :key="o" class="text item">
-                {{'标签' + o}}
-              </span>
-            </el-card>
+
+          <el-col :span="6">
+            <div>
+              <el-card shadow="always">
+                <div slot="header" class="clearfix">
+                  <span>tags</span>
+                </div>
+                <span v-for="o in 4" :key="o" class="text item">
+                  {{'标签' + o}}
+                </span>
+              </el-card>
+            </div>
           </el-col>
         </el-row>
       </el-main>
@@ -50,7 +50,6 @@ export default {
         {name:'article',navItem:'文章'},
         {name:'index',navItem:'首页'},
       ],
-
     }
   },
   methods: {

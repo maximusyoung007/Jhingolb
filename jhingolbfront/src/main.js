@@ -4,7 +4,9 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import ElementUI from 'element-ui'
+import Antd from 'ant-design-vue'
 import 'element-ui/lib/theme-chalk/index.css'
+import 'ant-design-vue/dist/antd.css'
 
 var axios = require('axios');
 axios.defaults.baseURL = "http://localhost:8090";
@@ -12,6 +14,7 @@ Vue.prototype.$axios = axios;
 Vue.config.productionTip = false
 
 Vue.use(ElementUI);
+Vue.use(Antd);
 
 /* eslint-disable no-new */
 new Vue({

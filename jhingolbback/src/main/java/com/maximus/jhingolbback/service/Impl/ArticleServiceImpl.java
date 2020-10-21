@@ -16,9 +16,13 @@ public class ArticleServiceImpl implements ArticleService {
     @Resource
     private ArticleMapper articleMapper;
 
+    /**
+     * @author maximus
+     * @return
+     */
     @Override
-    public PageInfo<Article> getArticleList() {
-        int currentPage = 1,pageSize = 10;
+    public PageInfo<Article> getFirstPageArticleList() {
+        int currentPage = 1,pageSize = 5;
         PageHelper.startPage(currentPage,pageSize);
         ArticleExample articleExample = new ArticleExample();
         List<Article> list = articleMapper.selectByExample(articleExample);
