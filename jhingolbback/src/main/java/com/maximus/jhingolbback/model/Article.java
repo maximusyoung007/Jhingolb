@@ -29,6 +29,8 @@ public class Article implements Serializable {
 
     private Integer userId;
 
+    private Integer releaseState;
+
     private static final long serialVersionUID = 1L;
 
     public Integer getId() {
@@ -109,6 +111,14 @@ public class Article implements Serializable {
 
     public void setArticleBody(String articleBody) {
         this.articleBody = articleBody;
+    }
+
+    public Integer getReleaseState() {
+        return releaseState;
+    }
+
+    public void setReleaseState(Integer releaseState) {
+        this.releaseState = releaseState;
     }
 
     @Override

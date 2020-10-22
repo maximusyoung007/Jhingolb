@@ -8,6 +8,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -30,5 +31,11 @@ public class ArticleController {
             logger.error("can not find any information about ");
         }
         return Result.error("没有获取到数据");
+    }
+
+    @PostMapping("addArticle")
+    @ResponseBody
+    public Result<String> addArticle() {
+        return Result.error("");
     }
 }

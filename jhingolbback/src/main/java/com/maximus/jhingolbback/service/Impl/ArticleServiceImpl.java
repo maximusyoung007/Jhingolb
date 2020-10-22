@@ -25,6 +25,7 @@ public class ArticleServiceImpl implements ArticleService {
         int currentPage = 1,pageSize = 5;
         PageHelper.startPage(currentPage,pageSize);
         ArticleExample articleExample = new ArticleExample();
+        articleExample.createCriteria().andReleaseStateEqualTo(1);
         List<Article> list = articleMapper.selectByExample(articleExample);
         PageInfo<Article> page = new PageInfo<Article>(list);
         return page;

@@ -664,6 +664,11 @@ public class ArticleExample {
             addCriterion("user_id not between", value1, value2, "userId");
             return (Criteria) this;
         }
+
+        public Criteria andReleaseStateEqualTo(Integer value) {
+            addCriterion("release_state =", value, "releaseState");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {
