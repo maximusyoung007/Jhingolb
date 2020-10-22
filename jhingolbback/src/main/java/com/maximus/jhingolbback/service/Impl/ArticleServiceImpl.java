@@ -21,8 +21,8 @@ public class ArticleServiceImpl implements ArticleService {
      * @return
      */
     @Override
-    public PageInfo<Article> getFirstPageArticleList() {
-        int currentPage = 1,pageSize = 5;
+    public PageInfo<Article> getArticleList(Article article) {
+        int currentPage = article.getCurrentPage(),pageSize = article.getPageSize();
         PageHelper.startPage(currentPage,pageSize);
         ArticleExample articleExample = new ArticleExample();
         articleExample.createCriteria().andReleaseStateEqualTo(1);

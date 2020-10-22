@@ -1,12 +1,11 @@
 package com.maximus.jhingolbback.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.util.Date;
 
-public class Article implements Serializable {
+public class Article extends Page implements Serializable {
     private Integer id;
 
     private String title;

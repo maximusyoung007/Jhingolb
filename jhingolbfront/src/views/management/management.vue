@@ -1,6 +1,6 @@
 <template>
   <el-container>
-    <el-aside style="width: 10%"></el-aside>
+    <el-aside style="width: 5%"></el-aside>
     <el-main >
       <el-header>
         <el-menu class="el-menu-demo" mode="horizontal">
@@ -27,7 +27,7 @@
         </el-main>
       </el-container>
     </el-main>
-    <el-aside style="width: 10%"></el-aside>
+    <el-aside style="width: 5%"></el-aside>
   </el-container>
 </template>
 
@@ -37,8 +37,8 @@ export default {
   data() {
     return {
       navList: [
-        {name:'editArticle',navItem:'文章编辑',activeClass: "el-icon-edit"},
-        {name:'manageTags',navItem:'标签管理',activeClass: "el-icon-collection-tag"}
+        {name:'articleList',navItem:'文章管理',activeClass: "el-icon-edit"},
+        {name:'manageTags',navItem:'标签管理',activeClass: "el-icon-collection-tag"},
       ]
     }
   }

@@ -8,5 +8,5 @@ public interface ArticleService {
      * @author maximus
      * @return
      */
-    PageInfo<Article> getFirstPageArticleList();
+    PageInfo<Article> getArticleList(Article article);
 }

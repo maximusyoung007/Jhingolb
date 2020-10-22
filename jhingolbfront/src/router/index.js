@@ -18,7 +18,7 @@ export default new Router({
       path: '/management',
       name: '/management',
       component: () => import("@/views/management/management"),
-      redirect: "/editArticle",
+      redirect: "/articleList",
       children: [
         {
           path: '/editArticle',
@@ -29,6 +29,11 @@ export default new Router({
           path: '/manageTags',
           name: 'manageTags',
           component: () => import("@/views/management/manageTags")
+        },
+        {
+          path: '/articleList',
+          name: 'articleList',
+          component: () => import("@/views/management/articleList")
         }
       ]
     },
