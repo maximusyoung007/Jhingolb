@@ -37,4 +37,6 @@ public interface ArticleMapper {
     int updateByPrimaryKeyWithBLOBs(ArticleWithBLOBs record);
 
     int updateByPrimaryKey(Article record);
+
+    Article getArticleById(Article article);
 }

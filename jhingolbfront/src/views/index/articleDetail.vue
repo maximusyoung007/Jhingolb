@@ -1,20 +1,17 @@
 <template>
   <div>
-    <el-card shadow="always" v-for="(item,i) in firstPageArticle" :key="i" :index="item.id">
+    <el-card shadow="always" v-model="article">
       <div slot="header" class="clearfix">
-        <div style="font-size: 24px">{{ item.title }}</div>
+        <div style="font-size: 24px">{{ article.title }}</div>
         <div class="time">
           <i class="el-icon-time"></i>
-          <time>{{ item.modifiedTime }}</time>
+          <time>{{ article.modifiedTime }}</time>
           &nbsp;
           <i class="el-icon-folder-opened"></i>
           <span>分类</span>
         </div>
       </div>
-      <div class="item-content" v-html="item.articleBody">
-      </div>
-      <div class="bottom clearfix">
-        <el-button @click="readMore(item.id)" type="text" class="button" style="float: right">阅读更多<i class="el-icon-d-arrow-right"></i></el-button>
+      <div v-html="article.articleBody">
       </div>
     </el-card>
     <br/>
@@ -26,25 +23,26 @@ export default {
   name: "index.vue",
   data() {
     return {
-      firstPageArticle:[
-        {title:"wenzhangmingzi",modifiedTime:"2020-02-01"}
-      ]
+      article:"",
     }
   },
   mounted:function() {
-    this.getFirstPageArticleList();
+    this.getArticleById();
   },
   methods: {
-    getFirstPageArticleList:function () {
+    getArticleById:function () {
       this.$axios({
-        method: "get",
-        url:"article/getFirstPageArticleList"
+        method: "post",
+        url:"article/getArticleById",
+        data: {
+          id: this.$route.params.id
+        }
       }).then((response) => {
-        this.firstPageArticle = response.data.data.list;
+        this.article = response.data.data;
       })
     },
-    readMore: function (id) {
-      this.$router.push({name: "articleDetail",params: {id: id}})
+    readMore: function () {
+      this.$router.push("")
     }
   }
 }
@@ -81,13 +79,5 @@ export default {
 }
 >>>pre code {
   display: block;
-}
-.item-content {
-  max-width: 100%;
-  word-break: break-all;
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 5;
 }
 </style>

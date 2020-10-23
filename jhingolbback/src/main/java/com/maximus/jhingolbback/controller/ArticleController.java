@@ -1,5 +1,6 @@
 package com.maximus.jhingolbback.controller;
 
+import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.maximus.jhingolbback.model.Article;
 import com.maximus.jhingolbback.model.ArticleTagConnect;
@@ -29,9 +30,10 @@ public class ArticleController {
     public Result<PageInfo> getFirstPageArticleList() {
         try {
             Article article = new Article();
-            article.setCurrentPage(1);
-            article.setPageSize(5);
-            PageInfo<Article> page = articleService.getArticleList(article);
+            int currentPage = 1,pageSize = 5;
+            PageHelper.startPage(1,5);
+            List<Article> list = articleService.getArticleList(article);
+            PageInfo<Article> page = new PageInfo<>(list);
             return Result.success(page,"获取列表成功");
         } catch(Exception e) {
             logger.error("can not find any information about ");
@@ -43,7 +45,10 @@ public class ArticleController {
     @ResponseBody
     public Result<PageInfo> getArticleList(@RequestBody Article article) {
         try {
-            PageInfo<Article> page = articleService.getArticleList(article);
+            int currentPage = article.getCurrentPage(),pageSize = article.getPageSize();
+            PageHelper.startPage(currentPage,pageSize);
+            List<Article> list = articleService.getArticleList(article);
+            PageInfo<Article> page = new PageInfo<>(list);
             return Result.success(page,"获取文章列表");
         } catch (Exception e) {
             logger.error("can not find any information about ");
@@ -55,5 +60,16 @@ public class ArticleController {
     @ResponseBody
     public Result<String> addArticle(@RequestBody Article article) {
         return articleService.addArticle(article);
+    }
+
+    @PostMapping("getArticleById")
+    @ResponseBody
+    public Result<Article> getArticleById(@RequestBody Article article) {
+        List<Article> list = articleService.getArticleList(article);
+        if(list.size() > 0) {
+            article = list.get(0);
+            return Result.success(article,"成功");
+        }
+        return Result.error("失败");
     }
 }

@@ -28,7 +28,6 @@ import wangEditor from "wangeditor"
 import chooseTags from "../manageTags/chooseTags"
 import hljs from "highlight.js"
 import 'highlight.js/styles/monokai-sublime.css'
-import tags from "../../index/tags";
 export default {
   name: "editArticle.vue",
   components: {chooseTags},
@@ -49,7 +48,7 @@ export default {
       this.editorData = newHtml
     }
     //代码语法高亮
-    //editor.highlight = hljs;
+    editor.highlight = hljs;
     // 创建编辑器
     editor.create()
     this.editor = editor

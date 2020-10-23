@@ -84,6 +84,11 @@ export default new Router({
           meta: {
             requireAuth: true
           }
+        },
+        {
+          path: '/articleDetail',
+          name: 'articleDetail',
+          component: () => import("@/views/index/articleDetail")
         }
       ]
     },

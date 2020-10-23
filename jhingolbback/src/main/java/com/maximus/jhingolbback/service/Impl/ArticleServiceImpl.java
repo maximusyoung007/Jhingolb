@@ -33,14 +33,14 @@ public class ArticleServiceImpl implements ArticleService {
      * @return
      */
     @Override
-    public PageInfo<Article> getArticleList(Article article) {
-        int currentPage = article.getCurrentPage(),pageSize = article.getPageSize();
-        PageHelper.startPage(currentPage,pageSize);
+    public List<Article> getArticleList(Article article) {
         ArticleExample articleExample = new ArticleExample();
         articleExample.createCriteria().andReleaseStateEqualTo(1);
+        if(article.getId() != null && !"".equals(article.getId())) {
+            articleExample.createCriteria().andIdEqualTo(article.getId());
+        }
         List<Article> list = articleMapper.selectByExample(articleExample);
-        PageInfo<Article> page = new PageInfo<Article>(list);
-        return page;
+        return list;
     }
 
     /**
