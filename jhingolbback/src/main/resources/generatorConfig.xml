@@ -32,7 +32,7 @@
                              targetProject="src/main/java">
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
-        <table tableName="article" domainObjectName="Article">
+        <table tableName="tags" domainObjectName="Tags">
         </table>
     </context>
 </generatorConfiguration>

@@ -53,13 +53,13 @@ export default {
         }
       }).then(function (response){
         if(response.data.type == "success") {
-          console.log("登录成功" + response.data.type);
           self.$router.push({path:'/management'});
         }
       }).catch(function (response) {
 
       })
-    }
+    },
+
   }
 }
 </script>

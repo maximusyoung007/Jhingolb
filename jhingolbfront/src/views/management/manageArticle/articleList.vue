@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <div class="addBtn">
-      <el-button type="primary" @click="editArticle()">写文章</el-button>
+      <el-button type="primary" @click="addArticle()">写文章</el-button>
     </div>
     <br>
     <div>
@@ -91,8 +91,8 @@ export default {
     handleCurrentChange:function (val) {
       this.getArticleList();
     },
-    editArticle: function (val) {
-      this.$router.push({path:'/editArticle'});
+    addArticle: function (val) {
+      this.$router.push({path:'/addArticle'});
     }
   }
 }

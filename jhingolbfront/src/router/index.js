@@ -23,17 +23,22 @@ export default new Router({
         {
           path: '/editArticle',
           name: 'editArticle',
-          component: () => import("@/views/management/editArticle")
+          component: () => import("@/views/management/manageArticle/editArticle")
         },
         {
           path: '/manageTags',
           name: 'manageTags',
-          component: () => import("@/views/management/manageTags")
+          component: () => import("@/views/management/manageTags/manageTags")
         },
         {
           path: '/articleList',
           name: 'articleList',
-          component: () => import("@/views/management/articleList")
+          component: () => import("@/views/management/manageArticle/articleList")
+        },
+        {
+          path: '/addArticle',
+          name: 'addArticle',
+          component: () => import("@/views/management/manageArticle/addArticle")
         }
       ]
     },

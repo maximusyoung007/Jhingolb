@@ -33,12 +33,6 @@ public class ArticleController {
         return Result.error("没有获取到数据");
     }
 
-    @PostMapping("addArticle")
-    @ResponseBody
-    public Result<String> addArticle() {
-        return Result.error("");
-    }
-
     @PostMapping("getArticleList")
     @ResponseBody
     public Result<PageInfo> getArticleList(@RequestBody Article article) {
@@ -49,5 +43,11 @@ public class ArticleController {
             logger.error("can not find any information about ");
         }
         return Result.error("没有回去到数据");
+    }
+
+    @PostMapping("addArticle")
+    @ResponseBody
+    public Result<String> addArticle(@RequestBody Article article) {
+        return Result.error("failed");
     }
 }

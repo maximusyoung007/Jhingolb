@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 public class Article extends Page implements Serializable {
     private Integer id;
@@ -29,6 +30,8 @@ public class Article extends Page implements Serializable {
     private Integer userId;
 
     private Integer releaseState;
+
+    private List<String> allTags;
 
     private static final long serialVersionUID = 1L;
 
@@ -118,6 +121,14 @@ public class Article extends Page implements Serializable {
 
     public void setReleaseState(Integer releaseState) {
         this.releaseState = releaseState;
+    }
+
+    public List<String> getAllTags() {
+        return allTags;
+    }
+
+    public void setAllTags(List<String> allTags) {
+        this.allTags = allTags;
     }
 
     @Override
