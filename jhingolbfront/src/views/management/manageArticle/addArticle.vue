@@ -3,19 +3,23 @@
     <el-form class="inputItem">
       <el-input class="inputItem" v-model="article.title" placeholder="请输入文章标题" style="padding-bottom: 10px"></el-input>
     </el-form>
-<!--    <div>-->
-<!--      <choose-tags></choose-tags>-->
-<!--    </div>-->
-    <div id="demo1"></div>
-    <br>
     <div>
       <choose-tags v-on:tagsChange="updateTags"></choose-tags>
+      <!--      <el-button type="primary" @click="addArticle(0)">保存</el-button>-->
+      <!--      <el-button type="success" @click="addArticle(1)">发布</el-button>-->
     </div>
-    <textarea name="" id="" cols="170" rows="20" readonly v-model="editorData"></textarea>
-    <div>
-      <el-button type="primary" @click="addArticle(0)">保存</el-button>
-      <el-button type="success" @click="addArticle(1)">发布</el-button>
-    </div>
+    <br>
+    <div id="demo1"></div>
+    <br>
+<!--    <div>-->
+<!--      <choose-tags v-on:tagsChange="updateTags"></choose-tags>-->
+<!--&lt;!&ndash;      <el-button type="primary" @click="addArticle(0)">保存</el-button>&ndash;&gt;-->
+<!--&lt;!&ndash;      <el-button type="success" @click="addArticle(1)">发布</el-button>&ndash;&gt;-->
+<!--    </div>-->
+    <textarea hidden name="" id="" cols="170" rows="20" readonly v-model="editorData"></textarea>
+    <br>
+    <el-button type="primary" @click="addArticle(0)">保存</el-button>
+    <el-button type="success" @click="addArticle(1)">发布</el-button>
   </div>
 </template>
 
@@ -64,12 +68,20 @@ export default {
           title:this.article.title,
           articleBody:this.editorData,
           releaseState: releaseState,
+          allTags:this.tagList,
+          views:0
+        }
+      }).then((response) => {
+        var type = response.data.type;
+        if(type == "success") {
+          this.$router.push({name: "addArticleResult",params: {state: releaseState}})
+        } else {
+          this.$router.push({name: "/addArticleResult",params: {state: '3'}})
         }
       })
     },
     updateTags: function (e) {
       this.tagList = e;
-      console.log(this.tagList);
     },
     addTags() {
 

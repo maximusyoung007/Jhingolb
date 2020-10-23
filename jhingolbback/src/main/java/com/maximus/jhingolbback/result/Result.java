@@ -11,6 +11,11 @@ public class Result<T> {
         return new Result<T>(data,message,ResultType.SUCCESS.getType());
     }
 
+    //成功且不用返回数据的情况
+    public static <T>Result<T> success(String message) {
+        return new Result<T>(message,ResultType.SUCCESS.getType());
+    }
+
     //错误
     public static <T>Result<T> error(String message) {
         return new Result<T>(message,ResultType.ERROR.getType());

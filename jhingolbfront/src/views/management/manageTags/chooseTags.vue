@@ -9,20 +9,25 @@
       {{tag}}
     </el-tag>
     <el-popover
-      placement="bottom"
       width="300"
       trigger="click"
       @show="loadTags()"
       @hide="clearTags()"
+      placement="right"
     >
       <p>请选择标签(最多可选择五个标签)</p>
-      <el-input placeolder="可选择标签" id="searchTags" v-model="searchTags" clearable/>
+      <div>
+        <el-input placeolder="可选择标签" id="searchTags" v-model="searchTags" clearable/>
+      </div>
+      <br>
       <el-tag :key="tag"
               style="cursor: pointer"
               type="info"
               v-for="tag in allTags"
               :disable-transitions="true"
-              @click="addTags(tag)">
+              @click="addTags(tag)"
+              size="mini"
+      >
         {{tag}}
       </el-tag>
       <el-button class="button-new-tag" slot="reference" size="medium" icon="el-icon-plus">添加标签</el-button>
@@ -63,6 +68,9 @@ export default {
     },
     addTags: function(tag) {
       var i = 0,len = this.dynamicTags.length;
+      if(len == 5) {
+        return;
+      }
       for(i = 0;i < len;i++) {
         if(this.dynamicTags[i] == tag) {
           return;

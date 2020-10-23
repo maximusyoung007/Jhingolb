@@ -7,7 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 public class Article extends Page implements Serializable {
-    private Integer id;
+    private String id;
 
     private String title;
 
@@ -16,6 +16,8 @@ public class Article extends Page implements Serializable {
     private String img;
 
     private Integer views;
+
+    private String excerpt;
 
     @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createdTime;
@@ -35,11 +37,11 @@ public class Article extends Page implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -129,6 +131,14 @@ public class Article extends Page implements Serializable {
 
     public void setAllTags(List<String> allTags) {
         this.allTags = allTags;
+    }
+
+    public String getExcerpt() {
+        return excerpt;
+    }
+
+    public void setExcerpt(String excerpt) {
+        this.excerpt = excerpt;
     }
 
     @Override

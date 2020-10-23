@@ -134,13 +134,13 @@
     insert into article (id, title, img, 
       views, created_time, modified_time, 
       category_id, tui_id, user_id, 
-      excerpt, body)
+      excerpt, article_body)
     values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{img,jdbcType=VARCHAR}, 
       #{views,jdbcType=INTEGER}, #{createdTime,jdbcType=TIMESTAMP}, #{modifiedTime,jdbcType=TIMESTAMP}, 
       #{categoryId,jdbcType=INTEGER}, #{tuiId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, 
-      #{excerpt,jdbcType=LONGVARCHAR}, #{body,jdbcType=LONGVARCHAR})
+      #{excerpt,jdbcType=LONGVARCHAR}, #{articleBody,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.maximus.jhingolbback.model.ArticleWithBLOBs">
+  <insert id="insertSelective" parameterType="com.maximus.jhingolbback.model.Article">
     insert into article
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -155,12 +155,8 @@
       <if test="views != null">
         views,
       </if>
-      <if test="createdTime != null">
         created_time,
-      </if>
-      <if test="modifiedTime != null">
         modified_time,
-      </if>
       <if test="categoryId != null">
         category_id,
       </if>
@@ -173,8 +169,11 @@
       <if test="excerpt != null">
         excerpt,
       </if>
-      <if test="body != null">
-        body,
+      <if test="articleBody != null">
+        article_body,
+      </if>
+      <if test="releaseState != null">
+        release_state
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -190,12 +189,8 @@
       <if test="views != null">
         #{views,jdbcType=INTEGER},
       </if>
-      <if test="createdTime != null">
-        #{createdTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="modifiedTime != null">
-        #{modifiedTime,jdbcType=TIMESTAMP},
-      </if>
+      now(),
+      now(),
       <if test="categoryId != null">
         #{categoryId,jdbcType=INTEGER},
       </if>
@@ -208,8 +203,11 @@
       <if test="excerpt != null">
         #{excerpt,jdbcType=LONGVARCHAR},
       </if>
-      <if test="body != null">
-        #{body,jdbcType=LONGVARCHAR},
+      <if test="articleBody != null">
+        #{articleBody,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="releaseState != null">
+        #{releaseState,jdbcType=INTEGER}
       </if>
     </trim>
   </insert>

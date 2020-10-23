@@ -18,7 +18,7 @@ public interface ArticleMapper {
 
     int insert(ArticleWithBLOBs record);
 
-    int insertSelective(ArticleWithBLOBs record);
+    int insertSelective(Article record);
 
     List<ArticleWithBLOBs> selectByExampleWithBLOBs(ArticleExample example);
 

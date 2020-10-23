@@ -2,14 +2,20 @@ package com.maximus.jhingolbback.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.maximus.jhingolbback.model.Article;
+import com.maximus.jhingolbback.model.ArticleTagConnect;
 import com.maximus.jhingolbback.result.Result;
 import com.maximus.jhingolbback.service.ArticleService;
+import com.maximus.jhingolbback.service.ArticleTagConnectService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("article")
@@ -48,6 +54,6 @@ public class ArticleController {
     @PostMapping("addArticle")
     @ResponseBody
     public Result<String> addArticle(@RequestBody Article article) {
-        return Result.error("failed");
+        return articleService.addArticle(article);
     }
 }
