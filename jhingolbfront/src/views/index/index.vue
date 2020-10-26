@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-card shadow="always" v-for="(item,i) in firstPageArticle" :key="i" :index="item.id">
+    <el-card shadow="never" v-for="(item,i) in firstPageArticle" :key="i" :index="item.id">
       <div slot="header" class="clearfix">
         <div style="font-size: 24px">{{ item.title }}</div>
         <div class="time">

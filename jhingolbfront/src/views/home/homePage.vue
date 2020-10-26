@@ -22,14 +22,33 @@
 
           <el-col :span="6">
             <div>
-              <el-card shadow="always">
-                <div slot="header" class="clearfix">
-                  <span>tags</span>
-                </div>
-                <span v-for="o in 4" :key="o" class="text item">
-                  {{'标签' + o}}
-                </span>
-              </el-card>
+              <el-input placeholder="..." v-model="searchArticle">
+                <el-button slot="append" icon="el-icon-search"></el-button>
+              </el-input>
+            </div>
+            <el-divider></el-divider>
+            <div>
+                <h3 style="border: #222222">标签</h3>
+              <el-tag :key="tag"
+                      style="cursor: pointer;padding-bottom: 10px"
+                      type="success"
+                      v-for="tag in allTags"
+                      :disable-transitions="true"
+                      @click="addTags(tag)"
+                      size="mini"
+              >
+                {{tag}}
+              </el-tag>
+            </div>
+            <el-divider></el-divider>
+            <div>
+              <h3 style="border: #222222">文章归档</h3>
+              <ul>
+                <li
+                    v-for="(item,i) in articleDate" :key="i" :index="item">
+                  <el-button size="mini" type="text">{{item}}</el-button>
+                </li>
+              </ul>
             </div>
           </el-col>
         </el-row>
@@ -50,10 +69,44 @@ export default {
         {name:'article',navItem:'文章'},
         {name:'index',navItem:'首页'},
       ],
+      allTags:[],
+      articleDate:[],
+      searchArticle: "",
+      activeColor:"dodgerblue",
+      pointer:"pointer"
     }
   },
   methods: {
-
+    loadTags:function() {
+      this.$axios({
+        methods: "get",
+        url: "tags/getTagsList"
+      }).then((response) => {
+        var list = response.data.data;
+        for(var i = 0;i < list.length;i++) {
+          var name = list[i].name;
+          this.allTags.push(name);
+        }
+      })
+    },
+    loadArticleDate: function () {
+      this.$axios({
+        methods: "get",
+        url: "article/getArticleDate",
+      }).then((response) => {
+        this.articleDate = response.data.data;
+      })
+    },
+    mouseOverColor: function () {
+      this.activeColor = "blue";
+    },
+    mouseDownColor: function () {
+      this.activeColor = "dodgerblue"
+    }
+  },
+  mounted() {
+    this.loadTags();
+    this.loadArticleDate();
   }
 }
 </script>

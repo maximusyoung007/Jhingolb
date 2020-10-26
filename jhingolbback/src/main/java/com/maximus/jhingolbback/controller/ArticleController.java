@@ -2,6 +2,7 @@ package com.maximus.jhingolbback.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.maximus.jhingolbback.Enum.NumberEnum;
 import com.maximus.jhingolbback.model.Article;
 import com.maximus.jhingolbback.model.ArticleTagConnect;
 import com.maximus.jhingolbback.result.Result;
@@ -14,9 +15,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Controller
 @RequestMapping("article")
@@ -71,5 +71,55 @@ public class ArticleController {
             return Result.success(article,"成功");
         }
         return Result.error("失败");
+    }
+
+    @GetMapping("getArticleDate")
+    @ResponseBody
+    public Result<Map<Date,String>> getArticleDate() {
+        try {
+            Article article = new Article();
+            List<Article> list = articleService.getArticleList(article);
+            Map<Date,String> map = new HashMap<>();
+            for(int i = 0;i < list.size();i++) {
+                Date modifiedTime = list.get(i).getModifiedTime();
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(modifiedTime);
+                String dateString = getCurrentCNDate(cal);
+                if(!map.containsValue(dateString)) {
+                    map.put(modifiedTime,dateString);
+                }
+            }
+            return Result.success(map,"成功");
+        } catch (Exception e) {
+            logger.error("失败" + e);
+        }
+        return Result.error("失败");
+    }
+
+    private String getCurrentCNDate(Calendar calendar) {
+        StringBuilder CNDate = new StringBuilder();
+        String year = String.valueOf(calendar.get(Calendar.YEAR));
+        String month = String.valueOf(calendar.get(Calendar.MONTH) + 1);
+        for (int i = 0; i < year.length(); i++) {
+            CNDate.append(NumberEnum.getValueByKey(year.substring(i,i+1)));
+        }
+        CNDate.append("年");
+        if(month.equals("10")) {
+            CNDate.append("十");
+        } else if(month.equals("11")) {
+            CNDate.append("十一");
+        } else if(month.equals("12")) {
+            CNDate.append("十二");
+        } else {
+            for(int i = 0;i < month.length();i++) {
+                if(month.charAt(i) == '0') {
+                    continue;
+                } else {
+                    CNDate.append(NumberEnum.getValueByKey(month.substring(i, i + 1)));
+                }
+            }
+        }
+        CNDate.append("月");
+        return CNDate.toString();
     }
 }
