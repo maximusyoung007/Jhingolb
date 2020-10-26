@@ -55,9 +55,6 @@
           </el-col>
         </el-row>
       </el-main>
-    <el-footer>
-      maximus
-    </el-footer>
   </el-container>
 
 </template>
