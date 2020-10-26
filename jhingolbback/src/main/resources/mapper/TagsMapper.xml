@@ -4,6 +4,7 @@
   <resultMap id="BaseResultMap" type="com.maximus.jhingolbback.model.Tags">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="use_counts" jdbcType="INTEGER" property="useCounts"/>
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -64,7 +65,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, name
+    id, name,use_counts
   </sql>
   <select id="selectByExample" parameterType="com.maximus.jhingolbback.model.TagsExample" resultMap="BaseResultMap">
     select

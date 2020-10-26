@@ -7,6 +7,8 @@ public class Tags implements Serializable {
 
     private String name;
 
+    private Integer useCounts;
+
     private static final long serialVersionUID = 1L;
 
     public Integer getId() {
@@ -23,6 +25,14 @@ public class Tags implements Serializable {
 
     public void setName(String name) {
         this.name = name == null ? null : name.trim();
+    }
+
+    public Integer getUseCounts() {
+        return useCounts;
+    }
+
+    public void setUseCounts(Integer useCounts) {
+        this.useCounts = useCounts;
     }
 
     @Override
