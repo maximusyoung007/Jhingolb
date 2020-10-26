@@ -1,14 +1,13 @@
 <template>
   <el-container>
-    <el-header>
+    <el-header style="background-color: #f1f1f1">
       <el-menu
-
         :default-active="'index'"
         router
         mode="horizontal"
-
         text-color="#222"
         active-text-color="#409EFF"
+        background-color="#f1f1f1"
       >
         <el-menu-item style="float: right" v-for="(item,i) in navList" :key="i" :index="item.name">
           {{ item.navItem }}
@@ -123,5 +122,11 @@ el-header{
   padding:0px;
   margin:0px;
   border:0px;
+}
+.el-tag.el-tag--success {
+  margin:3px
+}
+.el-menu.el-menu--horizontal{
+  border-bottom: solid 0px
 }
 </style>
