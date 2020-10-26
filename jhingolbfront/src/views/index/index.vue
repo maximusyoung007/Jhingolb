@@ -1,23 +1,24 @@
 <template>
   <div>
-    <el-card shadow="never" v-for="(item,i) in firstPageArticle" :key="i" :index="item.id">
-      <div slot="header" class="clearfix">
-        <div style="font-size: 24px">{{ item.title }}</div>
-        <div class="time">
-          <i class="el-icon-time"></i>
-          <time>{{ item.modifiedTime }}</time>
-          &nbsp;
-          <i class="el-icon-folder-opened"></i>
-          <span>分类</span>
+
+      <el-card shadow="never" v-for="(item,i) in firstPageArticle" :key="i"
+               :index="item.id">
+        <div slot="header" class="clearfix">
+          <div style="font-size: 24px">{{ item.title }}</div>
+          <div class="time">
+            <i class="el-icon-time"></i>
+            <time>{{ item.modifiedTime }}</time>
+            &nbsp;
+            <i class="el-icon-folder-opened"></i>
+            <span>分类</span>
+          </div>
         </div>
-      </div>
-      <div class="item-content" v-html="item.articleBody">
-      </div>
-      <div class="bottom clearfix">
-        <el-button @click="readMore(item.id)" type="text" class="button" style="float: right">阅读更多<i class="el-icon-d-arrow-right"></i></el-button>
-      </div>
-    </el-card>
-    <br/>
+        <div class="item-content" v-html="item.articleBody">
+        </div>
+        <div class="bottom clearfix">
+          <el-button @click="readMore(item.id)" type="text" class="button" style="float: right">阅读更多<i class="el-icon-d-arrow-right"></i></el-button>
+        </div>
+      </el-card>
   </div>
 </template>
 
@@ -89,5 +90,9 @@ export default {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 5;
+}
+
+.el-card{
+  margin-bottom: 10px;
 }
 </style>

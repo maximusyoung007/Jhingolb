@@ -1,22 +1,24 @@
 <template>
   <el-container>
-      <el-aside style="width: 10%"></el-aside>
-      <el-main>
-              <el-menu
-              :default-active="'index'"
-              router
-              mode="horizontal"
-              background-color="white"
-              text-color="#222"
-              active-text-color="#409EFF"
-            >
-              <el-menu-item style="float: right" v-for="(item,i) in navList" :key="i" :index="item.name">
-                {{ item.navItem }}
-              </el-menu-item>
-              <span id="title" style="color: #222;float: left;padding: 20px;text-decoration: none;line-hieght:1">云溢清寒</span>
-            </el-menu>
-        <el-row style="padding-top: 20px">
-          <el-col :span="18" style="padding-right: 20px">
+    <el-header>
+      <el-menu
+
+        :default-active="'index'"
+        router
+        mode="horizontal"
+
+        text-color="#222"
+        active-text-color="#409EFF"
+      >
+        <el-menu-item style="float: right" v-for="(item,i) in navList" :key="i" :index="item.name">
+          {{ item.navItem }}
+        </el-menu-item>
+        <span id="title" style="color: #222;float: left;padding: 20px;text-decoration: none;line-hieght:1">云溢清寒</span>
+      </el-menu>
+    </el-header>
+    <el-main style="background-color: white">
+        <el-row>
+          <el-col :span="18" style="padding-right: 10px">
             <router-view/>
           </el-col>
 
@@ -35,7 +37,7 @@
                       v-for="tag in allTags"
                       :disable-transitions="true"
                       @click="addTags(tag)"
-                      size="mini"
+                      size="small"
               >
                 {{tag}}
               </el-tag>
@@ -46,14 +48,16 @@
               <ul>
                 <li
                     v-for="(item,i) in articleDate" :key="i" :index="item">
-                  <el-button size="mini" type="text">{{item}}</el-button>
+                  <el-button size="small" type="text">{{item}}</el-button>
                 </li>
               </ul>
             </div>
           </el-col>
         </el-row>
       </el-main>
-    <el-aside style="width: 10%"></el-aside>
+    <el-footer>
+      maximus
+    </el-footer>
   </el-container>
 
 </template>
@@ -117,5 +121,10 @@ export default {
   padding-top: 20px;
   font-size: 20px;
   font-weight: bold
+}
+el-header{
+  padding:0px;
+  margin:0px;
+  border:0px;
 }
 </style>
