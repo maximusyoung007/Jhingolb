@@ -70,6 +70,14 @@ export default new Router({
           }
         },
         {
+          path: '/category',
+          name: '/category',
+          component: () => import("@/views/index/category"),
+          meta: {
+            requireAuth:true
+          }
+        },
+        {
           path: '/tags',
           name: '/tags',
           component: () => import("@/views/index/tags"),

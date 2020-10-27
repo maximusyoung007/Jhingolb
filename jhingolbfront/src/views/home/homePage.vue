@@ -68,7 +68,8 @@ export default {
       navList: [
         {name:'about',navItem:'关于'},
         {name:'tags',navItem:'标签'},
-        {name:'article',navItem:'文章'},
+        {name: 'category',navItem: '分类'},
+        //{name:'article',navItem:'文章'},
         {name:'index',navItem:'首页'},
       ],
       allTags:[],
