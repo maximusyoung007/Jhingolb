@@ -35,9 +35,10 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public List<Article> getArticleList(Article article) {
         ArticleExample articleExample = new ArticleExample();
-        articleExample.createCriteria().andReleaseStateEqualTo(1);
+        ArticleExample.Criteria criteria = articleExample.createCriteria();
+        criteria.andReleaseStateEqualTo(1);
         if(article.getId() != null && !"".equals(article.getId())) {
-            articleExample.createCriteria().andIdEqualTo(article.getId());
+            criteria.andIdEqualTo(article.getId());
         }
         List<Article> list = articleMapper.selectByExample(articleExample);
         return list;

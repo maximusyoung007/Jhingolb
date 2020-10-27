@@ -16,12 +16,13 @@
       </el-menu>
     </el-header>
     <el-main style="background-color: white">
+
         <el-row>
-          <el-col :span="18" style="padding-right: 10px">
+          <el-col :span="2"><div class="grid-content bg-purple" style="color: white">hello world</div></el-col>
+          <el-col :span="15" style="padding-right: 10px">
             <router-view/>
           </el-col>
-
-          <el-col :span="6">
+          <el-col :span="5">
             <div>
               <el-input placeholder="..." v-model="searchArticle">
                 <el-button slot="append" icon="el-icon-search"></el-button>
@@ -52,6 +53,7 @@
               </ul>
             </div>
           </el-col>
+          <el-col :span="2"><div class="grid-content bg-purple" style="color: white">hello world</div></el-col>
         </el-row>
       </el-main>
   </el-container>
