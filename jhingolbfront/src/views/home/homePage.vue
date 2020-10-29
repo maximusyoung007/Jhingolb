@@ -29,6 +29,18 @@
               </el-input>
             </div>
             <el-divider></el-divider>
+            <div class="weather">
+              <span class="weatherInfo">{{temp}}</span> &nbsp;
+              <span class="weatherInfo">{{city}}</span>
+              <img :src="image">
+              <span v-if="airCondition == '优'" style="color: limegreen" class="weatherInfo">{{airCondition}}</span>
+              <span v-if="airCondition == '良'" style="color: orange" class="weatherInfo">{{airCondition}}</span>
+              <span v-if="airCondition == '轻度污染'" style="color: darkorange" class="weatherInfo">{{airCondition}}</span>
+              <span v-if="airCondition == '中度污染'" style="color: red" class="weatherInfo">{{airCondition}}</span>
+              <span v-if="airCondition == '重度污染'" style="color: purple" class="weatherInfo">{{airCondition}}</span>
+              <span v-if="airCondition == '严重污染'" style="color: darkred" class="weatherInfo">{{airCondition}}</span>
+            </div>
+            <el-divider></el-divider>
             <div class="mainBox">
               <Calendar></Calendar>
             </div>
@@ -85,7 +97,18 @@ export default {
       searchArticle: "",
       activeColor:"dodgerblue",
       pointer:"pointer",
-      value:new Date()
+      city:"",
+      locationId:"",
+      //温度
+      temp:"",
+      //天气状况
+      situation:"",
+      //空气质量
+      airCondition:"",
+      //天气图标编号
+      icon:"",
+      image:"",
+      ip:""
     }
   },
   methods: {
@@ -114,11 +137,58 @@ export default {
     },
     mouseDownColor: function () {
       this.activeColor = "dodgerblue"
-    }
+    },
+    getWhether: function() {
+      var locationId = this.locationId;
+      this.$axios({
+        methods: "get",
+        url:"https://devapi.qweather.com/v7/weather/now?location=" + locationId + "&key=c777ad6141464ba4bee5675ed13ed0ed"
+      }).then((response) => {
+          var data = response.data.now;
+          this.temp = data.temp + "℃";
+          this.situation = data.text;
+          this.icon = data.icon;
+          this.image = require("../../common/static/img/weatherIcon/" + this.icon + ".png");
+          console.log(this.image);
+          this.getAirCondition();
+      })
+    },
+    getAirCondition: function() {
+      var locationId = this.locationId;
+      this.$axios({
+        methods: "get",
+        url: "https://devapi.qweather.com/v7/air/now?location=" + locationId + "&key=c777ad6141464ba4bee5675ed13ed0ed"
+      }).then((response) => {
+          this.airCondition = response.data.now.category;
+      })
+    },
+    getLocationID: function () {
+      var city = this.city;
+      if(city.charAt(city.length) == '市') {
+        city = city.substring(0,city.length - 1);
+      }
+      this.$axios({
+        methods:"get",
+        url:"https://geoapi.qweather.com/v2/city/lookup?location=" + city + "&key=c777ad6141464ba4bee5675ed13ed0ed"
+      }).then((response) => {
+        this.locationId = response.data.location[0].id;
+        this.getWhether();
+      })
+    },
+    getLocation: function() {
+      this.$axios({
+        methods:"get",
+        url:"https://restapi.amap.com/v3/ip?key=779959b6cd7d724db94bbfbef33d15a8"
+      }).then((response) => {
+        this.city = response.data.city;
+        this.getLocationID();
+      })
+    },
   },
   mounted() {
     this.loadTags();
     this.loadArticleDate();
+    this.getLocation();
   }
 }
 </script>
@@ -179,6 +249,14 @@ el-header{
       }
     }
   }
+}
+.weatherInfo {
+  font-size:20px;
+  font-weight: lighter;
+  padding: 5px;
+}
+.weather {
+  background-color: #f1f1f1;
 }
 
 </style>
