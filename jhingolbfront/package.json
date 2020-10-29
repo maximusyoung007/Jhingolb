@@ -16,6 +16,7 @@
     "highlight.js": "^10.3.1",
     "vue": "^2.5.2",
     "vue-axios": "^3.0.1",
+    "vue-calendar-component": "^2.8.2",
     "vue-router": "^3.4.6",
     "vuex": "^3.5.1",
     "wangeditor": "^4.0.4"

@@ -29,6 +29,10 @@
               </el-input>
             </div>
             <el-divider></el-divider>
+            <div class="mainBox">
+              <Calendar></Calendar>
+            </div>
+            <el-divider></el-divider>
             <div>
                 <h3 style="border: #222222">标签</h3>
               <el-tag :key="tag"
@@ -61,8 +65,12 @@
 </template>
 
 <script>
+import Calendar from "vue-calendar-component"
 export default {
   name: "head.vue",
+  components: {
+    Calendar
+  },
   data() {
     return {
       navList: [
@@ -76,7 +84,8 @@ export default {
       articleDate:[],
       searchArticle: "",
       activeColor:"dodgerblue",
-      pointer:"pointer"
+      pointer:"pointer",
+      value:new Date()
     }
   },
   methods: {
@@ -114,7 +123,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss">
 #title{
   position: absolute;
   padding-top: 20px;
@@ -132,4 +141,44 @@ el-header{
 .el-menu.el-menu--horizontal{
   border-bottom: solid 0px
 }
+.mainBox {
+  width:100%;
+  width:100%;
+  .wh_content_all {
+    background-color: #ffffff;
+    .wh_top_changge {
+      li {
+        color: #1fb331;
+        .wh_jiantou2 {
+          border-top-color: #0d0b0b;
+          border-right-color: #0d0b0b;
+        }
+        .wh_jiantou1{
+          border-top-color: #0d0b0b;
+          border-left-color: #0d0b0b;
+        }
+      }
+    }
+    .wh_content_item {
+      .wh_item_date {
+        color:#1ae558;
+      }
+      .wh_other_dayhide{
+        color:#bfbfbf;
+      }
+      .wh_chose_day {
+        background: #d1ff19;
+        color: #0d0b0b;
+      }
+      .wh_isToday{
+        background: #33ad53;
+        color: #0d0b0b;
+      }
+      .wh_top_tag{
+        color: #0d0b0b;
+      }
+    }
+  }
+}
+
 </style>
