@@ -27,15 +27,16 @@ export default {
     }
   },
   mounted() {
-
+    this.getCategories();
   },
   methods: {
     getCategories: function () {
-      $.axios({
+      this.$axios({
         method:"get",
-        url:"category/getCategories"
+        url:"category/getCategoryList"
       }).then((response) => {
-        
+          this.allCategories = response.data.data;
+          this.count = this.allCategories.length;
       })
     }
   }

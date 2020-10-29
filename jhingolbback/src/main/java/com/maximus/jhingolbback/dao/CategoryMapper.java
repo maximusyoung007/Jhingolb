@@ -3,8 +3,11 @@ package com.maximus.jhingolbback.dao;
 import com.maximus.jhingolbback.model.Category;
 import com.maximus.jhingolbback.model.CategoryExample;
 import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+@Mapper
 public interface CategoryMapper {
     long countByExample(CategoryExample example);
 
