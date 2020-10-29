@@ -66,7 +66,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, name, index, use_counts
+    id, name, use_counts
   </sql>
   <select id="selectByExample" parameterType="com.maximus.jhingolbback.model.CategoryExample" resultMap="BaseResultMap">
     select
