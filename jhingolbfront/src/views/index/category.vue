@@ -44,5 +44,7 @@ export default {
 </script>
 
 <style scoped>
-
+.el-tag--plain {
+  margin:5px
+}
 </style>

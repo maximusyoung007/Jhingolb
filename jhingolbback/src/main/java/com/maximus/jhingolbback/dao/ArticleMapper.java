@@ -38,5 +38,5 @@ public interface ArticleMapper {
 
     int updateByPrimaryKey(Article record);
 
-    Article getArticleById(Article article);
+    List<Article> getArticleList(Article article);
 }

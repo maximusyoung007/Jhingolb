@@ -31,7 +31,8 @@
             <el-divider></el-divider>
             <div class="weather">
               <span class="weatherInfo">{{temp}}</span> &nbsp;
-              <span class="weatherInfo">{{city}}</span>
+              <span class="weatherInfo">{{city}}</span>&nbsp;
+              <span class="weatherInfo">{{situation}}</span>
               <img :src="image">
               <span v-if="airCondition == '优'" style="color: limegreen" class="weatherInfo">{{airCondition}}</span>
               <span v-if="airCondition == '良'" style="color: orange" class="weatherInfo">{{airCondition}}</span>
@@ -45,22 +46,22 @@
               <Calendar></Calendar>
             </div>
             <el-divider></el-divider>
-            <div>
-                <h3 style="border: #222222">标签</h3>
-              <el-tag :key="tag"
+            <div class="tags">
+                <h3 style="border: #222222;padding-left: 5px">标签</h3>
+              <el-tag :key="tag.id"
                       style="cursor: pointer;padding-bottom: 10px"
                       type="success"
                       v-for="tag in allTags"
                       :disable-transitions="true"
-                      @click="addTags(tag)"
+                      @click="showArticleList(tag)"
                       size="small"
               >
-                {{tag}}
+                {{tag.name}}
               </el-tag>
             </div>
             <el-divider></el-divider>
-            <div>
-              <h3 style="border: #222222">文章归档</h3>
+            <div class="archive">
+              <h3 style="border: #222222;padding-left: 5px">文章归档</h3>
               <ul>
                 <li
                     v-for="(item,i) in articleDate" :key="i" :index="item">
@@ -89,7 +90,7 @@ export default {
         {name:'about',navItem:'关于'},
         {name:'tags',navItem:'标签'},
         {name: 'category',navItem: '分类'},
-        //{name:'article',navItem:'文章'},
+        {name:'article',navItem:'文章'},
         {name:'index',navItem:'首页'},
       ],
       allTags:[],
@@ -117,11 +118,7 @@ export default {
         methods: "get",
         url: "tags/getTagsList"
       }).then((response) => {
-        var list = response.data.data;
-        for(var i = 0;i < list.length;i++) {
-          var name = list[i].name;
-          this.allTags.push(name);
-        }
+        this.allTags = response.data.data;
       })
     },
     loadArticleDate: function () {
@@ -258,5 +255,6 @@ el-header{
 .weather {
   background-color: #f1f1f1;
 }
+
 
 </style>

@@ -35,6 +35,10 @@ public class Article extends Page implements Serializable {
 
     private List<String> allTags;
 
+    private String category;
+
+    private List<Tags> tags;
+
     private static final long serialVersionUID = 1L;
 
     public String getId() {
@@ -139,6 +143,22 @@ public class Article extends Page implements Serializable {
 
     public void setExcerpt(String excerpt) {
         this.excerpt = excerpt;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public List<Tags> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<Tags> tags) {
+        this.tags = tags;
     }
 
     @Override

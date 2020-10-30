@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.maximus.jhingolbback.dao.ArticleMapper">
   <resultMap id="BaseResultMap" type="com.maximus.jhingolbback.model.Article">
-    <id column="id" jdbcType="INTEGER" property="id" />
+    <id column="id" jdbcType="VARCHAR" property="id" />
     <result column="title" jdbcType="VARCHAR" property="title" />
     <result column="img" jdbcType="VARCHAR" property="img" />
     <result column="article_body" jdbcType="VARCHAR" property="articleBody"/>
@@ -13,6 +13,12 @@
     <result column="tui_id" jdbcType="INTEGER" property="tuiId" />
     <result column="user_id" jdbcType="INTEGER" property="userId" />
     <result column="release_state" jdbcType="INTEGER" property="releaseState"/>
+    <result column="category" jdbcType="VARCHAR" property="category"/>
+    <collection property="tags" ofType="com.maximus.jhingolbback.model.Tags">
+      <id column="tag_id" property="id" jdbcType="VARCHAR"/>
+      <result column="name" property="name" jdbcType="VARCHAR"/>
+      <result column="use_counts" property="useCounts" jdbcType="INTEGER"/>
+    </collection>
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.maximus.jhingolbback.model.ArticleWithBLOBs">
     <result column="excerpt" jdbcType="LONGVARCHAR" property="excerpt" />
@@ -77,7 +83,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, title,article_body,img, views, created_time, modified_time, category_id, tui_id, user_id,release_state
+    id, title,article_body,img, views, created_time, modified_time,
+    category_id, tui_id, user_id,release_state,category,tags
   </sql>
   <sql id="Blob_Column_List">
     excerpt, body
@@ -353,13 +360,23 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
 
-  <select id="getArticleById" parameterType="com.maximus.jhingolbback.model.Article" >
-    SELECT <include refid="Base_Column_List" />
-    FROM article
+  <select id="getArticleList" parameterType="com.maximus.jhingolbback.model.Article" resultMap="BaseResultMap">
+    SELECT a.id, a.title,a.article_body, a.views, a.created_time, a.modified_time,
+    a.category_id, a.user_id,a.release_state,c.name AS category,t.id AS tag_id,t.name,t.use_counts
+    FROM article a LEFT JOIN category c ON a.category_id = c.id
+    LEFT JOIN article_tag_connect atc ON a.id = atc.article_id
+    LEFT JOIN tags t ON atc.tag_id = t.id
     <where>
       <if test="id != null and !''.equals(id)">
-        id = #{id}
+        a.id = #{id}
+      </if>
+      <if test="releaseState != null and !''.equals(releaseState)">
+        AND release_state = #{releaseState}
+      </if>
+      <if test="categoryId != null and !''.equals(categoryId)">
+        AND category_id = #{categoryId}
       </if>
     </where>
   </select>
+
 </mapper>
