@@ -1,7 +1,7 @@
 <template>
   <div>
 
-      <el-card shadow="never" v-for="(item,i) in firstPageArticle" :key="i"
+      <el-card shadow="hover" v-for="(item,i) in firstPageArticle" :key="i"
                :index="item.id">
         <div slot="header" class="clearfix">
           <div style="font-size: 24px">{{ item.title }}</div>
@@ -10,7 +10,16 @@
             <time>{{ item.modifiedTime }}</time>
             &nbsp;
             <i class="el-icon-folder-opened"></i>
-            <span>分类</span>
+            <span>{{ item.category }}</span>
+          </div>
+          <div>
+            <el-tag :key="tag.id"
+                    style="cursor: pointer"
+                    v-for="tag in item.tags"
+                    :disable-transitions="true"
+                    size="mini"
+                    @click="showArticleListByTags(tag.id)"
+            >{{tag.name}}</el-tag>
           </div>
         </div>
         <div class="item-content" v-html="item.articleBody">
@@ -27,9 +36,7 @@ export default {
   name: "index.vue",
   data() {
     return {
-      firstPageArticle:[
-        {title:"wenzhangmingzi",modifiedTime:"2020-02-01"}
-      ]
+      firstPageArticle:[],
     }
   },
   mounted:function() {
@@ -46,6 +53,9 @@ export default {
     },
     readMore: function (id) {
       this.$router.push({name: "articleDetail",params: {id: id}})
+    },
+    showArticleListByTags : function(id) {
+      this.$router.push({name: "article",params: {tagId: id}})
     }
   }
 }
@@ -90,9 +100,14 @@ export default {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 5;
+  color: dimgrey;
 }
 
 .el-card{
   margin-bottom: 10px;
+}
+.el-tag {
+  margin-top:3px;
+  margin-right: 3px
 }
 </style>

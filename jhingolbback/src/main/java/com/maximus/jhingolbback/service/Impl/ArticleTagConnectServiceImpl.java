@@ -17,4 +17,9 @@ public class ArticleTagConnectServiceImpl implements ArticleTagConnectService {
     public int addArticleTagConnect(List<ArticleTagConnect> list) {
         return tagConnectMapper.addArticleTagConnect(list);
     }
+
+    @Override
+    public List<String> getArticleIdByTagId(String tagId) {
+        return tagConnectMapper.getArticleIdByTagId(tagId);
+    }
 }

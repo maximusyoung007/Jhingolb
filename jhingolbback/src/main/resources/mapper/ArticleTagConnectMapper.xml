@@ -186,4 +186,9 @@
       (uuid(),#{item.articleId},#{item.tagName})
     </foreach>
   </insert>
+
+  <select id="getArticleIdByTagId" parameterType="java.lang.String" resultType="java.lang.String">
+    SELECT article_id FROM article_tag_connect
+    WHERE tag_id = #{tagId}
+  </select>
 </mapper>

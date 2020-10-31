@@ -49,7 +49,10 @@ export default {
         url:"article/getArticleList",
         data: {
           currentPage:this.currentPage,
-          pageSize: this.pageSize
+          pageSize: this.pageSize,
+          tagId: this.$route.params.tagId,
+          categoryId: this.$route.params.categoryId,
+          modifiedTime: this.$route.params.modifiedTime
         }
       }).then((response) => {
         this.tableData = response.data.data.list;

@@ -41,9 +41,6 @@ export default {
         this.article = response.data.data;
       })
     },
-    readMore: function () {
-      this.$router.push("")
-    }
   }
 }
 </script>

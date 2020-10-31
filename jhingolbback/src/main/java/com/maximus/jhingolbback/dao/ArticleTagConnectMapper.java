@@ -32,4 +32,6 @@ public interface ArticleTagConnectMapper {
     int updateByPrimaryKey(ArticleTagConnect record);
 
     int addArticleTagConnect(List<ArticleTagConnect> list);
+
+    List<String> getArticleIdByTagId(@Param("tagId")String tagId);
 }

@@ -3,6 +3,12 @@ import Router from 'vue-router'
 
 Vue.use(Router)
 
+//重复跳转到相同的路由
+const originalPush = Router.prototype.push;
+Router.prototype.push = function push(location) {
+  return originalPush.call(this,location).catch(err => err);
+}
+
 export default new Router({
   mode: 'hash',
   routes: [
@@ -64,7 +70,7 @@ export default new Router({
         },
         {
           path: '/article',
-          name: '/article',
+          name: 'article',
           component: () => import("@/views/index/article"),
           meta: {
             requireAuth: true

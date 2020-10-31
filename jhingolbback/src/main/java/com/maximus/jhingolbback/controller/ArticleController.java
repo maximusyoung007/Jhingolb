@@ -15,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Controller
@@ -24,6 +23,9 @@ public class ArticleController {
     private static final Logger logger = LogManager.getLogger("ArticleController");
     @Resource
     private ArticleService articleService;
+
+    @Resource
+    private ArticleTagConnectService articleTagConnectService;
 
     @GetMapping("getFirstPageArticleList")
     @ResponseBody
@@ -47,11 +49,24 @@ public class ArticleController {
         try {
             int currentPage = article.getCurrentPage(),pageSize = article.getPageSize();
             PageHelper.startPage(currentPage,pageSize);
+            //根据标签获取文章
+            if(article.getTagId() != null && !"".equals(article.getTagId())) {
+                List<String> ids = articleTagConnectService.getArticleIdByTagId(article.getTagId());
+                article.setIds(ids);
+            }
+            //根据归档获取文章
+            if(article.getModifiedTime() != null) {
+                Date modifiedTime = article.getModifiedTime();
+                Date firstDay = getFirstDayOfMonth(modifiedTime);
+                Date lastDay = getLastDayOfMonth(modifiedTime);
+                article.setFirstDay(firstDay);
+                article.setLastDay(lastDay);
+            }
             List<Article> list = articleService.getArticleList(article);
             PageInfo<Article> page = new PageInfo<>(list);
             return Result.success(page,"获取文章列表");
         } catch (Exception e) {
-            logger.error("can not find any information about ");
+            logger.error("can not find any information about",e);
         }
         return Result.error("没有回去到数据");
     }
@@ -75,21 +90,25 @@ public class ArticleController {
 
     @GetMapping("getArticleDate")
     @ResponseBody
-    public Result<Map<Date,String>> getArticleDate() {
+    public Result<List<Article>> getArticleDate() {
         try {
             Article article = new Article();
             List<Article> list = articleService.getArticleList(article);
-            Map<Date,String> map = new HashMap<>();
-            for(int i = 0;i < list.size();i++) {
-                Date modifiedTime = list.get(i).getModifiedTime();
+            List<Article> result = new ArrayList<>();
+            List<String> set = new ArrayList<>();
+
+            for(Article article1 : list) {
+                Date modifiedTime = article1.getModifiedTime();
                 Calendar cal = Calendar.getInstance();
                 cal.setTime(modifiedTime);
                 String dateString = getCurrentCNDate(cal);
-                if(!map.containsValue(dateString)) {
-                    map.put(modifiedTime,dateString);
+                if(!set.contains(dateString)) {
+                    set.add(dateString);
+                    article1.setArchive(dateString);
+                    result.add(article1);
                 }
             }
-            return Result.success(map,"成功");
+            return Result.success(result,"成功");
         } catch (Exception e) {
             logger.error("失败" + e);
         }
@@ -121,5 +140,21 @@ public class ArticleController {
         }
         CNDate.append("月");
         return CNDate.toString();
+    }
+
+    public static Date getFirstDayOfMonth(Date date) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        int first = cal.getActualMinimum(Calendar.DAY_OF_MONTH);
+        cal.set(Calendar.DAY_OF_MONTH,first);
+        return cal.getTime();
+    }
+
+    public static Date getLastDayOfMonth(Date date) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        int last = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+        cal.set(Calendar.DAY_OF_MONTH,last);
+        return cal.getTime();
     }
 }

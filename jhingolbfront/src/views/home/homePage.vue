@@ -64,8 +64,8 @@
               <h3 style="border: #222222;padding-left: 5px">文章归档</h3>
               <ul>
                 <li
-                    v-for="(item,i) in articleDate" :key="i" :index="item">
-                  <el-button size="small" type="text">{{item}}</el-button>
+                    v-for="item in articleArchive" :key="item.id" :index="item.id">
+                  <el-button size="small" type="text" @click="getArticleByArchive(item.modifiedTime)">{{item.archive}}</el-button>
                 </li>
               </ul>
             </div>
@@ -79,6 +79,7 @@
 
 <script>
 import Calendar from "vue-calendar-component"
+import article from "../index/article";
 export default {
   name: "head.vue",
   components: {
@@ -94,7 +95,7 @@ export default {
         {name:'index',navItem:'首页'},
       ],
       allTags:[],
-      articleDate:[],
+      articleArchive:[],
       searchArticle: "",
       activeColor:"dodgerblue",
       pointer:"pointer",
@@ -126,7 +127,8 @@ export default {
         methods: "get",
         url: "article/getArticleDate",
       }).then((response) => {
-        this.articleDate = response.data.data;
+        this.articleArchive = response.data.data;
+        console.log(this.articleArchive);
       })
     },
     mouseOverColor: function () {
@@ -146,7 +148,6 @@ export default {
           this.situation = data.text;
           this.icon = data.icon;
           this.image = require("../../common/static/img/weatherIcon/" + this.icon + ".png");
-          console.log(this.image);
           this.getAirCondition();
       })
     },
@@ -181,6 +182,12 @@ export default {
         this.getLocationID();
       })
     },
+    showArticleList: function (tag) {
+        this.$router.push({name: "article", params: {tagId: tag.id}})
+    },
+    getArticleByArchive: function (modifiedTime) {
+      this.$router.push({name: "article",params: {modifiedTime: modifiedTime}});
+    }
   },
   mounted() {
     this.loadTags();

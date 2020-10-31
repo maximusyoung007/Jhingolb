@@ -39,6 +39,16 @@ public class Article extends Page implements Serializable {
 
     private List<Tags> tags;
 
+    private String tagId;
+
+    private String archive;
+
+    private List<String> ids;
+
+    private Date firstDay;
+
+    private Date lastDay;
+
     private static final long serialVersionUID = 1L;
 
     public String getId() {
@@ -159,6 +169,46 @@ public class Article extends Page implements Serializable {
 
     public void setTags(List<Tags> tags) {
         this.tags = tags;
+    }
+
+    public String getTagId() {
+        return tagId;
+    }
+
+    public void setTagId(String tagId) {
+        this.tagId = tagId;
+    }
+
+    public String getArchive() {
+        return archive;
+    }
+
+    public void setArchive(String archive) {
+        this.archive = archive;
+    }
+
+    public List<String> getIds() {
+        return ids;
+    }
+
+    public void setIds(List<String> ids) {
+        this.ids = ids;
+    }
+
+    public Date getFirstDay() {
+        return firstDay;
+    }
+
+    public void setFirstDay(Date firstDay) {
+        this.firstDay = firstDay;
+    }
+
+    public Date getLastDay() {
+        return lastDay;
+    }
+
+    public void setLastDay(Date lastDay) {
+        this.lastDay = lastDay;
     }
 
     @Override

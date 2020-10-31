@@ -376,6 +376,16 @@
       <if test="categoryId != null and !''.equals(categoryId)">
         AND category_id = #{categoryId}
       </if>
+      <if test="ids != null and ids.size() > 0">
+        AND a.id in
+        <foreach collection="ids" index="index" item="item" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="firstDay != null and lastDay != null">
+        AND a.modified_time &lt;= #{lastDay}
+        AND a.modified_time &gt;= #{firstDay}
+      </if>
     </where>
   </select>
 

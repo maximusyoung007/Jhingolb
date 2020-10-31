@@ -11,4 +11,6 @@ public interface ArticleTagConnectService {
      * @return
      */
     int addArticleTagConnect(List<ArticleTagConnect> list);
+
+    List<String> getArticleIdByTagId(String tagId);
 }
