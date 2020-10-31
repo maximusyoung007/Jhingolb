@@ -64,7 +64,7 @@ export default {
     handleCurrentChange:function (val) {
       this.getArticleList();
     },
-  }
+  },
 }
 </script>
 

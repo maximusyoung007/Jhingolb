@@ -20,7 +20,7 @@
         <el-row>
           <el-col :span="2"><div class="grid-content bg-purple" style="color: white">hello world</div></el-col>
           <el-col :span="15" style="padding-right: 10px">
-            <router-view/>
+            <router-view v-if="showRouterView"/>
           </el-col>
           <el-col :span="5">
             <div>
@@ -110,7 +110,8 @@ export default {
       //天气图标编号
       icon:"",
       image:"",
-      ip:""
+      ip:"",
+      showRouterView:true
     }
   },
   methods: {
@@ -183,10 +184,17 @@ export default {
       })
     },
     showArticleList: function (tag) {
-        this.$router.push({name: "article", params: {tagId: tag.id}})
+      this.$router.push({name: "article", params: {tagId: tag.id,type:tag.id}})
+      this.reload();
     },
     getArticleByArchive: function (modifiedTime) {
-      this.$router.push({name: "article",params: {modifiedTime: modifiedTime}});
+      this.$router.push({name: "article",params: {modifiedTime: modifiedTime,type:modifiedTime}});
+      this.reload();
+    },
+    //重新加载页面
+    reload: function() {
+      this.showRouterView = false;
+      this.$nextTick(() => (this.showRouterView = true))
     }
   },
   mounted() {

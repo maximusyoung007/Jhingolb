@@ -9,6 +9,7 @@ Router.prototype.push = function push(location) {
   return originalPush.call(this,location).catch(err => err);
 }
 
+
 export default new Router({
   mode: 'hash',
   routes: [
@@ -69,7 +70,7 @@ export default new Router({
           }
         },
         {
-          path: '/article',
+          path: '/article/:type',
           name: 'article',
           component: () => import("@/views/index/article"),
           meta: {
