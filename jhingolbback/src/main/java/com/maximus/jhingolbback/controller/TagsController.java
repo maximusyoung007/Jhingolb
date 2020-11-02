@@ -25,4 +25,14 @@ public class TagsController {
         }
         return Result.error("失败");
     }
+
+    @RequestMapping("getTagsListInUse")
+    @ResponseBody
+    public Result<List<Tags>> getTagsListInUse() {
+        List<Tags> result = tagsService.getTagsListInUse();
+        if(result.size() > 0) {
+            return Result.success(result,"成功");
+        }
+        return Result.error("失败");
+    }
 }

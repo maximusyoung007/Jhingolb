@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface TagsService {
     public List<Tags> getTagList();
+
+    List<Tags> getTagsListInUse();
 }

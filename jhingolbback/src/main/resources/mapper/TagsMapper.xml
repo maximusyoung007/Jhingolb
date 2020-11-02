@@ -163,4 +163,9 @@
     set name = #{name,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="getTagsListInUse" resultMap="BaseResultMap">
+    SELECT id,name,use_counts FROM tags
+    WHERE id in (SELECT distinct tag_id FROM article_tag_connect)
+  </select>
 </mapper>

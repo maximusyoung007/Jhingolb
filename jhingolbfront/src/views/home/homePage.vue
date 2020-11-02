@@ -91,7 +91,7 @@ export default {
         {name:'about',navItem:'关于'},
         {name:'tags',navItem:'标签'},
         {name: 'category',navItem: '分类'},
-        {name:'article',navItem:'文章'},
+        //{name:'article',navItem:'文章'},
         {name:'index',navItem:'首页'},
       ],
       allTags:[],
@@ -118,7 +118,7 @@ export default {
     loadTags:function() {
       this.$axios({
         methods: "get",
-        url: "tags/getTagsList"
+        url: "tags/getTagsListInUse"
       }).then((response) => {
         this.allTags = response.data.data;
       })
@@ -129,7 +129,6 @@ export default {
         url: "article/getArticleDate",
       }).then((response) => {
         this.articleArchive = response.data.data;
-        console.log(this.articleArchive);
       })
     },
     mouseOverColor: function () {

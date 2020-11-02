@@ -17,7 +17,11 @@ public class TagsServiceImpl implements TagsService {
     @Override
     public List<Tags> getTagList() {
         TagsExample example = new TagsExample();
-        List<Tags> list = tagsMapper.selectByExample(example);
-        return list;
+        return tagsMapper.selectByExample(example);
+    }
+
+    @Override
+    public List<Tags> getTagsListInUse() {
+        return tagsMapper.getTagsListInUse();
     }
 }
