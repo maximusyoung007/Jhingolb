@@ -13,17 +13,67 @@
       </div>
       <div v-html="article.articleBody">
       </div>
+      <div button="buttonGroup" style="text-align: center">
+        <a-button type="primary" icon="like" @click="addThumbsUp()">赞成({{this.comments.thumbsUp}})</a-button>
+        <a-button type="danger" icon="dislike" @click="addOppose()">反对({{this.comments.oppose}})</a-button>
+      </div>
+      <el-divider></el-divider>
+      <div>
+        <el-form :rules="rules" class="demo-ruleForm"
+                 :model="comments" ref="comments" label-width="70px">
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="昵称：" prop="petName">
+                <el-input placeholder="请输入一个昵称" v-model="comments.petName"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="邮箱：" prop="email">
+                <el-input placeholder="请输入邮箱" v-model="comments.email"></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-form-item>
+            <el-input type="textarea" :rows="10" placeholder="请输入评论" v-model="comments.textarea"></el-input>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="addComments('comments')">发表</el-button>
+          </el-form-item>
+        </el-form>
+      </div>
+      <el-divider></el-divider>
+      <div>
+        {{comments.commentCounts}}条评论
+      </div>
     </el-card>
     <br/>
   </div>
 </template>
 
 <script>
+import {Message} from 'element-ui'
 export default {
   name: "index.vue",
   data() {
     return {
       article:"",
+      comments: {
+        petName:"",
+        email:"",
+        textarea:"",
+        thumbsUp:"",
+        oppose:"",
+        commentCounts: ""
+      },
+      rules: {
+        petName: [
+          {required: true,message:"请填写昵称",trigger:'blur'},
+        ],
+        email:[
+          {required:true,message:"请填写邮箱",trigger:'blur'},
+          {type: 'email',message: "请输入正确的邮箱",trigger: ['blur','change']}
+        ]
+      }
     }
   },
   mounted:function() {
@@ -39,8 +89,65 @@ export default {
         }
       }).then((response) => {
         this.article = response.data.data;
+        this.comments.thumbsUp = response.data.data.thumbsUp;
+        this.comments.oppose = response.data.data.oppose;
+        this.comments.commentCounts = response.data.data.commentCounts;
       })
     },
+    addComments: function(formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          this.$axios({
+            method: "post",
+            url:"comments/addComments",
+            data: {
+              articleId: this.article.id,
+              username: this.comments.petName,
+              email: this.comments.email,
+              content: this.comments.textarea
+            }
+          }).then((response) => {
+            if(response.data.type == "success") {
+              Message({
+                message: response.data.msg,
+                type: "success",
+                center:true,
+                offset:50
+              })
+              this.comments.petName = "";
+              this.comments.email = "";
+              this.comments.textarea = "";
+              this.comments.commentCounts = response.data.data;
+            }
+          })
+        } else {
+          console.log('error submit!!');
+          return false;
+        }
+      });
+    },
+    addThumbsUp: function () {
+      this.$axios({
+        method: "post",
+        url:"article/addThumbsUp",
+        data: {
+          id: this.article.id
+        }
+      }).then((response) => {
+        this.comments.thumbsUp = response.data.data;
+      })
+    },
+    addOppose: function() {
+      this.$axios({
+        method:"post",
+        url:"article/addOppose",
+        data: {
+          id: this.article.id
+        }
+      }).then((response) => {
+        this.comments.oppose = response.data.data;
+      })
+    }
   }
 }
 </script>

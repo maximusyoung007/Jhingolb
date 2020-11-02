@@ -14,6 +14,9 @@
     <result column="user_id" jdbcType="INTEGER" property="userId" />
     <result column="release_state" jdbcType="INTEGER" property="releaseState"/>
     <result column="category" jdbcType="VARCHAR" property="category"/>
+    <result column="thumbs_up" property="thumbsUp" jdbcType="INTEGER"/>
+    <result column="oppose" property="oppose" jdbcType="INTEGER"/>
+    <result column="comment_counts" property="commentCounts" jdbcType="INTEGER"/>
     <collection property="tags" ofType="com.maximus.jhingolbback.model.Tags">
       <id column="tag_id" property="id" jdbcType="VARCHAR"/>
       <result column="name" property="name" jdbcType="VARCHAR"/>
@@ -347,22 +350,39 @@
       body = #{body,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.maximus.jhingolbback.model.Article">
+
+  <update id="updateThumbsUp" parameterType="com.maximus.jhingolbback.model.Article">
+    <selectKey resultType="java.lang.Integer" keyProperty="thumbsUp" order="AFTER">
+        SELECT thumbs_up FROM article WHERE id = #{id}
+    </selectKey>
     update article
-    set title = #{title,jdbcType=VARCHAR},
-      img = #{img,jdbcType=VARCHAR},
-      views = #{views,jdbcType=INTEGER},
-      created_time = #{createdTime,jdbcType=TIMESTAMP},
-      modified_time = #{modifiedTime,jdbcType=TIMESTAMP},
-      category_id = #{categoryId,jdbcType=INTEGER},
-      tui_id = #{tuiId,jdbcType=INTEGER},
-      user_id = #{userId,jdbcType=INTEGER}
+    <set>
+      <if test="thumbsUp != null and !''.equals(thumbsUp)">
+        thumbs_up = thumbs_up + 1,
+      </if>
+    </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
 
+  <update id="updateOppose" parameterType="com.maximus.jhingolbback.model.Article">
+    <selectKey resultType="java.lang.Integer" keyProperty="oppose" order="AFTER">
+      SELECT oppose FROM article WHERE id = #{id}
+    </selectKey>
+    UPDATE article
+    <set>
+      <if test="oppose != null and !''.equals(oppose)">
+        oppose = oppose + 1
+      </if>
+    </set>
+    WHERE id = #{id}
+  </update>
+
   <select id="getArticleList" parameterType="com.maximus.jhingolbback.model.Article" resultMap="BaseResultMap">
-    SELECT a.id, a.title,a.article_body, a.views, a.created_time, a.modified_time,
-    a.category_id, a.user_id,a.release_state,c.name AS category,t.id AS tag_id,t.name,t.use_counts
+    SELECT a.id, a.title,a.article_body,
+     a.views, a.created_time, a.modified_time,
+    a.category_id, a.user_id,a.release_state,
+    a.thumbs_up,a.oppose,(SELECT count(*) from comments where article_id = #{id}) AS comment_counts,
+    c.name AS category,t.id AS tag_id,t.name,t.use_counts
     FROM article a LEFT JOIN category c ON a.category_id = c.id
     LEFT JOIN article_tag_connect atc ON a.id = atc.article_id
     LEFT JOIN tags t ON atc.tag_id = t.id

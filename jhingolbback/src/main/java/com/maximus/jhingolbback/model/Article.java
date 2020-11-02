@@ -49,6 +49,12 @@ public class Article extends Page implements Serializable {
 
     private Date lastDay;
 
+    private Integer thumbsUp;
+
+    private Integer oppose;
+
+    private Integer commentCounts;
+
     private static final long serialVersionUID = 1L;
 
     public String getId() {
@@ -209,6 +215,30 @@ public class Article extends Page implements Serializable {
 
     public void setLastDay(Date lastDay) {
         this.lastDay = lastDay;
+    }
+
+    public Integer getThumbsUp() {
+        return thumbsUp;
+    }
+
+    public void setThumbsUp(Integer thumbsUp) {
+        this.thumbsUp = thumbsUp;
+    }
+
+    public Integer getOppose() {
+        return oppose;
+    }
+
+    public void setOppose(Integer oppose) {
+        this.oppose = oppose;
+    }
+
+    public Integer getCommentCounts() {
+        return commentCounts;
+    }
+
+    public void setCommentCounts(Integer commentCounts) {
+        this.commentCounts = commentCounts;
     }
 
     @Override

@@ -17,4 +17,8 @@ public interface ArticleService {
      * 添加文章
      */
     Result<String> addArticle(Article record);
+
+    int updateThumbsUp(Article record);
+
+    int updateOppose(Article article);
 }

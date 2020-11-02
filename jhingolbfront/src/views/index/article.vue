@@ -2,18 +2,20 @@
   <div class="block">
     <el-table
       :data="tableData"
+      :show-header="false"
       style="width: 100%">
       <el-table-column
-        prop="modifiedTime"
-        label="时间"
-        width="250"
-        >
-      </el-table-column>
-      <el-table-column
         prop="title"
-        label="标题"
-
-        >
+        label="标题">
+        <template slot-scope="scope">
+          <div>
+<!--            <i class="el-icon-time"></i>-->
+            <time style="font-size: 13px;color:#999 ">{{ scope.row.modifiedTime }}</time>
+          </div>
+          <div>
+            <span style="font-size: 20px;cursor:pointer;font-family: 'Hiragino Sans GB'" @click="getArticleDetail(scope.row.id)">{{scope.row.title}}</span>
+          </div>
+        </template>
       </el-table-column>
     </el-table>
     <div class="page" style="text-align: center">
@@ -64,6 +66,9 @@ export default {
     handleCurrentChange:function (val) {
       this.getArticleList();
     },
+    getArticleDetail:function(id) {
+      this.$router.push({name:"articleDetail",params: {id:id}})
+    }
   },
 }
 </script>

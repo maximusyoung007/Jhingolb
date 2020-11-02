@@ -4,14 +4,12 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.maximus.jhingolbback.Enum.NumberEnum;
 import com.maximus.jhingolbback.model.Article;
-import com.maximus.jhingolbback.model.ArticleTagConnect;
 import com.maximus.jhingolbback.result.Result;
 import com.maximus.jhingolbback.service.ArticleService;
 import com.maximus.jhingolbback.service.ArticleTagConnectService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -64,6 +62,7 @@ public class ArticleController {
             }
             List<Article> list = articleService.getArticleList(article);
             PageInfo<Article> page = new PageInfo<>(list);
+            page.setTotal(list.size());
             return Result.success(page,"获取文章列表");
         } catch (Exception e) {
             logger.error("can not find any information about",e);
@@ -111,6 +110,38 @@ public class ArticleController {
             return Result.success(result,"成功");
         } catch (Exception e) {
             logger.error("失败" + e);
+        }
+        return Result.error("失败");
+    }
+
+    @PostMapping("addThumbsUp")
+    @ResponseBody
+    public Result<Integer> addThumbsUp(@RequestBody Article article) {
+        article.setThumbsUp(1);
+        try {
+            int count = articleService.updateThumbsUp(article);
+            if(count > 0) {
+                Integer thumbsUp = article.getThumbsUp();
+                return Result.success(thumbsUp,"成功");
+            }
+        } catch (Exception e) {
+            logger.info("点赞失败",e);
+        }
+        return Result.error("失败");
+    }
+
+    @PostMapping("addOppose")
+    @ResponseBody
+    public Result<Integer> addOppose(@RequestBody Article article) {
+        article.setOppose(1);
+        try {
+            int count = articleService.updateOppose(article);
+            if(count > 0) {
+                Integer oppose = article.getOppose();
+                return Result.success(oppose,"成功");
+            }
+        } catch (Exception e) {
+            logger.info("失败",e);
         }
         return Result.error("失败");
     }

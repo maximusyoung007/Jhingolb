@@ -36,7 +36,9 @@ public interface ArticleMapper {
 
     int updateByPrimaryKeyWithBLOBs(ArticleWithBLOBs record);
 
-    int updateByPrimaryKey(Article record);
+    int updateThumbsUp(Article record);
+
+    int updateOppose(Article article);
 
     List<Article> getArticleList(Article article);
 }

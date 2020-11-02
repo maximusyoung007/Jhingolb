@@ -18,8 +18,8 @@
     <el-main style="background-color: white">
 
         <el-row>
-          <el-col :span="2"><div class="grid-content bg-purple" style="color: white">hello world</div></el-col>
-          <el-col :span="15" style="padding-right: 10px">
+          <el-col :span="3"><div class="grid-content bg-purple" style="color: white">hello world</div></el-col>
+          <el-col :span="14" style="padding-right: 10px">
             <router-view v-if="showRouterView"/>
           </el-col>
           <el-col :span="5">
@@ -30,10 +30,10 @@
             </div>
             <el-divider></el-divider>
             <div class="weather">
-              <span class="weatherInfo">{{temp}}</span> &nbsp;
-              <span class="weatherInfo">{{city}}</span>&nbsp;
+              <span class="weatherInfo">{{temp}}</span> &nbsp
+              <span class="weatherInfo">{{city}}</span>&nbsp
               <span class="weatherInfo">{{situation}}</span>
-              <img :src="image">
+              <img :src="image" class="weatherImg">
               <span v-if="airCondition == '优'" style="color: limegreen" class="weatherInfo">{{airCondition}}</span>
               <span v-if="airCondition == '良'" style="color: orange" class="weatherInfo">{{airCondition}}</span>
               <span v-if="airCondition == '轻度污染'" style="color: darkorange" class="weatherInfo">{{airCondition}}</span>
@@ -262,12 +262,16 @@ el-header{
   }
 }
 .weatherInfo {
-  font-size:20px;
+  font-size:17px;
   font-weight: lighter;
   padding: 5px;
 }
 .weather {
   background-color: #f1f1f1;
+}
+.weatherImg {
+  height: 20px;
+  width: 20px
 }
 
 

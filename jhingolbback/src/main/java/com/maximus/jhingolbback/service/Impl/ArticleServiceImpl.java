@@ -1,11 +1,8 @@
 package com.maximus.jhingolbback.service.Impl;
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import com.maximus.jhingolbback.dao.ArticleMapper;
 import com.maximus.jhingolbback.dao.ArticleTagConnectMapper;
 import com.maximus.jhingolbback.model.Article;
-import com.maximus.jhingolbback.model.ArticleExample;
 import com.maximus.jhingolbback.model.ArticleTagConnect;
 import com.maximus.jhingolbback.result.Result;
 import com.maximus.jhingolbback.service.ArticleService;
@@ -53,6 +50,7 @@ public class ArticleServiceImpl implements ArticleService {
         int count = articleMapper.insertSelective(article);
         List<String> tagsNames = article.getAllTags();
         List<ArticleTagConnect> atcList = new ArrayList<>();
+
         for(int i = 0;i < tagsNames.size();i++) {
             ArticleTagConnect articleTagConnect = new ArticleTagConnect();
             articleTagConnect.setTagName(tagsNames.get(i));
@@ -71,5 +69,15 @@ public class ArticleServiceImpl implements ArticleService {
         }
 
         return Result.error("保存或发布文章失败");
+    }
+
+    @Override
+    public int updateThumbsUp(Article record) {
+        return articleMapper.updateThumbsUp(record);
+    }
+
+    @Override
+    public int updateOppose(Article article) {
+        return articleMapper.updateOppose(article);
     }
 }
