@@ -9,6 +9,8 @@
     <result column="article_id" jdbcType="VARCHAR" property="articleId" />
     <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="avatar" property="avatar" jdbcType="VARCHAR"/>
+    <result column="content" property="content" jdbcType="VARCHAR"/>
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.maximus.jhingolbback.model.Comments">
     <result column="content" jdbcType="LONGVARCHAR" property="content" />
@@ -72,7 +74,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, father_id, username, email, article_id, add_time, update_time
+    id, father_id, username, email, article_id, add_time, update_time,avatar,content
   </sql>
   <sql id="Blob_Column_List">
     content

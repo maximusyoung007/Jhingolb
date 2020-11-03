@@ -1,5 +1,7 @@
 package com.maximus.jhingolbback.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -14,13 +16,17 @@ public class Comments implements Serializable {
 
     private String articleId;
 
+    @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:ss")
     private Date addTime;
 
+    @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updateTime;
 
     private String content;
 
     private Integer commentCounts;
+
+    private String avatar;
 
     private static final long serialVersionUID = 1L;
 
@@ -94,6 +100,14 @@ public class Comments implements Serializable {
 
     public void setCommentCounts(Integer commentCounts) {
         this.commentCounts = commentCounts;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
     @Override

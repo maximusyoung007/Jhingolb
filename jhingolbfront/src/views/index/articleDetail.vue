@@ -41,9 +41,27 @@
           </el-form-item>
         </el-form>
       </div>
-      <el-divider></el-divider>
       <div>
-        {{comments.commentCounts}}条评论
+        <a-list
+          class="comment-list"
+          :header="`${comments.commentCounts}条评论`"
+          item-layout="horizontal"
+          :data-source="commentList"
+        >
+          <a-list-item slot="renderItem" slot-scope="item, index">
+            <a-comment :author="item.username" :avatar="item.avatar">
+              <template slot="actions">
+                <span v-for="action in item.actions">{{ action }}</span>
+              </template>
+              <p slot="content">
+          {{ item.content }}
+              </p>
+              <a-tooltip slot="datetime">
+                <span>{{ item.updateTime}}</span>
+              </a-tooltip>
+            </a-comment>
+          </a-list-item>
+        </a-list>
       </div>
     </el-card>
     <br/>
@@ -52,6 +70,7 @@
 
 <script>
 import {Message} from 'element-ui'
+import moment from 'moment'
 export default {
   name: "index.vue",
   data() {
@@ -63,7 +82,7 @@ export default {
         textarea:"",
         thumbsUp:"",
         oppose:"",
-        commentCounts: ""
+        commentCounts: "",
       },
       rules: {
         petName: [
@@ -73,11 +92,13 @@ export default {
           {required:true,message:"请填写邮箱",trigger:'blur'},
           {type: 'email',message: "请输入正确的邮箱",trigger: ['blur','change']}
         ]
-      }
+      },
+      commentList:[],
     }
   },
   mounted:function() {
     this.getArticleById();
+    this.getCommentList();
   },
   methods: {
     getArticleById:function () {
@@ -147,6 +168,21 @@ export default {
       }).then((response) => {
         this.comments.oppose = response.data.data;
       })
+    },
+    getCommentList: function () {
+      this.$axios({
+        method:"post",
+        url:"comments/getCommentList",
+        data: {
+          articleId: this.$route.params.id
+        }
+      }).then((response) => {
+        this.commentList = response.data.data;
+        //临时
+        for(var i = 0;i < this.commentList.length;i++) {
+          this.commentList[i].actions = "回复";
+        }
+      })
     }
   }
 }
@@ -183,5 +219,9 @@ export default {
 }
 >>>pre code {
   display: block;
+}
+p {
+  margin-left: 0;
+
 }
 </style>

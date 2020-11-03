@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping("comments")
@@ -35,5 +37,18 @@ public class CommentsController {
             logger.info("新增评论失败",e);
         }
         return Result.error("评论失败");
+    }
+
+    @RequestMapping("getCommentList")
+    @ResponseBody
+    public Result<List<Comments>> getCommentList(@RequestBody Comments comments) {
+        List<Comments> result = new ArrayList<>();
+        if(comments.getArticleId() != null) {
+            result = commentsService.getCommentList(comments.getArticleId());
+        }
+        if(result.size() > 0) {
+            return Result.success(result,"成功");
+        }
+        return Result.error("失败");
     }
 }
