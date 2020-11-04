@@ -37,32 +37,12 @@
             <el-input type="textarea" :rows="10" placeholder="请输入评论" v-model="comments.textarea"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="addComments('comments')">发表</el-button>
+            <a-button type="primary" @click="addComments('comments')">发表</a-button>
           </el-form-item>
         </el-form>
       </div>
-      <div>
-        <a-list
-          class="comment-list"
-          :header="`${comments.commentCounts}条评论`"
-          item-layout="horizontal"
-          :data-source="commentList"
-        >
-          <a-list-item slot="renderItem" slot-scope="item, index">
-            <a-comment :author="item.username" :avatar="item.avatar">
-              <template slot="actions">
-                <span v-for="action in item.actions">{{ action }}</span>
-              </template>
-              <p slot="content">
-          {{ item.content }}
-              </p>
-              <a-tooltip slot="datetime">
-                <span>{{ item.updateTime}}</span>
-              </a-tooltip>
-            </a-comment>
-          </a-list-item>
-        </a-list>
-      </div>
+      {{this.comments.commentCounts}}条评论
+      <comments v-for="item in commentList" :key="item.id" v-bind:parent-comments="item"></comments>
     </el-card>
     <br/>
   </div>
@@ -70,9 +50,10 @@
 
 <script>
 import {Message} from 'element-ui'
-import moment from 'moment'
+import Comments from '../common/comments'
 export default {
   name: "index.vue",
+  components:{Comments},
   data() {
     return {
       article:"",
@@ -93,7 +74,10 @@ export default {
           {type: 'email',message: "请输入正确的邮箱",trigger: ['blur','change']}
         ]
       },
-      commentList:[],
+      commentList:[
+        {username:'username1',content:'it is a test',haveLike:true,haveDisLike:true,date:'2020-01-01'},
+        {username:'username2',content: 'it is a test',haveLike: true,haveDisLike: true,date:'2020-01-01'}
+      ],
     }
   },
   mounted:function() {

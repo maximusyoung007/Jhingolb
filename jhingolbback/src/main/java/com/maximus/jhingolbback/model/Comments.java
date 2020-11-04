@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 public class Comments implements Serializable {
     private String id;
@@ -27,6 +28,12 @@ public class Comments implements Serializable {
     private Integer commentCounts;
 
     private String avatar;
+
+    private Integer likes;
+
+    private Integer dislikes;
+
+    private List<Comments> childrenComments;
 
     private static final long serialVersionUID = 1L;
 
@@ -108,6 +115,30 @@ public class Comments implements Serializable {
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+    public Integer getLikes() {
+        return likes;
+    }
+
+    public void setLikes(Integer likes) {
+        this.likes = likes;
+    }
+
+    public Integer getDislikes() {
+        return dislikes;
+    }
+
+    public void setDislikes(Integer dislikes) {
+        this.dislikes = dislikes;
+    }
+
+    public List<Comments> getChildrenComments() {
+        return childrenComments;
+    }
+
+    public void setChildrenComments(List<Comments> childrenComments) {
+        this.childrenComments = childrenComments;
     }
 
     @Override

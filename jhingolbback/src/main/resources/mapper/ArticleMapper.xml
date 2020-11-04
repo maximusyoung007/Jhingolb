@@ -381,7 +381,7 @@
     SELECT a.id, a.title,a.article_body,
      a.views, a.created_time, a.modified_time,
     a.category_id, a.user_id,a.release_state,
-    a.thumbs_up,a.oppose,(SELECT count(*) from comments where article_id = #{id}) AS comment_counts,
+    a.thumbs_up,a.oppose,(SELECT count(*) from comments where article_id = #{id} AND father_id = 0) AS comment_counts,
     c.name AS category,t.id AS tag_id,t.name,t.use_counts
     FROM article a LEFT JOIN category c ON a.category_id = c.id
     LEFT JOIN article_tag_connect atc ON a.id = atc.article_id

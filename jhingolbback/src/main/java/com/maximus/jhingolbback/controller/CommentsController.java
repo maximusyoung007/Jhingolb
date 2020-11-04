@@ -43,12 +43,31 @@ public class CommentsController {
     @ResponseBody
     public Result<List<Comments>> getCommentList(@RequestBody Comments comments) {
         List<Comments> result = new ArrayList<>();
-        if(comments.getArticleId() != null) {
-            result = commentsService.getCommentList(comments.getArticleId());
+        if(comments.getArticleId() != null || comments.getId() != null) {
+            result = commentsService.getCommentList(comments);
         }
         if(result.size() > 0) {
+            for(Comments comments1 : result) {
+                if(comments1.getId() != null && !"0".equals(comments1.getId())) {
+                    comments1.setFatherId(comments1.getId());
+                    List<Comments> childrenList = commentsService.getChildrenCommentList(comments1);
+                    comments1.setChildrenComments(childrenList);
+                }
+            }
             return Result.success(result,"成功");
         }
         return Result.error("失败");
+    }
+
+    @RequestMapping("updateComments")
+    @ResponseBody
+    public Result<String> updateCommentList(@RequestBody Comments comments) {
+        try{
+            int count = commentsService.updateComments(comments);
+            return Result.success("修改成功","修改成功");
+        } catch (Exception e) {
+            logger.error("修改失败",e);
+        }
+        return Result.error("修改失败");
     }
 }

@@ -20,10 +20,36 @@ public class CommentsServiceImpl implements CommentsService {
     }
 
     @Override
-    public List<Comments> getCommentList(String articleId) {
+    public List<Comments> getCommentList(Comments comments) {
         CommentsExample example = new CommentsExample();
-        example.createCriteria().andArticleIdEqualTo(articleId);
+        CommentsExample.Criteria criteria = example.createCriteria();
+        if(comments.getArticleId() != null) {
+            criteria.andArticleIdEqualTo(comments.getArticleId());
+        }
+        if(comments.getId() != null) {
+            criteria.andIdEqualTo(comments.getId());
+        }
+        //查询所有的父评论
+        criteria.andFatherIdEqualTo("0");
         List<Comments> result = commentsMapper.selectByExample(example);
         return result;
+    }
+
+    /**
+     * 查询所有的子评论
+     * @param comments
+     * @return
+     */
+    @Override
+    public List<Comments> getChildrenCommentList(Comments comments) {
+        CommentsExample example = new CommentsExample();
+        example.createCriteria().andFatherIdEqualTo(comments.getFatherId());
+        List<Comments> result = commentsMapper.selectByExample(example);
+        return result;
+    }
+
+    @Override
+    public int updateComments(Comments comments) {
+        return commentsMapper.updateByPrimaryKey(comments);
     }
 }

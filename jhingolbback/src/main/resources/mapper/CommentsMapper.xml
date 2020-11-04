@@ -11,6 +11,8 @@
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="avatar" property="avatar" jdbcType="VARCHAR"/>
     <result column="content" property="content" jdbcType="VARCHAR"/>
+    <result column="likes" property="likes" jdbcType="INTEGER"/>
+    <result column="dislikes" property="dislikes" jdbcType="INTEGER"/>
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.maximus.jhingolbback.model.Comments">
     <result column="content" jdbcType="LONGVARCHAR" property="content" />
@@ -74,7 +76,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, father_id, username, email, article_id, add_time, update_time,avatar,content
+    id, father_id, username, email, article_id, add_time, update_time,avatar,content,likes,dislikes
   </sql>
   <sql id="Blob_Column_List">
     content
@@ -130,10 +132,10 @@
   <insert id="insert" parameterType="com.maximus.jhingolbback.model.Comments">
     insert into comments (id, father_id, username, 
       email, article_id, add_time, 
-      update_time, content)
+      update_time, content,likes,dislikes)
     values (uuid(), #{fatherId,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR},
       #{email,jdbcType=VARCHAR}, #{articleId,jdbcType=VARCHAR}, now(),
-      now(), #{content,jdbcType=LONGVARCHAR})
+      now(), #{content,jdbcType=LONGVARCHAR},0,0)
     <selectKey keyProperty="commentCounts" resultType="java.lang.Integer" order="AFTER">
       SELECT COUNT(*) from comments WHERE article_id = #{articleId}
     </selectKey>
@@ -298,12 +300,33 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.maximus.jhingolbback.model.Comments">
     update comments
-    set father_id = #{fatherId,jdbcType=VARCHAR},
+    <set>
+     <if test="fatherId != null">
+        father_id = #{fatherId,jdbcType=VARCHAR},
+     </if>
+     <if test="username != null">
       username = #{username,jdbcType=VARCHAR},
+     </if>
+     <if test="email != null">
       email = #{email,jdbcType=VARCHAR},
+     </if>
+     <if test="articleId != null">
       article_id = #{articleId,jdbcType=VARCHAR},
+     </if>
+     <if test="addTime != null">
       add_time = #{addTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP}
+     </if>
+     <if test="updateTime != null">
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+     </if>
+     <if test="likes != null">
+       likes = #{likes},
+     </if>
+     <if test="dislikes != null">
+       dislikes = #{dislikes}
+     </if>
+    </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
+
 </mapper>
