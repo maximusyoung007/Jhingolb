@@ -44,6 +44,7 @@ public class CommentsServiceImpl implements CommentsService {
     public List<Comments> getChildrenCommentList(Comments comments) {
         CommentsExample example = new CommentsExample();
         example.createCriteria().andFatherIdEqualTo(comments.getFatherId());
+        example.setOrderByClause("update_time");
         List<Comments> result = commentsMapper.selectByExample(example);
         return result;
     }

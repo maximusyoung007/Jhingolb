@@ -33,12 +33,41 @@
         </div>
         <div>
           <el-card shadow="never" style="background-color:#f4f4f4;" v-show="ifShowReplayTextarea">
-            <div>
-              <el-input type="textarea" :rows="2" placeholder="回复..." v-model="replayTextarea"></el-input>
-            </div>
-            <div>
-                <a-button type="primary" @click="addReplay()" style="float: right">回复</a-button>
-            </div>
+            <a-form layout="inline" :form="form" @submit="handleSubmit">
+              <a-form-item label="昵称：" :validate-status="userNameError() ? 'error' : ''" :help="userNameError() || ''">
+                <a-input v-model="replayUsername"
+                  v-decorator="[
+                    'userName',
+                    { rules: [{ required: true, message: '请输入一个昵称' }] },
+                  ]"
+                  placeholder="Username"
+                >
+                </a-input>
+              </a-form-item>
+              <a-form-item label="邮箱：" :validate-status="emailError() ? 'error' : ''" :help="emailError() || ''">
+                <a-input v-model="replayEmail"
+                  v-decorator="[
+                    'email',
+                    { rules: [{ required: true, message: '请输入邮箱' },
+                                {pattern:/^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/,message:'请输入正确的邮箱格式'}] },
+                  ]"
+                  placeholder="email"
+                >
+                </a-input>
+              </a-form-item>
+
+              <a-form-item>
+                <a-button type="primary" html-type="submit"
+                          :disabled="hasErrors(form.getFieldsError())" @click="addReplay()">
+                  回复
+                </a-button>
+              </a-form-item>
+            </a-form>
+            <a-form>
+              <a-form-item>
+                <el-input type="textarea" :rows="2" v-model="replayTextarea" autosize></el-input>
+              </a-form-item>
+            </a-form>
           </el-card>
         </div>
         <div>
@@ -59,6 +88,9 @@
 
 <script>
 import {Message} from "element-ui";
+function hasErrors(fieldsError) {
+  return Object.keys(fieldsError).some(field => fieldsError[field]);
+}
 export default {
   name: "Comments",
   data() {
@@ -67,13 +99,20 @@ export default {
       comments2: this.parentComments,
       replayTextarea: "",
       replayNotNull:false,
-      ifShowReplayTextarea: false
+      ifShowReplayTextarea: false,
+      hasErrors,
+      replayUsername:"",
+      replayEmail:"",
+      form: this.$form.createForm(this, { name: 'horizontal_login' }),
     }
   },
   props: ['parentComments'],
 
   mounted:function() {
-
+    this.$nextTick(() => {
+      // To disabled submit button at the beginning.
+      this.form.validateFields();
+    });
   },
   methods: {
     like: function (id){
@@ -113,8 +152,9 @@ export default {
           url:"comments/addComments",
           data:{
             fatherId: this.comments.id,
-            username: '游客测试',
-            content: replayContent
+            username: this.replayUsername,
+            content: replayContent,
+            email: this.replayEmail
           }
         }).then((response) => {
           if(response.data.type == "success") {
@@ -137,7 +177,25 @@ export default {
         this.comments2 = response.data.data[0];
         this.ifShowReplayTextarea = false;
       })
-    }
+    },
+    // Only show error after a field is touched.
+    userNameError() {
+      const { getFieldError, isFieldTouched } = this.form;
+      return isFieldTouched('userName') && getFieldError('userName');
+    },
+    // Only show error after a field is touched.
+    emailError() {
+      const { getFieldError, isFieldTouched } = this.form;
+      return isFieldTouched('email') && getFieldError('email');
+    },
+    handleSubmit(e) {
+      e.preventDefault();
+      this.form.validateFields((err, values) => {
+        if (!err) {
+          console.log('Received values of form: ', values);
+        }
+      });
+    },
   }
 }
 
