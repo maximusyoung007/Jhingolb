@@ -29,6 +29,7 @@ public class CommentsServiceImpl implements CommentsService {
         if(comments.getId() != null) {
             criteria.andIdEqualTo(comments.getId());
         }
+        example.setOrderByClause("update_time");
         //查询所有的父评论
         criteria.andFatherIdEqualTo("0");
         List<Comments> result = commentsMapper.selectByExample(example);

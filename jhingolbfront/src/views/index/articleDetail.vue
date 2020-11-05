@@ -13,10 +13,10 @@
       </div>
       <div v-html="article.articleBody">
       </div>
-      <div button="buttonGroup" style="text-align: center">
-        <a-button type="primary" icon="like" @click="addThumbsUp()">赞成({{this.comments.thumbsUp}})</a-button>
-        <a-button type="danger" icon="dislike" @click="addOppose()">反对({{this.comments.oppose}})</a-button>
-      </div>
+<!--      <div button="buttonGroup" style="text-align: center">-->
+<!--        <a-button type="primary" icon="like" @click="addThumbsUp()">赞成({{this.comments.thumbsUp}})</a-button>-->
+<!--        <a-button type="danger" icon="dislike" @click="addOppose()">反对({{this.comments.oppose}})</a-button>-->
+<!--      </div>-->
       <el-divider></el-divider>
       <div>
         <el-form :rules="rules" class="demo-ruleForm"
@@ -43,6 +43,7 @@
       </div>
       {{this.comments.commentCounts}}条评论
       <comments v-for="item in commentList" :key="item.id" v-bind:parent-comments="item"></comments>
+      <div id="elementAfterComment"></div>
     </el-card>
     <br/>
   </div>
@@ -86,11 +87,15 @@ export default {
   },
   methods: {
     getArticleById:function () {
+      if(this.$route.params.id != null) {
+        localStorage.setItem("id", this.$route.params.id);
+      }
+      console.log("id" + localStorage.getItem("id"));
       this.$axios({
         method: "post",
         url:"article/getArticleById",
         data: {
-          id: this.$route.params.id
+          id: localStorage.getItem("id")
         }
       }).then((response) => {
         this.article = response.data.data;
@@ -119,10 +124,15 @@ export default {
                 center:true,
                 offset:50
               })
-              this.comments.petName = "";
-              this.comments.email = "";
-              this.comments.textarea = "";
-              this.comments.commentCounts = response.data.data;
+              //重新加载评论列表
+              this.getCommentList();
+              this.comments.commentCounts = this.commentList.length;
+              var page = document.querySelector("#elementAfterComment");
+              var top = this.getElementToTop(page);
+              window.scrollTo({
+                'top': top,
+                'behavior': 'smooth'
+              })
             }
           })
         } else {
@@ -158,15 +168,17 @@ export default {
         method:"post",
         url:"comments/getCommentList",
         data: {
-          articleId: this.$route.params.id
+          articleId: localStorage.getItem("id")
         }
       }).then((response) => {
         this.commentList = response.data.data;
-        //临时
-        for(var i = 0;i < this.commentList.length;i++) {
-          this.commentList[i].actions = "回复";
-        }
       })
+    },
+    getElementToTop: function(el) {
+      if(el.parentElement) {
+        return this.getElementToTop(el.parentElement) + el.offsetTop
+      }
+      return el.offsetTop
     }
   }
 }

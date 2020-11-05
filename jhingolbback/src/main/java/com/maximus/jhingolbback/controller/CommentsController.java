@@ -12,9 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("comments")
@@ -28,6 +26,9 @@ public class CommentsController {
     public Result<Integer> addComments(@RequestBody Comments comments) {
         if(comments.getFatherId() == null) {
             comments.setFatherId("0");
+        }
+        if(comments.getReplayTo() == null) {
+            comments.setReplayTo("0");
         }
         try {
             int count = commentsService.insert(comments);

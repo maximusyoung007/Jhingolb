@@ -33,6 +33,8 @@ public class Comments implements Serializable {
 
     private Integer dislikes;
 
+    private String replayTo;
+
     private List<Comments> childrenComments;
 
     private static final long serialVersionUID = 1L;
@@ -139,6 +141,14 @@ public class Comments implements Serializable {
 
     public void setChildrenComments(List<Comments> childrenComments) {
         this.childrenComments = childrenComments;
+    }
+
+    public String getReplayTo() {
+        return replayTo;
+    }
+
+    public void setReplayTo(String replayTo) {
+        this.replayTo = replayTo;
     }
 
     @Override

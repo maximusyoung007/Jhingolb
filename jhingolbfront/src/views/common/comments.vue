@@ -19,67 +19,71 @@
         </div>
         <div>
             <!--点赞按钮-->
-            <a-icon v-show="this.comments.likes == 0" class="commentsSame" type="like" @click="like(parentComments.id)"></a-icon>
-            <a-icon v-show="this.comments.likes > 0" class="commentsSame" type="like" @click="like(parentComments.id)" theme="filled"></a-icon>
-            <span v-show="this.comments.likes > 0" style="color:#67c23a">{{this.comments.likes}}</span>
+<!--            <a-icon v-show="this.comments.likes == 0" class="commentsSame" type="like" @click="like(parentComments.id)"></a-icon>-->
+<!--            <a-icon v-show="this.comments.likes > 0" class="commentsSame" type="like" @click="like(parentComments.id)" theme="filled"></a-icon>-->
+<!--            <span v-show="this.comments.likes > 0" style="color:#67c23a">{{this.comments.likes}}</span>-->
 
-            <!--点踩按钮-->
-            <a-icon v-show="this.comments.dislikes == 0" class="commentsSame" type="dislike" @click="dislike(parentComments.id)"></a-icon>
-            <a-icon v-show="this.comments.dislikes > 0" class="commentsSame" type="dislike" @click="dislike(parentComments.id)" theme="filled"></a-icon>
-            <span v-show="this.comments.dislikes > 0" style="color: #ff4d4f">{{this.comments.dislikes}}</span>
+<!--            &lt;!&ndash;点踩按钮&ndash;&gt;-->
+<!--            <a-icon v-show="this.comments.dislikes == 0" class="commentsSame" type="dislike" @click="dislike(parentComments.id)"></a-icon>-->
+<!--            <a-icon v-show="this.comments.dislikes > 0" class="commentsSame" type="dislike" @click="dislike(parentComments.id)" theme="filled"></a-icon>-->
+<!--            <span v-show="this.comments.dislikes > 0" style="color: #ff4d4f">{{this.comments.dislikes}}</span>-->
 
             <span class="commentsSame" @click="openReplay()">回复</span>
             <time class="commentsDate">{{this.comments.updateTime}}</time>
         </div>
         <div>
           <el-card shadow="never" style="background-color:#f4f4f4;" v-show="ifShowReplayTextarea">
-            <a-form layout="inline" :form="form" @submit="handleSubmit">
-              <a-form-item label="昵称：" :validate-status="userNameError() ? 'error' : ''" :help="userNameError() || ''">
-                <a-input v-model="replayUsername"
-                  v-decorator="[
-                    'userName',
-                    { rules: [{ required: true, message: '请输入一个昵称' }] },
-                  ]"
-                  placeholder="Username"
-                >
-                </a-input>
-              </a-form-item>
-              <a-form-item label="邮箱：" :validate-status="emailError() ? 'error' : ''" :help="emailError() || ''">
-                <a-input v-model="replayEmail"
-                  v-decorator="[
-                    'email',
-                    { rules: [{ required: true, message: '请输入邮箱' },
-                                {pattern:/^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/,message:'请输入正确的邮箱格式'}] },
-                  ]"
-                  placeholder="email"
-                >
-                </a-input>
-              </a-form-item>
-
-              <a-form-item>
-                <a-button type="primary" html-type="submit"
-                          :disabled="hasErrors(form.getFieldsError())" @click="addReplay()">
-                  回复
-                </a-button>
-              </a-form-item>
-            </a-form>
-            <a-form>
-              <a-form-item>
-                <el-input type="textarea" :rows="2" v-model="replayTextarea" autosize></el-input>
-              </a-form-item>
-            </a-form>
+            <el-form :inline="true" :model="formInline" :rules="rules" ref="formInline">
+              <el-form-item label="昵称" prop="username" size="small">
+                <el-input v-model="formInline.username"></el-input>
+              </el-form-item>
+              <el-form-item label="邮箱" prop="email" size="small">
+                <el-input v-model="formInline.email"></el-input>
+              </el-form-item>
+              <el-form-item size="small">
+                <el-button type="primary" @click="addReplay('formInline')">回复</el-button>
+              </el-form-item>
+            </el-form>
+            <div>
+                <el-input type="textarea" :rows="3" v-model="replayTextarea" autosize></el-input>
+            </div>
           </el-card>
         </div>
         <div>
+          <div>
           <el-card shadow="never" style="background-color: #f4f4f4" v-for="item in this.comments2.childrenComments" :key="item.id">
             <div class="commentsAuthor">
-              {{item.username}}:
+              <div v-if="item.replayTo != null && item.replayTo != 0" class="commentsAuthor">
+                {{item.username}}：回复：{{item.replayTo}}:
+              </div>
+              <div v-if="item.replayTo == null || item.replayTo == 0" class="commentsAuthor">
+                {{item.username}}：
+              </div>
               <p>
                 {{item.content}}
               </p>
-              <time class="commentsDate">{{item.updateTime}}</time>
+              <time class="commentsDate">{{item.updateTime}}</time> <span style="float: right;cursor: pointer" @click="replayToChildren(item.username)">回复</span>
             </div>
           </el-card>
+          </div>
+          <div id="formInline2">
+          <el-card shadow="never" style="background-color:#f4f4f4;" v-show="ifShowReplayToChildren">
+            <el-form :inline="true" :model="formInline2" :rules="rules2" ref="formInline2">
+              <el-form-item label="昵称" prop="username2" size="small">
+                <el-input v-model="formInline2.username2"></el-input>
+              </el-form-item>
+              <el-form-item label="邮箱" prop="email2" size="small">
+                <el-input v-model="formInline2.email2"></el-input>
+              </el-form-item>
+              <el-form-item size="small">
+                <el-button type="primary" @click="addReplayToChildren('formInline2')">回复</el-button>
+              </el-form-item>
+            </el-form>
+            <div>
+              <el-input type="textarea" :rows="3" v-model="replayTextarea2" autosize :placeholder="myPlaceholder"></el-input>
+            </div>
+          </el-card>
+          </div>
         </div>
       </el-col>
     </el-row>
@@ -88,9 +92,6 @@
 
 <script>
 import {Message} from "element-ui";
-function hasErrors(fieldsError) {
-  return Object.keys(fieldsError).some(field => fieldsError[field]);
-}
 export default {
   name: "Comments",
   data() {
@@ -98,25 +99,43 @@ export default {
       comments: this.parentComments,
       comments2: this.parentComments,
       replayTextarea: "",
+      replayTextarea2: "",
       replayNotNull:false,
       ifShowReplayTextarea: false,
-      hasErrors,
+      ifShowReplayToChildren: false,
       replayUsername:"",
       replayEmail:"",
-      form: this.$form.createForm(this, { name: 'horizontal_login' }),
+      replayTo: "",
+      formInline: {
+        username: "",
+        email: ""
+      },
+      rules:{
+        username:[{required: true,message:"请输入昵称",trigger:"blur"}],
+        email:[{required: true,message:"请出入邮箱",trigger:"blur"},
+          {type: 'email',message: "请输入正确的邮箱",trigger: ['blur','change']}
+        ]
+      },
+      formInline2: {
+        username2: "",
+        email2: ""
+      },
+      rules2:{
+        username2:[{required: true,message:"请输入昵称",trigger:"blur"}],
+        email2:[{required: true,message:"请出入邮箱",trigger:"blur"},
+          {type: 'email',message: "请输入正确的邮箱",trigger: ['blur','change']}
+        ]
+      },
+      myPlaceholder:"回复给..."
     }
   },
   props: ['parentComments'],
 
   mounted:function() {
-    this.$nextTick(() => {
-      // To disabled submit button at the beginning.
-      this.form.validateFields();
-    });
+
   },
   methods: {
     like: function (id){
-      this.comments.likes++;
       this.$axios({
         method: "post",
         url:"comments/updateComments",
@@ -129,7 +148,6 @@ export default {
       })
     },
     dislike: function (id) {
-      this.comments.dislikes++;
       this.$axios({
         method: "post",
         url:"comments/updateComments",
@@ -144,27 +162,6 @@ export default {
     openReplay: function() {
       this.ifShowReplayTextarea = true;
     },
-    addReplay: function () {
-      var replayContent = this.replayTextarea.trim();
-      if(replayContent != null && replayContent != "") {
-        this.$axios({
-          method:"post",
-          url:"comments/addComments",
-          data:{
-            fatherId: this.comments.id,
-            username: this.replayUsername,
-            content: replayContent,
-            email: this.replayEmail
-          }
-        }).then((response) => {
-          if(response.data.type == "success") {
-            this.refreshChildrenComment();
-          }
-        })
-      } else {
-        Message('回复不能为空');
-      }
-    },
     refreshChildrenComment: function () {
       this.$axios({
         method:"post",
@@ -178,24 +175,87 @@ export default {
         this.ifShowReplayTextarea = false;
       })
     },
-    // Only show error after a field is touched.
-    userNameError() {
-      const { getFieldError, isFieldTouched } = this.form;
-      return isFieldTouched('userName') && getFieldError('userName');
-    },
-    // Only show error after a field is touched.
-    emailError() {
-      const { getFieldError, isFieldTouched } = this.form;
-      return isFieldTouched('email') && getFieldError('email');
-    },
-    handleSubmit(e) {
-      e.preventDefault();
-      this.form.validateFields((err, values) => {
-        if (!err) {
-          console.log('Received values of form: ', values);
+    addReplay: function (formName) {
+      this.$refs[formName].validate((valid) => {
+        if(valid) {
+          var replayContent = this.replayTextarea.trim();
+          if(replayContent != null && replayContent != "") {
+            this.$axios({
+              method:"post",
+              url:"comments/addComments",
+              data:{
+                fatherId: this.comments.id,
+                username: this.formInline.username,
+                content: replayContent,
+                email: this.formInline.email
+              }
+            }).then((response) => {
+              if(response.data.type == "success") {
+                this.refreshChildrenComment();
+              }
+              Message.success("评论成功");
+            })
+          } else {
+            Message('回复不能为空');
+          }
+        } else {
+          console.log('error submit!!');
+          return false;
         }
-      });
+      })
     },
+    replayToChildren: function (name) {
+      this.ifShowReplayToChildren = true;
+      this.replayTo = name;
+      this.myPlaceholder = "回复给" + name + "...";
+      var page = document.querySelector("#formInline2");
+      var top = this.getElementToTop(page);
+      window.scrollTo({
+        'top': top,
+        'behavior': 'smooth'
+      })
+    },
+    addReplayToChildren: function(formName) {
+      this.$refs[formName].validate((valid) => {
+        if(valid) {
+          var replayContent = this.replayTextarea2.trim();
+          if(replayContent != null && replayContent != "") {
+            this.$axios({
+              method:"post",
+              url:"comments/addComments",
+              data:{
+                fatherId: this.comments.id,
+                username: this.formInline2.username2,
+                content: replayContent,
+                email: this.formInline2.email2,
+                replayTo: this.replayTo
+              }
+            }).then((response) => {
+              if(response.data.type == "success") {
+                this.refreshChildrenComment();
+              }
+              Message.success("评论成功");
+              this.ifShowReplayToChildren = false;
+              this.formInline2.username2 = "";
+              this.formInline2.email2 = "";
+              this.replayTextarea2 = "";
+
+            })
+          } else {
+            Message('回复不能为空');
+          }
+        } else {
+          console.log('error submit!!');
+          return false;
+        }
+      })
+    },
+    getElementToTop: function(el) {
+      if(el.parentElement) {
+        return this.getElementToTop(el.parentElement) + el.offsetTop
+      }
+      return el.offsetTop
+    }
   }
 }
 
