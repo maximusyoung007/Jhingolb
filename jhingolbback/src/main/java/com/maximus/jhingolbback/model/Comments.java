@@ -1,11 +1,13 @@
 package com.maximus.jhingolbback.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+@Data
 public class Comments implements Serializable {
     private String id;
 
@@ -38,134 +40,4 @@ public class Comments implements Serializable {
     private List<Comments> childrenComments;
 
     private static final long serialVersionUID = 1L;
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id == null ? null : id.trim();
-    }
-
-    public String getFatherId() {
-        return fatherId;
-    }
-
-    public void setFatherId(String fatherId) {
-        this.fatherId = fatherId == null ? null : fatherId.trim();
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username == null ? null : username.trim();
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email == null ? null : email.trim();
-    }
-
-    public String getArticleId() {
-        return articleId;
-    }
-
-    public void setArticleId(String articleId) {
-        this.articleId = articleId == null ? null : articleId.trim();
-    }
-
-    public Date getAddTime() {
-        return addTime;
-    }
-
-    public void setAddTime(Date addTime) {
-        this.addTime = addTime;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content == null ? null : content.trim();
-    }
-
-    public Integer getCommentCounts() {
-        return commentCounts;
-    }
-
-    public void setCommentCounts(Integer commentCounts) {
-        this.commentCounts = commentCounts;
-    }
-
-    public String getAvatar() {
-        return avatar;
-    }
-
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
-    }
-
-    public Integer getLikes() {
-        return likes;
-    }
-
-    public void setLikes(Integer likes) {
-        this.likes = likes;
-    }
-
-    public Integer getDislikes() {
-        return dislikes;
-    }
-
-    public void setDislikes(Integer dislikes) {
-        this.dislikes = dislikes;
-    }
-
-    public List<Comments> getChildrenComments() {
-        return childrenComments;
-    }
-
-    public void setChildrenComments(List<Comments> childrenComments) {
-        this.childrenComments = childrenComments;
-    }
-
-    public String getReplayTo() {
-        return replayTo;
-    }
-
-    public void setReplayTo(String replayTo) {
-        this.replayTo = replayTo;
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
-        sb.append(", fatherId=").append(fatherId);
-        sb.append(", username=").append(username);
-        sb.append(", email=").append(email);
-        sb.append(", articleId=").append(articleId);
-        sb.append(", addTime=").append(addTime);
-        sb.append(", updateTime=").append(updateTime);
-        sb.append(", content=").append(content);
-        sb.append("]");
-        return sb.toString();
-    }
 }
