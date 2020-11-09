@@ -20,15 +20,14 @@
         <el-col :span="8"></el-col>
       </el-row>
     </el-main>
-    <el-footer>
-
-    </el-footer>
+    <p>状态：{{$store.state.username}}</p>
   </el-container>
 </template>
 
 <script>
 import BlogHeader from "../../components/common/Header";
 import BlogFooter from "../../components/common/Footer";
+
 export default {
   name: "blogAdmin",
   components: {BlogFooter, BlogHeader},
@@ -44,16 +43,23 @@ export default {
   methods: {
     loginSys() {
       const self = this
+      console.log("login username" + this.$store.state.user.username)
       this.$axios({
         method: "post",
-        url:"authUser/getUser",
+        url:"login/login",
         data: {
           username: this.form.username,
           password: this.form.password
         }
-      }).then(function (response){
+      }).then(response => {
+        console.log(response);
         if(response.data.type == "success") {
-          self.$router.push({path:'/management'});
+          //console.log(this.form.username + "," + this.form.password);
+          console.log(self.form.username + "," + this.form.password);
+          console.log(this.$route.query.redirect);
+          this.$store.commit("login",this.form);
+          var path = this.$route.query.redirect;
+          this.$router.replace({path: path === '/' || path === undefined ? '/management' : path})
         }
       }).catch(function (response) {
 

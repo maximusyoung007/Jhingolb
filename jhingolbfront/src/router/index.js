@@ -11,7 +11,7 @@ Router.prototype.push = function push(location) {
 
 
 export default new Router({
-  mode: 'hash',
+  mode: 'history',
   routes: [
     {
       path: '/',
@@ -22,36 +22,55 @@ export default new Router({
       name: 'login',
       component: () => import("@/views/login/Login")
     },
+    //meta: { requiredAuth:true}表示是否访问这个页面是否需要登录
     {
       path: '/management',
       name: '/management',
       component: () => import("@/views/management/management"),
+      meta: {
+        requireAuth: true
+      },
       redirect: "/articleList",
       children: [
         {
           path: '/editArticle',
           name: 'editArticle',
-          component: () => import("@/views/management/manageArticle/editArticle")
+          component: () => import("@/views/management/manageArticle/editArticle"),
+          meta: {
+            requireAuth: true
+          },
         },
         {
           path: '/manageTags',
           name: 'manageTags',
-          component: () => import("@/views/management/manageTags/manageTags")
+          component: () => import("@/views/management/manageTags/manageTags"),
+          meta: {
+            requireAuth: true
+          },
         },
         {
           path: '/articleList',
           name: 'articleList',
-          component: () => import("@/views/management/manageArticle/articleList")
+          component: () => import("@/views/management/manageArticle/articleList"),
+          meta: {
+            requireAuth: true
+          },
         },
         {
           path: '/addArticle',
           name: 'addArticle',
-          component: () => import("@/views/management/manageArticle/addArticle")
+          component: () => import("@/views/management/manageArticle/addArticle"),
+          meta: {
+            requireAuth: true
+          },
         },
         {
           path: '/addArticleResult',
           name: 'addArticleResult',
-          component: () => import("@/views/management/manageArticle/addArticleResult")
+          component: () => import("@/views/management/manageArticle/addArticleResult"),
+          meta: {
+            requireAuth: true
+          },
         }
       ]
     },
@@ -65,41 +84,26 @@ export default new Router({
           path: '/index',
           name: 'index',
           component: () => import("@/views/index/index"),
-          meta: {
-            requireAuth: true
-          }
         },
         {
           path: '/article/:type',
           name: 'article',
           component: () => import("@/views/index/article"),
-          meta: {
-            requireAuth: true
-          }
         },
         {
           path: '/category',
           name: '/category',
           component: () => import("@/views/index/category"),
-          meta: {
-            requireAuth:true
-          }
         },
         {
           path: '/tags',
           name: '/tags',
           component: () => import("@/views/index/tags"),
-          meta: {
-            requireAuth: true
-          }
         },
         {
           path: '/about',
           name: '/about',
           component: () => import("@/views/index/about"),
-          meta: {
-            requireAuth: true
-          }
         },
         {
           path: '/articleDetail',
