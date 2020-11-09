@@ -29,4 +29,6 @@ public class AuthUser implements Serializable {
 
     private Date dateJoined;
 
+    private String salt;
+
 }

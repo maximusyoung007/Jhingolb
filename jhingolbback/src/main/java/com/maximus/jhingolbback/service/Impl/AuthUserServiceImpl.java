@@ -7,6 +7,8 @@ import com.maximus.jhingolbback.dao.AuthUserMapper;
 import com.maximus.jhingolbback.model.AuthUser;
 import com.maximus.jhingolbback.model.AuthUserExample;
 import com.maximus.jhingolbback.service.AuthUserService;
+import org.apache.shiro.crypto.SecureRandomNumberGenerator;
+import org.apache.shiro.crypto.hash.SimpleHash;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -19,13 +21,9 @@ public class AuthUserServiceImpl implements AuthUserService {
 
     @Override
     public List<AuthUser> getAuthUser(AuthUser user) {
-//        int currentPage = 1,pageSize = 10;
-//        PageHelper.startPage(currentPage,pageSize);
         AuthUserExample userExample = new AuthUserExample();
         userExample.createCriteria().andUsernameLike(user.getUsername());
-        userExample.createCriteria().andPasswordLike(user.getPassword());
         List<AuthUser> list = authUserMapper.selectByExample(userExample);
-        //PageInfo<AuthUser> page = new PageInfo<AuthUser>(list);
         return list;
     }
 

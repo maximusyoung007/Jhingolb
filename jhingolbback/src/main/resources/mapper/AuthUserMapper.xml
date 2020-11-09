@@ -13,6 +13,7 @@
     <result column="is_staff" jdbcType="BIT" property="isStaff" />
     <result column="is_active" jdbcType="BIT" property="isActive" />
     <result column="date_joined" jdbcType="TIMESTAMP" property="dateJoined" />
+    <result column="salt" jdbcType="VARCHAR" property="salt"/>
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -74,7 +75,7 @@
   </sql>
   <sql id="Base_Column_List">
     id, password, last_login, is_superuser, username, first_name, last_name, email, is_staff, 
-    is_active, date_joined
+    is_active, date_joined,salt
   </sql>
   <select id="selectByExample" parameterType="com.maximus.jhingolbback.model.AuthUserExample" resultMap="BaseResultMap">
     select

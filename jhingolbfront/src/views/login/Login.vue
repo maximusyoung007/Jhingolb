@@ -52,11 +52,7 @@ export default {
           password: this.form.password
         }
       }).then(response => {
-        console.log(response);
         if(response.data.type == "success") {
-          //console.log(this.form.username + "," + this.form.password);
-          console.log(self.form.username + "," + this.form.password);
-          console.log(this.$route.query.redirect);
           this.$store.commit("login",this.form);
           var path = this.$route.query.redirect;
           this.$router.replace({path: path === '/' || path === undefined ? '/management' : path})
