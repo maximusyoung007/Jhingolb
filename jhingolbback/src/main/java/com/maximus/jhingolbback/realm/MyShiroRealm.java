@@ -1,13 +1,10 @@
 package com.maximus.jhingolbback.realm;
 
-import com.auth0.jwt.exceptions.SignatureVerificationException;
-import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.maximus.jhingolbback.model.AuthUser;
 import com.maximus.jhingolbback.model.Role;
 import com.maximus.jhingolbback.result.Result;
 import com.maximus.jhingolbback.service.AuthUserService;
 import com.maximus.jhingolbback.service.RoleService;
-import com.maximus.jhingolbback.shiro.JWTToken;
 import com.maximus.jhingolbback.util.JWTUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -18,19 +15,16 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
-import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 @Controller
-public class ShiroRealm extends AuthorizingRealm {
-    private static final Logger logger = LogManager.getLogger(ShiroRealm.class);
+public class MyShiroRealm extends AuthorizingRealm {
+    private static final Logger logger = LogManager.getLogger(MyShiroRealm.class);
     @Autowired
     private RoleService roleService;
 
@@ -72,8 +66,10 @@ public class ShiroRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authToken) throws AuthenticationException {
         //String token = (String) authToken.getCredentials();
+        System.out.println(this.getCredentialsMatcher());
+        UsernamePasswordToken t = (UsernamePasswordToken) authToken;
         String username = authToken.getPrincipal().toString();
-
+        String password = new String(t.getPassword());
         if(StringUtils.isEmpty(username)) {
             throw new AuthenticationException("token错误!");
         }
@@ -85,17 +81,15 @@ public class ShiroRealm extends AuthorizingRealm {
             throw new AuthenticationException("用户不存在");
         }
         AuthUser user1 = list.get(0);
-        String password = user1.getPassword();
+        String passwordInDB = user1.getPassword();
         String salt = user1.getSalt();
-        SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(username,password, ByteSource.Util.bytes(salt),username);
+//        if(null == passwordInDB || !passwordInDB.equals(password)) {
+//            throw new AuthenticationException();
+//        }
+        SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(username,passwordInDB,ByteSource.Util.bytes(salt),getName());
         return authenticationInfo;
     }
 
-    /**
-     * 将shiro原生token替换未JWTToken
-     * @param token
-     * @return
-     */
     @Override
     public boolean supports(AuthenticationToken token) {
         return token instanceof UsernamePasswordToken;
