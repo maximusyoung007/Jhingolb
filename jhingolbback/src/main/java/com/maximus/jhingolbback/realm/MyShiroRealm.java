@@ -65,28 +65,13 @@ public class MyShiroRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authToken) throws AuthenticationException {
-        //String token = (String) authToken.getCredentials();
-        System.out.println(this.getCredentialsMatcher());
-        UsernamePasswordToken t = (UsernamePasswordToken) authToken;
         String username = authToken.getPrincipal().toString();
-        String password = new String(t.getPassword());
-        if(StringUtils.isEmpty(username)) {
-            throw new AuthenticationException("token错误!");
-        }
         AuthUser user = new AuthUser();
         user.setUsername(username);
-        List<AuthUser> list = userService.getAuthUser(user);
-
-        if(list.size() <= 0) {
-            throw new AuthenticationException("用户不存在");
-        }
-        AuthUser user1 = list.get(0);
-        String passwordInDB = user1.getPassword();
+        AuthUser user1 = userService.getAuthUser(user).get(0);
+        String password = user1.getPassword();
         String salt = user1.getSalt();
-//        if(null == passwordInDB || !passwordInDB.equals(password)) {
-//            throw new AuthenticationException();
-//        }
-        SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(username,passwordInDB,ByteSource.Util.bytes(salt),getName());
+        SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(username,password,ByteSource.Util.bytes(salt),getName());
         return authenticationInfo;
     }
 
@@ -95,19 +80,4 @@ public class MyShiroRealm extends AuthorizingRealm {
         return token instanceof UsernamePasswordToken;
     }
 
-    /**
-     * 清除登录用户授权信息缓存
-     */
-    public void clearCached() {
-        this.clearCachedAuthorizationInfo(SecurityUtils.getSubject().getPrincipals());
-    }
-
-    /**
-     * 超级管理员不做判断，拥有所有角色
-     */
-//    @Override
-//    public boolean hasRole(PrincipalCollection principalCollection,String roleIdentifier) {
-//        String username = JWTUtil.getUsername(principalCollection.getPrimaryPrincipal().toString());
-//        return Constant.SYSTEM_SUPER_ADMIN.equals(username) || super.hasRole(principals, roleIdentifier);
-//    }
 }

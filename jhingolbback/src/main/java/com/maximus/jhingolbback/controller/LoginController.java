@@ -4,18 +4,17 @@ import com.maximus.jhingolbback.model.AuthUser;
 import com.maximus.jhingolbback.result.Result;
 import com.maximus.jhingolbback.service.AuthUserService;
 import com.maximus.jhingolbback.service.LoginService;
-import com.maximus.jhingolbback.util.JWTUtil;
-import com.sun.xml.internal.txw2.output.ResultFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 @RestController
 @RequestMapping("login")
@@ -41,9 +40,12 @@ public class LoginController {
         try{
             subject.login(usernamePasswordToken);
             return Result.success("登录成功");
-        } catch (AuthenticationException exception) {
-            logger.info("账号或密码错误",exception);
-            return Result.error("账号或密码错误");
+        } catch (IncorrectCredentialsException exception) {
+            logger.error("密码错误",exception);
+            return Result.error("密码错误");
+        } catch(UnknownAccountException e) {
+            logger.error("用户名不存在",e);
+            return Result.error("用户名不存在");
         }
     }
 }
