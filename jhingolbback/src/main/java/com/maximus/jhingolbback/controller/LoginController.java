@@ -28,7 +28,7 @@ public class LoginController {
     private LoginService loginService;
 
     /**
-     * 登录认证
+     * 登录
      */
     @PostMapping("/login")
     @ResponseBody
@@ -47,5 +47,16 @@ public class LoginController {
             logger.error("用户名不存在",e);
             return Result.error("用户名不存在");
         }
+    }
+
+    /**
+     * 登出
+     */
+    @GetMapping("logout")
+    @ResponseBody
+    public Result<String> logout() {
+        Subject subject = SecurityUtils.getSubject();
+        subject.logout();
+        return Result.success("成功登出");
     }
 }

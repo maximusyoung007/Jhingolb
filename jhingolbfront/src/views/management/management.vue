@@ -1,12 +1,22 @@
 <template>
   <el-container>
-    <el-aside style="width: 5%"></el-aside>
     <el-main >
       <el-header>
-        <el-menu class="el-menu-demo" mode="horizontal">
-          <h2>后台管理</h2>
+        <el-menu :default-active="'index'"
+                 router
+                 mode="horizontal"
+                 text-color="#222"
+                 active-text-color="#409EFF"
+                 >
+          <el-menu-item>
+            <span id="title" style="color: #222;float: left;text-decoration: none;line-hieght:1">云溢清寒</span>
+          </el-menu-item>
+          <el-menu-item style="float: right">
+            <el-button size="small" type="primary" @click="logout()" style="float: right">退出系统</el-button>
+          </el-menu-item>
         </el-menu>
       </el-header>
+      <br>
       <el-container>
         <el-aside>
           <el-row class="tac">
@@ -27,7 +37,6 @@
         </el-main>
       </el-container>
     </el-main>
-    <el-aside style="width: 5%"></el-aside>
   </el-container>
 </template>
 
@@ -41,9 +50,27 @@ export default {
         {name:'manageTags',navItem:'标签管理',activeClass: "el-icon-collection-tag"},
       ]
     }
+  },
+  methods: {
+    logout: function () {
+      this.$axios({
+        methods:"get",
+        url:"login/logout"
+      }).then(response => {
+        if(response.data.type == "success") {
+          this.$store.commit('logout');
+          this.$router.replace('/login');
+        }
+      })
+    }
   }
 }
 </script>
 
 <style scoped>
+#title{
+  position: absolute;
+  font-size: 20px;
+  font-weight: bold
+}
 </style>
