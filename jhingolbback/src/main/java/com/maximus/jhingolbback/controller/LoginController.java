@@ -3,11 +3,9 @@ package com.maximus.jhingolbback.controller;
 import com.maximus.jhingolbback.model.AuthUser;
 import com.maximus.jhingolbback.result.Result;
 import com.maximus.jhingolbback.service.AuthUserService;
-import com.maximus.jhingolbback.service.LoginService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -23,9 +21,6 @@ public class LoginController {
 
     @Resource
     private AuthUserService userService;
-
-    @Resource
-    private LoginService loginService;
 
     /**
      * 登录
@@ -58,5 +53,14 @@ public class LoginController {
         Subject subject = SecurityUtils.getSubject();
         subject.logout();
         return Result.success("成功登出");
+    }
+
+    /**
+     * 认证，每次跳转路由之前，访问这个controller，进入拦截器，如果当前是已经登录的状态，再跳转路由
+     */
+    @GetMapping("authentication")
+    @ResponseBody
+    public Result<String> authentication() {
+        return Result.success("成功","成功");
     }
 }

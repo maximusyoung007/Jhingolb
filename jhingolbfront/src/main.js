@@ -13,6 +13,7 @@ import store from "./store"
 var axios = require('axios');
 //axios.defaults.baseURL = "http://106.14.44.210:8090";
 axios.defaults.baseURL = "http://127.0.0.1:8090"
+axios.defaults.withCredentials = true
 Vue.prototype.$axios = axios;
 Vue.prototype.$store = store;
 Vue.config.productionTip = false
@@ -23,9 +24,15 @@ Vue.use(AMap);
 
 router.beforeEach((to,from,next) => {
   if(to.meta.requireAuth) {
-    console.log("跳转前" + store.state.user.username);
     if(store.state.user.username) {
-      next();
+      axios({
+        method:"get",
+        url:"login/authentication"
+      }).then(response => {
+        if(response.data.type == "success") {
+          next();
+        }
+      })
     } else {
       next({
         path:'/login',

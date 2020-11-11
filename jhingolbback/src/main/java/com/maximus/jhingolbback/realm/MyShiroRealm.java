@@ -5,10 +5,8 @@ import com.maximus.jhingolbback.model.Role;
 import com.maximus.jhingolbback.result.Result;
 import com.maximus.jhingolbback.service.AuthUserService;
 import com.maximus.jhingolbback.service.RoleService;
-import com.maximus.jhingolbback.util.JWTUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
@@ -39,20 +37,6 @@ public class MyShiroRealm extends AuthorizingRealm {
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         logger.info("doGetAuthorizationInfo:" + principals.toString());
-
-        String username = JWTUtil.getUsername(principals.getPrimaryPrincipal().toString());
-        SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
-        //根据登录名获取登录用户信息
-        if(!StringUtils.isEmpty(username)) {
-            Result<List<Role>> roleResult = roleService.getRolesByUserName(username);
-            if(roleResult != null && roleResult.getType().equals("success") && roleResult.getData().size() > 0) {
-                for(Role role : roleResult.getData()) {
-                    authorizationInfo.addRole(role.getRole());
-                }
-            }
-            return authorizationInfo;
-        }
-
         return null;
     }
 
