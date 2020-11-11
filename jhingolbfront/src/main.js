@@ -31,6 +31,11 @@ router.beforeEach((to,from,next) => {
       }).then(response => {
         if(response.data.type == "success") {
           next();
+        } else {
+          next({
+            path:'/login',
+            query:{redirect: to.fullPath}
+          })
         }
       })
     } else {
