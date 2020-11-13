@@ -27,7 +27,7 @@ public class LoginController {
      */
     @PostMapping("/login")
     @ResponseBody
-    public Result<String> login(@RequestBody AuthUser user) {
+    public Result<String> login(AuthUser user) {
         String username = user.getUsername();
         String password = user.getPassword();
         Subject subject = SecurityUtils.getSubject();

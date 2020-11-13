@@ -240,4 +240,21 @@
       parent_id = #{parentId,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+
+  <select id="selectByIds" parameterType="list" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from menu
+    WHERE id in
+    <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+      #{item}
+    </foreach>
+  </select>
+
+  <select id="getMenusByParentsId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from menu
+    WHERE parent_id = #{parentId}
+  </select>
 </mapper>
