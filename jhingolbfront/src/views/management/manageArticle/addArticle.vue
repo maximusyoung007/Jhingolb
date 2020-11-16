@@ -1,25 +1,37 @@
 <template>
-  <div class="home">
-    <el-form class="inputItem">
-      <el-input class="inputItem" v-model="article.title" placeholder="请输入文章标题" style="padding-bottom: 10px"></el-input>
-    </el-form>
-    <div>
-      <choose-tags v-on:tagsChange="updateTags"></choose-tags>
-      <!--      <el-button type="primary" @click="addArticle(0)">保存</el-button>-->
-      <!--      <el-button type="success" @click="addArticle(1)">发布</el-button>-->
-    </div>
-    <br>
-    <div id="demo1"></div>
-    <br>
-<!--    <div>-->
-<!--      <choose-tags v-on:tagsChange="updateTags"></choose-tags>-->
-<!--&lt;!&ndash;      <el-button type="primary" @click="addArticle(0)">保存</el-button>&ndash;&gt;-->
-<!--&lt;!&ndash;      <el-button type="success" @click="addArticle(1)">发布</el-button>&ndash;&gt;-->
-<!--    </div>-->
-    <textarea hidden name="" id="" cols="170" rows="20" readonly v-model="editorData"></textarea>
-    <br>
-    <el-button type="primary" @click="addArticle(0)">保存</el-button>
-    <el-button type="success" @click="addArticle(1)">发布</el-button>
+  <div>
+    <el-row>
+      <el-col :span="4"><div class="grid-content bg-purple" style="color: white">hello world</div></el-col>
+      <el-col :span="16">
+        <div class="home">
+          <el-form class="inputItem">
+            <el-input class="inputItem" v-model="article.title" placeholder="请输入文章标题" style="padding-bottom: 10px"></el-input>
+          </el-form>
+          <div>
+            <el-select  v-model="categoryValue" placeholder="选择分类" size="small" style="display: inline;float: left;padding-right: 5px">
+              <el-option
+                v-for="item in categoryList"
+                :key="item.id"
+                :label="item.label"
+                :value="item.name"
+              >
+              </el-option>
+            </el-select>
+          <choose-tags v-on:tagsChange="updateTags"></choose-tags>
+          </div>
+          <br>
+          <div id="demo1"></div>
+          <textarea hidden name="" id="" cols="170" rows="20" readonly v-model="editorData"></textarea>
+        </div>
+        <div>
+          <div style="text-align: center">
+            <el-button type="primary" @click="addArticle(0)">保存</el-button>
+            <el-button type="success" @click="addArticle(1)">发布</el-button>
+          </div>
+        </div>
+      </el-col>
+      <el-col :span="4"><div class="grid-content bg-purple" style="color: white">hello world</div></el-col>
+    </el-row>
   </div>
 </template>
 
@@ -38,7 +50,9 @@ export default {
       article: {
         title: ""
       },
-      tagList: []
+      tagList: [],
+      categoryList:[],
+      categoryValue:""
     }
   },
   mounted() {
@@ -49,15 +63,32 @@ export default {
     }
     //代码语法高亮
     editor.highlight = hljs;
+    editor.config.height = 500;
+    editor.config.zIndex = 500;
+    editor.config.onchangeTimeout = 500;
+    editor.config.historyMaxSize = 500;
+    editor.config.emotions = [
+      {
+        title:'emoji',
+        type: 'emoji',
+        content: '😀 😃 😄 😁 😆 😅 😂 😊 😇 🙂 🙃 😉 😓 😪 😴 🙄 🤔 😬 🤐'.split(/\s/),
+      }
+    ];
+    //editor.config.uploadImgServer = 'article/uploadImage';
+    editor.config.uploadImgShowBase64 = true;
+    editor.config.uploadImgMaxSize = 2 * 1024 * 1024;
+    editor.config.withCredentials = true;
     // 创建编辑器
-    editor.create()
-    this.editor = editor
+    editor.create();
+    this.editor = editor;
+    this.getEditorData();
+    this.initSelect();
   },
   methods: {
     getEditorData() {
       // 通过代码获取编辑器内容
       let data = this.editor.txt.html()
-      alert(data)
+      this.editorData = data;
     },
     addArticle: function (releaseState) {
       this.$axios({
@@ -81,6 +112,14 @@ export default {
     },
     updateTags: function (e) {
       this.tagList = e;
+    },
+    initSelect() {
+      this.$axios({
+        method:"get",
+        url:"category/getCategoryList"
+      }).then(response => {
+        this.categoryList = response.data.data;
+      })
     },
     addTags() {
 

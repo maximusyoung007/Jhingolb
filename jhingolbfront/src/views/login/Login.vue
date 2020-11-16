@@ -20,7 +20,6 @@
         <el-col :span="8"></el-col>
       </el-row>
     </el-main>
-    <p>状态：{{$store.state.username}}</p>
   </el-container>
 </template>
 

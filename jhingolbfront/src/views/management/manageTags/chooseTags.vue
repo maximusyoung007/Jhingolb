@@ -13,7 +13,8 @@
       trigger="click"
       @show="loadTags()"
       @hide="clearTags()"
-      placement="right"
+      x-placement="bottom"
+      modal-append-to-body="false"
     >
       <p>请选择标签(最多可选择五个标签)</p>
       <div>

@@ -57,14 +57,6 @@ export default new Router({
           },
         },
         {
-          path: '/addArticle',
-          name: 'addArticle',
-          component: () => import("@/views/management/manageArticle/addArticle"),
-          meta: {
-            requireAuth: true
-          },
-        },
-        {
           path: '/addArticleResult',
           name: 'addArticleResult',
           component: () => import("@/views/management/manageArticle/addArticleResult"),
@@ -73,6 +65,14 @@ export default new Router({
           },
         }
       ]
+    },
+    {
+      path: '/addArticle',
+      name: 'addArticle',
+      component: () => import("@/views/management/manageArticle/addArticle"),
+      meta: {
+        requireAuth: true
+      },
     },
     {
       path: '/homePage',
