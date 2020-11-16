@@ -31,7 +31,6 @@ public class ArticleServiceImpl implements ArticleService {
      */
     @Override
     public List<Article> getArticleList(Article article) {
-        article.setReleaseState(1);
         List<Article> list = articleMapper.getArticleList(article);
         return list;
     }

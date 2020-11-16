@@ -57,6 +57,8 @@ public class Article extends Page implements Serializable {
 
     private Integer commentCounts;
 
+    private Integer isManage;
+
     private static final long serialVersionUID = 1L;
 
 }

@@ -60,6 +60,11 @@ public class ArticleController {
                 article.setFirstDay(firstDay);
                 article.setLastDay(lastDay);
             }
+            if(article.getIsManage() == 1) {
+                article.setReleaseState(null);
+            } else {
+                article.setReleaseState(1);
+            }
             List<Article> list = articleService.getArticleList(article);
             PageInfo<Article> page = new PageInfo<>(list);
             page.setTotal(list.size());
