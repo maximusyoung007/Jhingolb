@@ -75,6 +75,14 @@ export default new Router({
       },
     },
     {
+      path: '/previewArticle',
+      name: 'previewArticle',
+      component: () => import("@/views/management/manageArticle/previewArticle"),
+      meta: {
+        requireAuth: true
+      }
+    },
+    {
       path: '/homePage',
       name: 'homePage',
       component: () => import("@/views/home/homePage"),

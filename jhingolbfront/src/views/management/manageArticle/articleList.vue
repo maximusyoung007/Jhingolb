@@ -34,6 +34,7 @@
         </el-table-column>
         <el-table-column label="操作" width="200">
             <template slot-scope="scope">
+              <el-button size="mini" @click="previewArticle(scope.$index,scope.row)">预览</el-button>
               <el-button size="mini" @click="EditArticle(scope.$index,scope.row)">编辑</el-button>
               <el-button size="mini" type="danger" @click="EditArticle(scope.$index,scope.row)">删除</el-button>
             </template>
@@ -55,6 +56,7 @@
 </template>
 
 <script>
+
 export default {
   name: "editArticle.vue",
   data() {
@@ -93,6 +95,10 @@ export default {
     },
     addArticle: function (val) {
       this.$router.push({path:'/addArticle'});
+    },
+    previewArticle: function (index,row) {
+      var previewArticleId = row.id;
+      this.$router.push({name:'previewArticle',params:{previewArticleId:previewArticleId}});
     }
   }
 }
