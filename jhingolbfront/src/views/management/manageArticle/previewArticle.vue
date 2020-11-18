@@ -1,19 +1,28 @@
 <template>
   <div>
-    <el-card shadow="always" v-model="article">
-      <div slot="header" class="clearfix">
-        <div style="font-size: 24px">{{ article.title }}</div>
-        <div class="time">
-          <i class="el-icon-time"></i>
-          <time>{{ article.modifiedTime }}</time>
-          &nbsp;
-          <i class="el-icon-folder-opened"></i>
-          <span>分类</span>
-        </div>
-      </div>
-      <div v-html="article.articleBody">
-      </div>
-    </el-card>
+    <el-row>
+      <el-col :span="4"><div class="grid-content bg-purple" style="color: #d9d9d9">hello world</div></el-col>
+      <el-col :span="16">
+        <el-card shadow="never" v-model="article">
+          <div slot="header" class="clearfix">
+            <div style="font-size: 24px">{{ article.title }}</div>
+            <div class="time">
+              <i class="el-icon-time"></i>
+              <time>{{ article.modifiedTime }}</time>
+              &nbsp;
+              <i class="el-icon-folder-opened"></i>
+              <span>分类</span>
+            </div>
+          </div>
+          <div v-html="article.articleBody">
+          </div>
+          <el-divider></el-divider>
+          <el-button type="primary" @click="toEditPage(this.article.id)">编辑</el-button>
+          <el-button type="success" @click="goBack()">返回</el-button>
+        </el-card>
+      </el-col>
+      <el-col :span="4"><div class="grid-content bg-purple" style="color: #d9d9d9">hello world</div></el-col>
+    </el-row>
     <br/>
   </div>
 </template>
@@ -42,7 +51,6 @@ export default {
         }
       }).then((response) => {
         this.article = response.data.data;
-        this.comments.thumbsUp = response.data.data.thumbsUp;
         this.comments.oppose = response.data.data.oppose;
         this.comments.commentCounts = response.data.data.commentCounts;
       })
@@ -52,12 +60,21 @@ export default {
         return this.getElementToTop(el.parentElement) + el.offsetTop
       }
       return el.offsetTop
+    },
+    toEditPage: function (id) {
+      this.$router.push({name:"editArticle",params:{articleId:id}})
+    },
+    goBack: function () {
+      this.$router.go(-1);
     }
   }
 }
 </script>
 
-<style scoped>
+<style>
+.el-row {
+  background: #d9d9d9;
+}
 .time{
   font-size: 13px;
   color:#999;

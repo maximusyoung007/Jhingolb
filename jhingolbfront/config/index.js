@@ -17,6 +17,14 @@ module.exports = {
         pathRewrite: {
           '^/api': '/' //由于后端的访问路径没有'/api',所有替换为'/'
         }
+      },
+      '/ips': {
+        target: 'https://restapi.amap.com',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/ips': '',
+        },
+        logLevel: 'debug',
       }
     },
 
