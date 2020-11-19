@@ -33,14 +33,6 @@ export default new Router({
       redirect: "/articleList",
       children: [
         {
-          path: '/editArticle',
-          name: 'editArticle',
-          component: () => import("@/views/management/manageArticle/editArticle"),
-          meta: {
-            requireAuth: true
-          },
-        },
-        {
           path: '/manageTags',
           name: 'manageTags',
           component: () => import("@/views/management/manageTags/manageTags"),
@@ -81,6 +73,14 @@ export default new Router({
       meta: {
         requireAuth: true
       }
+    },
+    {
+      path: '/editArticle',
+      name: 'editArticle',
+      component: () => import("@/views/management/manageArticle/editArticle"),
+      meta: {
+        requireAuth: true
+      },
     },
     {
       path: '/homePage',

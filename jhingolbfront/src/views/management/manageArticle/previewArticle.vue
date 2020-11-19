@@ -11,14 +11,23 @@
               <time>{{ article.modifiedTime }}</time>
               &nbsp;
               <i class="el-icon-folder-opened"></i>
-              <span>分类</span>
+              <span>{{ article.category }}</span>
+            </div>
+            <div>
+              <el-tag :key="tag.id"
+                      v-for="tag in tags"
+                      :disable-transitions="true"
+                      size="mini"
+              >{{tag.name}}</el-tag>
             </div>
           </div>
           <div v-html="article.articleBody">
           </div>
           <el-divider></el-divider>
-          <el-button type="primary" @click="toEditPage(this.article.id)">编辑</el-button>
-          <el-button type="success" @click="goBack()">返回</el-button>
+          <div style="text-align: center">
+            <el-button type="primary" @click="toEditPage(article.id)">编辑</el-button>
+            <el-button type="success" @click="goBack()">返回</el-button>
+          </div>
         </el-card>
       </el-col>
       <el-col :span="4"><div class="grid-content bg-purple" style="color: #d9d9d9">hello world</div></el-col>
@@ -33,6 +42,7 @@ export default {
   data() {
     return {
       article:"",
+      tags:""
     }
   },
   mounted:function() {
@@ -40,8 +50,8 @@ export default {
   },
   methods: {
     getArticleById:function () {
-      if(this.$route.params.id != null) {
-        localStorage.setItem("previewArticleId", this.$route.params.id);
+      if(this.$route.params.previewArticleId != null) {
+        localStorage.setItem("previewArticleId", this.$route.params.previewArticleId);
       }
       this.$axios({
         method: "post",
@@ -51,8 +61,7 @@ export default {
         }
       }).then((response) => {
         this.article = response.data.data;
-        this.comments.oppose = response.data.data.oppose;
-        this.comments.commentCounts = response.data.data.commentCounts;
+        this.tags = this.article.tags;
       })
     },
     getElementToTop: function(el) {
@@ -73,7 +82,7 @@ export default {
 
 <style>
 .el-row {
-  background: #d9d9d9;
+  background: white;
 }
 .time{
   font-size: 13px;
@@ -108,6 +117,9 @@ export default {
 }
 p {
   margin-left: 0;
-
+}
+.el-tag {
+  margin-top:3px;
+  margin-right: 3px
 }
 </style>

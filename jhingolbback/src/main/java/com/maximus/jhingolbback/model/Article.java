@@ -27,7 +27,7 @@ public class Article extends Page implements Serializable {
     @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:ss")
     private Date modifiedTime;
 
-    private Integer categoryId;
+    private String categoryId;
 
     private Integer tuiId;
 

@@ -21,4 +21,6 @@ public interface ArticleService {
     int updateThumbsUp(Article record);
 
     int updateOppose(Article article);
+
+    Result<String> updateArticleInfo(Article article);
 }

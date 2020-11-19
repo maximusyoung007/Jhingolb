@@ -4,16 +4,20 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.maximus.jhingolbback.Enum.NumberEnum;
 import com.maximus.jhingolbback.model.Article;
+import com.maximus.jhingolbback.model.Tags;
 import com.maximus.jhingolbback.result.Result;
 import com.maximus.jhingolbback.service.ArticleService;
 import com.maximus.jhingolbback.service.ArticleTagConnectService;
+import com.maximus.jhingolbback.service.TagsService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.swing.text.html.HTML;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("article")
@@ -24,6 +28,9 @@ public class ArticleController {
 
     @Resource
     private ArticleTagConnectService articleTagConnectService;
+
+    @Resource
+    private TagsService tagsService;
 
     @GetMapping("getFirstPageArticleList")
     @ResponseBody
@@ -60,8 +67,12 @@ public class ArticleController {
                 article.setFirstDay(firstDay);
                 article.setLastDay(lastDay);
             }
-            if(article.getIsManage() == 1) {
-                article.setReleaseState(null);
+            if(article.getIsManage() != null) {
+                if (article.getIsManage() == 1) {
+                    article.setReleaseState(null);
+                } else {
+                    article.setReleaseState(1);
+                }
             } else {
                 article.setReleaseState(1);
             }
@@ -77,7 +88,28 @@ public class ArticleController {
 
     @PostMapping("addArticle")
     @ResponseBody
-    public Result<String> addArticle(@RequestBody Article article) {
+    public Result<String> addArticle(@RequestBody Map<String,Object> map) {
+        Article article = new Article();
+        article.setTitle(map.get("title").toString());
+        article.setArticleBody(map.get("articleBody").toString());
+        article.setReleaseState((Integer)map.get("releaseState"));
+        List<Tags> tagsList = new ArrayList<>();
+        List<LinkedHashMap> hashMapList = new ArrayList<>();
+        Object obj = map.get("allTags");
+        if(obj instanceof ArrayList<?>) {
+            for(Object o : (List<?>) obj) {
+                hashMapList.add(LinkedHashMap.class.cast(o));
+            }
+        }
+        for(LinkedHashMap hashMap : hashMapList) {
+            Tags tag = new Tags();
+            tag.setId(hashMap.get("id").toString());
+            tag.setName(hashMap.get("name").toString());
+            tagsList.add(tag);
+        }
+        article.setTags(tagsList);
+        article.setCategoryId(map.get("category").toString());
+        article.setViews((Integer)map.get("views"));
         return articleService.addArticle(article);
     }
 
@@ -149,6 +181,33 @@ public class ArticleController {
             logger.info("失败",e);
         }
         return Result.error("失败");
+    }
+
+    @PostMapping("updateArticle")
+    @ResponseBody
+    public Result<String> updateArticle(@RequestBody Map<String,Object> map) {
+        Article article = new Article();
+        article.setTitle(map.get("title").toString());
+        article.setArticleBody(map.get("articleBody").toString());
+        List<Tags> tags = new ArrayList<>();
+        List<LinkedHashMap> tem = new ArrayList<>();
+        Object obj = map.get("allTags");
+        if(obj instanceof ArrayList<?>) {
+            for(Object o : (List<?>) obj) {
+                tem.add(LinkedHashMap.class.cast(o));
+            }
+        }
+        for(LinkedHashMap hashMap : tem) {
+            Tags tags1 = new Tags();
+            tags1.setId(hashMap.get("id").toString());
+            tags1.setName(hashMap.get("name").toString());
+            tags.add(tags1);
+        }
+        article.setTags(tags);
+        article.setCategory(map.get("category").toString());
+        article.setReleaseState((Integer) map.get("releaseState"));
+        article.setId(map.get("articleId").toString());
+        return articleService.updateArticleInfo(article);
     }
 
     private String getCurrentCNDate(Calendar calendar) {

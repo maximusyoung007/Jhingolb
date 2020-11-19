@@ -4,6 +4,7 @@ import com.maximus.jhingolbback.dao.ArticleMapper;
 import com.maximus.jhingolbback.dao.ArticleTagConnectMapper;
 import com.maximus.jhingolbback.model.Article;
 import com.maximus.jhingolbback.model.ArticleTagConnect;
+import com.maximus.jhingolbback.model.Tags;
 import com.maximus.jhingolbback.result.Result;
 import com.maximus.jhingolbback.service.ArticleService;
 import org.apache.logging.log4j.LogManager;
@@ -47,21 +48,23 @@ public class ArticleServiceImpl implements ArticleService {
         article.setId(uuid);
 
         int count = articleMapper.insertSelective(article);
-        List<String> tagsNames = article.getAllTags();
+        List<Tags> tagsList = article.getTags();
         List<ArticleTagConnect> atcList = new ArrayList<>();
 
-        for(int i = 0;i < tagsNames.size();i++) {
+        for(Tags tags : tagsList) {
             ArticleTagConnect articleTagConnect = new ArticleTagConnect();
-            articleTagConnect.setTagName(tagsNames.get(i));
+            articleTagConnect.setTagName(tags.getName());
+            articleTagConnect.setTagId(tags.getId());
             articleTagConnect.setArticleId(uuid);
             atcList.add(articleTagConnect);
         }
+        //添加标签和文章关系
         int count1 = articleTagConnectMapper.addArticleTagConnect(atcList);
         if(count > 0 && count1 > 0) {
             if(releaseState == 0) {
-                return Result.success("保存文章成功");
+                return Result.success(uuid,"保存文章成功");
             } else if(releaseState == 1) {
-                return Result.success("发布文章成功");
+                return Result.success(uuid,"发布文章成功");
             } else {
                 return Result.error("请保存或发布文章");
             }
@@ -78,5 +81,32 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public int updateOppose(Article article) {
         return articleMapper.updateOppose(article);
+    }
+
+    @Override
+    @Transactional(rollbackFor = {RuntimeException.class,Error.class})
+    public Result<String> updateArticleInfo(Article article) {
+        int count = articleMapper.updateArticle(article);
+        List<Tags> tagsList = article.getTags();
+        //删除所有的该文章ID对应的标签
+        int count1 = articleTagConnectMapper.deleteByArticleId(article.getId());
+        //将新增的文章标签存到表中
+        List<ArticleTagConnect> list = new ArrayList<>();
+        for(Tags tags : tagsList) {
+            ArticleTagConnect articleTagConnect = new ArticleTagConnect();
+            articleTagConnect.setTagId(tags.getId());
+            articleTagConnect.setTagName(tags.getName());
+            articleTagConnect.setArticleId(article.getId());
+            list.add(articleTagConnect);
+        }
+        int count2 = 0;
+        if(list.size() > 0) {
+            count2 = articleTagConnectMapper.addArticleTagConnect(list);
+        }
+        if(count > 0 && count1 > 0 && count2 > 0) {
+            return Result.success("成功","成功");
+        } else {
+            return Result.error("失败");
+        }
     }
 }

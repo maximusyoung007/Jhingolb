@@ -13,7 +13,7 @@ import store from "./store"
 var axios = require('axios');
 //axios.defaults.baseURL = "http://106.14.44.210:8090";
 axios.defaults.baseURL = "http://127.0.0.1:8090"
-axios.defaults.withCredentials = true
+// axios.defaults.withCredentials = true
 Vue.prototype.$axios = axios;
 Vue.prototype.$store = store;
 Vue.config.productionTip = false

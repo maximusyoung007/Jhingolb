@@ -1,13 +1,5 @@
 <template>
   <div>
-    <el-tag
-      :key="tag"
-      v-for="tag in dynamicTags"
-      closable
-      :disable-transitions="false"
-      @close="handleClose(tag)">
-      {{tag}}
-    </el-tag>
     <el-popover
       width="300"
       trigger="click"
@@ -21,7 +13,7 @@
         <el-input placeolder="可选择标签" id="searchTags" v-model="searchTags" clearable/>
       </div>
       <br>
-      <el-tag :key="tag"
+      <el-tag :key="tag.id"
               style="cursor: pointer"
               type="info"
               v-for="tag in allTags"
@@ -29,10 +21,18 @@
               @click="addTags(tag)"
               size="mini"
       >
-        {{tag}}
+        {{tag.name}}
       </el-tag>
       <el-button class="button-new-tag" slot="reference" size="medium" icon="el-icon-plus">添加标签</el-button>
     </el-popover>
+    <el-tag
+      :key="tag.id"
+      v-for="tag in dynamicTags"
+      closable
+      :disable-transitions="false"
+      @close="handleClose(tag)">
+      {{tag.name}}
+    </el-tag>
   </div>
 </template>
 
@@ -41,11 +41,18 @@ export default {
   name: "ChooseTags",
   data() {
     return {
-      dynamicTags: [],
+      dynamicTags: this.chosenTag,
       inputVisible: false,
       inputValue: '',
       allTags:[],
       searchTags:"",
+    }
+  },
+  props:['chosenTag'],
+  //监听异步传过来的数据
+  watch:{
+    chosenTag:function (newVal,oldVal) {
+      this.dynamicTags = newVal;
     }
   },
   methods:{
@@ -57,11 +64,7 @@ export default {
         methods: "get",
         url: "tags/getTagsList"
       }).then((response) => {
-        var list = response.data.data;
-        for(var i = 0;i < list.length;i++) {
-          var name = list[i].name;
-          this.allTags.push(name);
-        }
+        this.allTags = response.data.data;
       })
     },
     clearTags: function () {
@@ -73,7 +76,7 @@ export default {
         return;
       }
       for(i = 0;i < len;i++) {
-        if(this.dynamicTags[i] == tag) {
+        if(this.dynamicTags[i].name == tag.name) {
           return;
         }
       }

@@ -34,4 +34,6 @@ public interface ArticleTagConnectMapper {
     int addArticleTagConnect(List<ArticleTagConnect> list);
 
     List<String> getArticleIdByTagId(@Param("tagId")String tagId);
+
+    int deleteByArticleId(@Param("articleId")String articleId);
 }

@@ -10,7 +10,7 @@ public class ArticleTagConnect implements Serializable {
 
     private String articleId;
 
-    private Integer tagId;
+    private String tagId;
 
     private String tagName;
 

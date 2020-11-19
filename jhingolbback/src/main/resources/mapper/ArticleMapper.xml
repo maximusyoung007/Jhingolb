@@ -9,7 +9,7 @@
     <result column="views" jdbcType="INTEGER" property="views" />
     <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
     <result column="modified_time" jdbcType="TIMESTAMP" property="modifiedTime" />
-    <result column="category_id" jdbcType="INTEGER" property="categoryId" />
+    <result column="category_id" jdbcType="VARCHAR" property="categoryId" />
     <result column="tui_id" jdbcType="INTEGER" property="tuiId" />
     <result column="user_id" jdbcType="INTEGER" property="userId" />
     <result column="release_state" jdbcType="INTEGER" property="releaseState"/>
@@ -285,20 +285,41 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByExample" parameterType="map">
-    update article
-    set id = #{record.id,jdbcType=INTEGER},
-      title = #{record.title,jdbcType=VARCHAR},
-      img = #{record.img,jdbcType=VARCHAR},
-      views = #{record.views,jdbcType=INTEGER},
-      created_time = #{record.createdTime,jdbcType=TIMESTAMP},
-      modified_time = #{record.modifiedTime,jdbcType=TIMESTAMP},
-      category_id = #{record.categoryId,jdbcType=INTEGER},
-      tui_id = #{record.tuiId,jdbcType=INTEGER},
-      user_id = #{record.userId,jdbcType=INTEGER}
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
+  <update id="updateArticle" parameterType="com.maximus.jhingolbback.model.Article">
+    UPDATE article a
+    <set>
+        <if test="id != null and !''.equals(id)">
+            a.id = #{id,jdbcType=INTEGER},
+        </if>
+        <if test="title != null and !''.equals(title)">
+            a.title = #{title,jdbcType=VARCHAR},
+        </if>
+        <if test="articleBody != null and !''.equals(articleBody)">
+            a.article_body = #{articleBody,jdbcType=VARCHAR},
+        </if>
+        <if test="img != null and !''.equals(img)">
+          a.img = #{img,jdbcType=VARCHAR},
+        </if>
+        <if test="views != null and !''.equals(views)">
+          a.views = #{views,jdbcType=INTEGER},
+        </if>
+        <if test="userId != null and !''.equals(userId)">
+          a.user_id = #{userId,jdbcType=INTEGER},
+        </if>
+        <if test="releaseState != null and !''.equals(releaseState)">
+          a.release_state = #{releaseState},
+        </if>
+<!--        <if test="category != null and !''.equals(category)">-->
+<!--          a.category = #{category},-->
+<!--        </if>-->
+        a.modified_time = now(),
+        a.category_id = (SELECT id FROM category WHERE name = #{category})
+    </set>
+    <where>
+      <if test="id != null">
+        a.id = #{id}
+      </if>
+    </where>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.maximus.jhingolbback.model.ArticleWithBLOBs">
     update article

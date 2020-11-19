@@ -30,7 +30,7 @@ public interface ArticleMapper {
 
     int updateByExampleWithBLOBs(@Param("record") ArticleWithBLOBs record, @Param("example") ArticleExample example);
 
-    int updateByExample(@Param("record") Article record, @Param("example") ArticleExample example);
+    int updateArticle(Article article);
 
     int updateByPrimaryKeySelective(ArticleWithBLOBs record);
 
@@ -41,4 +41,5 @@ public interface ArticleMapper {
     int updateOppose(Article article);
 
     List<Article> getArticleList(Article article);
+
 }

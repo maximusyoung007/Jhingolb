@@ -13,11 +13,11 @@
                 v-for="item in categoryList"
                 :key="item.id"
                 :label="item.label"
-                :value="item.name"
+                :value="item.id"
               >
               </el-option>
             </el-select>
-          <choose-tags v-on:tagsChange="updateTags"></choose-tags>
+          <choose-tags v-on:tagsChange="updateTags" :chosenTag="chosenTag"></choose-tags>
           </div>
           <br>
           <div id="demo1"></div>
@@ -40,6 +40,7 @@ import wangEditor from "wangeditor"
 import chooseTags from "../manageTags/chooseTags"
 import hljs from "highlight.js"
 import 'highlight.js/styles/monokai-sublime.css'
+import category from "../../index/category";
 export default {
   name: "editArticle.vue",
   components: {chooseTags},
@@ -52,7 +53,8 @@ export default {
       },
       tagList: [],
       categoryList:[],
-      categoryValue:""
+      categoryValue:"",
+      chosenTag: []
     }
   },
   mounted() {
@@ -99,14 +101,16 @@ export default {
           articleBody:this.editorData,
           releaseState: releaseState,
           allTags:this.tagList,
-          views:0
+          category: this.categoryValue,
+          views:0,
         }
       }).then((response) => {
         var type = response.data.type;
+        var articleId = response.data.data;
         if(type == "success") {
-          this.$router.push({name: "addArticleResult",params: {state: releaseState}})
+          this.$router.push({name: "addArticleResult",params: {state: releaseState,articleId: articleId}});
         } else {
-          this.$router.push({name: "/addArticleResult",params: {state: '3'}})
+          this.$router.push({name: "/addArticleResult",params: {state: '3',articleId: articleId}});
         }
       })
     },
@@ -119,6 +123,9 @@ export default {
         url:"category/getCategoryList"
       }).then(response => {
         this.categoryList = response.data.data;
+        for(var i = 0;i < this.categoryList.length;i++) {
+          this.categoryList[i].label = this.categoryList[i].name;
+        }
       })
     },
     addTags() {

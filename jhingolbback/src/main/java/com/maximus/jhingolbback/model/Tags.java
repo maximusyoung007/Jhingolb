@@ -6,7 +6,7 @@ import java.io.Serializable;
 
 @Data
 public class Tags implements Serializable {
-    private Integer id;
+    private String id;
 
     private String name;
 
