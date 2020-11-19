@@ -9,25 +9,5 @@ import org.apache.ibatis.annotations.Param;
 
 @Mapper
 public interface MenuRoleConnectMapper {
-    long countByExample(MenuRoleConnectExample example);
-
-    int deleteByExample(MenuRoleConnectExample example);
-
-    int deleteByPrimaryKey(String id);
-
-    int insert(MenuRoleConnect record);
-
-    int insertSelective(MenuRoleConnect record);
-
     List<MenuRoleConnect> selectByExample(MenuRoleConnectExample example);
-
-    MenuRoleConnect selectByPrimaryKey(String id);
-
-    int updateByExampleSelective(@Param("record") MenuRoleConnect record, @Param("example") MenuRoleConnectExample example);
-
-    int updateByExample(@Param("record") MenuRoleConnect record, @Param("example") MenuRoleConnectExample example);
-
-    int updateByPrimaryKeySelective(MenuRoleConnect record);
-
-    int updateByPrimaryKey(MenuRoleConnect record);
 }

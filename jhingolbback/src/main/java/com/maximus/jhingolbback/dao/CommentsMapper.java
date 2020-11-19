@@ -23,17 +23,5 @@ public interface CommentsMapper {
 
     List<Comments> selectByExample(CommentsExample example);
 
-    Comments selectByPrimaryKey(String id);
-
-    int updateByExampleSelective(@Param("record") Comments record, @Param("example") CommentsExample example);
-
-    int updateByExampleWithBLOBs(@Param("record") Comments record, @Param("example") CommentsExample example);
-
-    int updateByExample(@Param("record") Comments record, @Param("example") CommentsExample example);
-
-    int updateByPrimaryKeySelective(Comments record);
-
-    int updateByPrimaryKeyWithBLOBs(Comments record);
-
     int updateByPrimaryKey(Comments record);
 }

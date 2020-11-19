@@ -92,22 +92,6 @@
   <sql id="Blob_Column_List">
     excerpt, body
   </sql>
-  <select id="selectByExampleWithBLOBs" parameterType="com.maximus.jhingolbback.model.ArticleExample" resultMap="ResultMapWithBLOBs">
-    select
-    <if test="distinct">
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from article
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null">
-      order by ${orderByClause}
-    </if>
-  </select>
   <select id="selectByExample" parameterType="com.maximus.jhingolbback.model.ArticleExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
@@ -122,14 +106,6 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
-    select 
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from article
-    where id = #{id,jdbcType=INTEGER}
-  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from article
     where id = #{id,jdbcType=INTEGER}
@@ -140,16 +116,6 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.maximus.jhingolbback.model.ArticleWithBLOBs">
-    insert into article (id, title, img, 
-      views, created_time, modified_time, 
-      category_id, tui_id, user_id, 
-      excerpt, article_body)
-    values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{img,jdbcType=VARCHAR}, 
-      #{views,jdbcType=INTEGER}, #{createdTime,jdbcType=TIMESTAMP}, #{modifiedTime,jdbcType=TIMESTAMP}, 
-      #{categoryId,jdbcType=INTEGER}, #{tuiId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, 
-      #{excerpt,jdbcType=LONGVARCHAR}, #{articleBody,jdbcType=LONGVARCHAR})
-  </insert>
   <insert id="insertSelective" parameterType="com.maximus.jhingolbback.model.Article">
     insert into article
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -227,64 +193,6 @@
       <include refid="Example_Where_Clause" />
     </if>
   </select>
-  <update id="updateByExampleSelective" parameterType="map">
-    update article
-    <set>
-      <if test="record.id != null">
-        id = #{record.id,jdbcType=INTEGER},
-      </if>
-      <if test="record.title != null">
-        title = #{record.title,jdbcType=VARCHAR},
-      </if>
-      <if test="record.img != null">
-        img = #{record.img,jdbcType=VARCHAR},
-      </if>
-      <if test="record.views != null">
-        views = #{record.views,jdbcType=INTEGER},
-      </if>
-      <if test="record.createdTime != null">
-        created_time = #{record.createdTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.modifiedTime != null">
-        modified_time = #{record.modifiedTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.categoryId != null">
-        category_id = #{record.categoryId,jdbcType=INTEGER},
-      </if>
-      <if test="record.tuiId != null">
-        tui_id = #{record.tuiId,jdbcType=INTEGER},
-      </if>
-      <if test="record.userId != null">
-        user_id = #{record.userId,jdbcType=INTEGER},
-      </if>
-      <if test="record.excerpt != null">
-        excerpt = #{record.excerpt,jdbcType=LONGVARCHAR},
-      </if>
-      <if test="record.body != null">
-        body = #{record.body,jdbcType=LONGVARCHAR},
-      </if>
-    </set>
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExampleWithBLOBs" parameterType="map">
-    update article
-    set id = #{record.id,jdbcType=INTEGER},
-      title = #{record.title,jdbcType=VARCHAR},
-      img = #{record.img,jdbcType=VARCHAR},
-      views = #{record.views,jdbcType=INTEGER},
-      created_time = #{record.createdTime,jdbcType=TIMESTAMP},
-      modified_time = #{record.modifiedTime,jdbcType=TIMESTAMP},
-      category_id = #{record.categoryId,jdbcType=INTEGER},
-      tui_id = #{record.tuiId,jdbcType=INTEGER},
-      user_id = #{record.userId,jdbcType=INTEGER},
-      excerpt = #{record.excerpt,jdbcType=LONGVARCHAR},
-      body = #{record.body,jdbcType=LONGVARCHAR}
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
   <update id="updateArticle" parameterType="com.maximus.jhingolbback.model.Article">
     UPDATE article a
     <set>
@@ -295,7 +203,7 @@
             a.title = #{title,jdbcType=VARCHAR},
         </if>
         <if test="articleBody != null and !''.equals(articleBody)">
-            a.article_body = #{articleBody,jdbcType=VARCHAR},
+            a.article_body = #{articleBody}
         </if>
         <if test="img != null and !''.equals(img)">
           a.img = #{img,jdbcType=VARCHAR},
@@ -321,57 +229,6 @@
       </if>
     </where>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.maximus.jhingolbback.model.ArticleWithBLOBs">
-    update article
-    <set>
-      <if test="title != null">
-        title = #{title,jdbcType=VARCHAR},
-      </if>
-      <if test="img != null">
-        img = #{img,jdbcType=VARCHAR},
-      </if>
-      <if test="views != null">
-        views = #{views,jdbcType=INTEGER},
-      </if>
-      <if test="createdTime != null">
-        created_time = #{createdTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="modifiedTime != null">
-        modified_time = #{modifiedTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="categoryId != null">
-        category_id = #{categoryId,jdbcType=INTEGER},
-      </if>
-      <if test="tuiId != null">
-        tui_id = #{tuiId,jdbcType=INTEGER},
-      </if>
-      <if test="userId != null">
-        user_id = #{userId,jdbcType=INTEGER},
-      </if>
-      <if test="excerpt != null">
-        excerpt = #{excerpt,jdbcType=LONGVARCHAR},
-      </if>
-      <if test="body != null">
-        body = #{body,jdbcType=LONGVARCHAR},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.maximus.jhingolbback.model.ArticleWithBLOBs">
-    update article
-    set title = #{title,jdbcType=VARCHAR},
-      img = #{img,jdbcType=VARCHAR},
-      views = #{views,jdbcType=INTEGER},
-      created_time = #{createdTime,jdbcType=TIMESTAMP},
-      modified_time = #{modifiedTime,jdbcType=TIMESTAMP},
-      category_id = #{categoryId,jdbcType=INTEGER},
-      tui_id = #{tuiId,jdbcType=INTEGER},
-      user_id = #{userId,jdbcType=INTEGER},
-      excerpt = #{excerpt,jdbcType=LONGVARCHAR},
-      body = #{body,jdbcType=LONGVARCHAR}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-
   <update id="updateThumbsUp" parameterType="com.maximus.jhingolbback.model.Article">
     <selectKey resultType="java.lang.Integer" keyProperty="thumbsUp" order="AFTER">
         SELECT thumbs_up FROM article WHERE id = #{id}

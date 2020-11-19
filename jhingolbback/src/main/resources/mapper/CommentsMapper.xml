@@ -112,14 +112,6 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
-    select 
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from comments
-    where id = #{id,jdbcType=VARCHAR}
-  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from comments
     where id = #{id,jdbcType=VARCHAR}
@@ -202,103 +194,6 @@
       <include refid="Example_Where_Clause" />
     </if>
   </select>
-  <update id="updateByExampleSelective" parameterType="map">
-    update comments
-    <set>
-      <if test="record.id != null">
-        id = #{record.id,jdbcType=VARCHAR},
-      </if>
-      <if test="record.fatherId != null">
-        father_id = #{record.fatherId,jdbcType=VARCHAR},
-      </if>
-      <if test="record.username != null">
-        username = #{record.username,jdbcType=VARCHAR},
-      </if>
-      <if test="record.email != null">
-        email = #{record.email,jdbcType=VARCHAR},
-      </if>
-      <if test="record.articleId != null">
-        article_id = #{record.articleId,jdbcType=VARCHAR},
-      </if>
-      <if test="record.addTime != null">
-        add_time = #{record.addTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.updateTime != null">
-        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.content != null">
-        content = #{record.content,jdbcType=LONGVARCHAR},
-      </if>
-    </set>
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExampleWithBLOBs" parameterType="map">
-    update comments
-    set id = #{record.id,jdbcType=VARCHAR},
-      father_id = #{record.fatherId,jdbcType=VARCHAR},
-      username = #{record.username,jdbcType=VARCHAR},
-      email = #{record.email,jdbcType=VARCHAR},
-      article_id = #{record.articleId,jdbcType=VARCHAR},
-      add_time = #{record.addTime,jdbcType=TIMESTAMP},
-      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
-      content = #{record.content,jdbcType=LONGVARCHAR}
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExample" parameterType="map">
-    update comments
-    set id = #{record.id,jdbcType=VARCHAR},
-      father_id = #{record.fatherId,jdbcType=VARCHAR},
-      username = #{record.username,jdbcType=VARCHAR},
-      email = #{record.email,jdbcType=VARCHAR},
-      article_id = #{record.articleId,jdbcType=VARCHAR},
-      add_time = #{record.addTime,jdbcType=TIMESTAMP},
-      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.maximus.jhingolbback.model.Comments">
-    update comments
-    <set>
-      <if test="fatherId != null">
-        father_id = #{fatherId,jdbcType=VARCHAR},
-      </if>
-      <if test="username != null">
-        username = #{username,jdbcType=VARCHAR},
-      </if>
-      <if test="email != null">
-        email = #{email,jdbcType=VARCHAR},
-      </if>
-      <if test="articleId != null">
-        article_id = #{articleId,jdbcType=VARCHAR},
-      </if>
-      <if test="addTime != null">
-        add_time = #{addTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null">
-        update_time = #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="content != null">
-        content = #{content,jdbcType=LONGVARCHAR},
-      </if>
-    </set>
-    where id = #{id,jdbcType=VARCHAR}
-  </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.maximus.jhingolbback.model.Comments">
-    update comments
-    set father_id = #{fatherId,jdbcType=VARCHAR},
-      username = #{username,jdbcType=VARCHAR},
-      email = #{email,jdbcType=VARCHAR},
-      article_id = #{articleId,jdbcType=VARCHAR},
-      add_time = #{addTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP},
-      content = #{content,jdbcType=LONGVARCHAR}
-    where id = #{id,jdbcType=VARCHAR}
-  </update>
   <update id="updateByPrimaryKey" parameterType="com.maximus.jhingolbback.model.Comments">
     update comments
     <set>

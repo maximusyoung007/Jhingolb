@@ -15,22 +15,6 @@ public interface ArticleTagConnectMapper {
 
     int deleteByPrimaryKey(String id);
 
-    int insert(ArticleTagConnect record);
-
-    int insertSelective(ArticleTagConnect record);
-
-    List<ArticleTagConnect> selectByExample(ArticleTagConnectExample example);
-
-    ArticleTagConnect selectByPrimaryKey(String id);
-
-    int updateByExampleSelective(@Param("record") ArticleTagConnect record, @Param("example") ArticleTagConnectExample example);
-
-    int updateByExample(@Param("record") ArticleTagConnect record, @Param("example") ArticleTagConnectExample example);
-
-    int updateByPrimaryKeySelective(ArticleTagConnect record);
-
-    int updateByPrimaryKey(ArticleTagConnect record);
-
     int addArticleTagConnect(List<ArticleTagConnect> list);
 
     List<String> getArticleIdByTagId(@Param("tagId")String tagId);
