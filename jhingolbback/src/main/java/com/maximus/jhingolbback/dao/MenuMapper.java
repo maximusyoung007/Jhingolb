@@ -11,4 +11,8 @@ import org.apache.ibatis.annotations.Param;
 public interface MenuMapper {
     List<Menu> selectByExample(MenuExample example);
 
+    List<Menu> selectByIds(List<String> list);
+
+    List<Menu> getMenusByParentsId(@Param("parentId")String parentId);
+
 }
