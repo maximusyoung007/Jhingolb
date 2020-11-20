@@ -56,7 +56,8 @@
 </template>
 
 <script>
-
+import {Message} from 'element-ui'
+import {MessageBox} from 'element-ui'
 export default {
   name: "editArticle.vue",
   data() {
@@ -106,17 +107,32 @@ export default {
       this.$router.push({name: 'editArticle',params:{articleId:articleId}});
     },
     deleteArticle: function(index,row) {
-      this.$axios({
-        method:"post",
-        url:"article/deleteArticle",
-        data: {
-          id: row.id
-        }
-      }).then(response => {
-        if(response.data.type == "success") {
-
-        }
-      })
+      MessageBox.confirm('确定要删除该文章吗?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.$axios({
+          method:"post",
+          url:"article/deleteArticle",
+          data:{
+            id: row.id
+          }
+        }).then(response => {
+          if(response.data.type == "success") {
+            Message({
+              type: 'success',
+              message: '删除成功!'
+            });
+            this.getArticleList();
+          }
+        })
+      }).catch(() => {
+        Message({
+          type: 'info',
+          message: '已取消删除'
+        });
+      });
     }
   }
 }

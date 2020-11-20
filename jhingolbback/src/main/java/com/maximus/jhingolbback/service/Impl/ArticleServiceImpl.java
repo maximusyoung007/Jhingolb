@@ -109,4 +109,15 @@ public class ArticleServiceImpl implements ArticleService {
             return Result.error("失败");
         }
     }
+
+    @Override
+    @Transactional(rollbackFor = {RuntimeException.class,Error.class})
+    public Result<String> deleteArticle(Article article) {
+        int count1 = articleMapper.deleteByPrimaryKey(article.getId());
+        int count2 = articleTagConnectMapper.deleteByArticleId(article.getId());
+        if(count1 > 0 && count2 > 0) {
+            return Result.success("成功");
+        }
+        return Result.error("失败");
+    }
 }

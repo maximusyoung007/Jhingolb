@@ -1,5 +1,6 @@
 package com.maximus.jhingolbback.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.maximus.jhingolbback.Enum.NumberEnum;
@@ -208,6 +209,12 @@ public class ArticleController {
         article.setReleaseState((Integer) map.get("releaseState"));
         article.setId(map.get("articleId").toString());
         return articleService.updateArticleInfo(article);
+    }
+
+    @RequestMapping("deleteArticle")
+    @ResponseBody
+    public Result<String> deleteArticle(@RequestBody Article article) {
+        return articleService.deleteArticle(article);
     }
 
     private String getCurrentCNDate(Calendar calendar) {

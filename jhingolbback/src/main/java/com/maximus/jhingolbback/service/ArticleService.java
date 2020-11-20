@@ -23,4 +23,6 @@ public interface ArticleService {
     int updateOppose(Article article);
 
     Result<String> updateArticleInfo(Article article);
+
+    Result<String> deleteArticle(Article article);
 }
