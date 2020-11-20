@@ -94,7 +94,7 @@ export default new Router({
           component: () => import("@/views/index/index"),
         },
         {
-          path: '/article/:type',
+          path: '/article',
           name: 'article',
           component: () => import("@/views/index/article"),
         },

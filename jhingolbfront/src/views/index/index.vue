@@ -1,7 +1,7 @@
 <template>
   <div>
 
-      <el-card shadow="hover" v-for="(item,i) in firstPageArticle" :key="i"
+      <el-card shadow="never" v-for="(item,i) in firstPageArticle" :key="i"
                :index="item.id">
         <div slot="header" class="clearfix">
           <div style="font-size: 24px">{{ item.title }}</div>

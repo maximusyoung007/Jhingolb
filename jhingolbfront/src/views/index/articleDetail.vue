@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-card shadow="always" v-model="article">
+    <el-card shadow="never" v-model="article">
       <div slot="header" class="clearfix">
         <div style="font-size: 24px">{{ article.title }}</div>
         <div class="time">

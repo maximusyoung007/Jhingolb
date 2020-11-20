@@ -9,16 +9,18 @@
         class="articleTable"
         :data="articleTable"
         border
-        style="width: 100%">
+        fit
+      >
         <el-table-column align="center"
           label="文章标题"
-          width="515">
+          >
           <template slot-scope="scope">
             <span>{{scope.row.title}}({{scope.row.modifiedTime}})</span>
           </template>
         </el-table-column>
         <el-table-column
           label="发布状态"
+          align="center"
           width="100">
           <template slot-scope="scope">
             <span>{{scope.row.releaseState == 1 ? '已发布' : '未发布'}}</span>
@@ -27,12 +29,13 @@
         <el-table-column
           prop="views"
           label="阅读数"
+          align="center"
           width="100">
         </el-table-column>
-        <el-table-column label="操作" width="200">
+        <el-table-column label="操作" width="250" align="center">
             <template slot-scope="scope">
-              <el-button size="mini" @click="previewArticle(scope.$index,scope.row)">预览</el-button>
-              <el-button size="mini" @click="editArticle(scope.$index,scope.row)">编辑</el-button>
+              <el-button size="mini" type="success" @click="previewArticle(scope.$index,scope.row)">预览</el-button>
+              <el-button size="mini" type="primary" @click="editArticle(scope.$index,scope.row)">编辑</el-button>
               <el-button size="mini" type="danger" @click="deleteArticle(scope.$index,scope.row)">删除</el-button>
             </template>
         </el-table-column>
@@ -101,6 +104,19 @@ export default {
     editArticle: function (index,row) {
       var articleId = row.id;
       this.$router.push({name: 'editArticle',params:{articleId:articleId}});
+    },
+    deleteArticle: function(index,row) {
+      this.$axios({
+        method:"post",
+        url:"article/deleteArticle",
+        data: {
+          id: row.id
+        }
+      }).then(response => {
+        if(response.data.type == "success") {
+
+        }
+      })
     }
   }
 }
