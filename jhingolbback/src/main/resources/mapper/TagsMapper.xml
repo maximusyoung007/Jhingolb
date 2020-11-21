@@ -85,5 +85,19 @@
   <select id="getTagsListInUse" resultMap="BaseResultMap">
     SELECT id,name,use_counts FROM tags
     WHERE id in (SELECT distinct tag_id FROM article_tag_connect)
+    ORDER BY update_time DESC 
   </select>
+
+  <update id="updateTagsById" parameterType="com.maximus.jhingolbback.model.Tags">
+    update tags set name = #{name},update_time = now()
+    where id = #{id}
+  </update>
+
+  <delete id="deleteTagsById" parameterType="com.maximus.jhingolbback.model.Tags">
+    delete from tags where id = #{id}
+  </delete>
+
+  <insert id="addTags" parameterType="com.maximus.jhingolbback.model.Tags">
+    insert into tags (id,name,use_counts,add_time,update_time) values (uuid(),#{name},#{useCounts},now(),now())
+  </insert>
 </mapper>

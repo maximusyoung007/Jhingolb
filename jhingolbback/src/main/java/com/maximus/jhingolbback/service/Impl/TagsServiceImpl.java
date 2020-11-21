@@ -24,4 +24,19 @@ public class TagsServiceImpl implements TagsService {
     public List<Tags> getTagsListInUse() {
         return tagsMapper.getTagsListInUse();
     }
+
+    @Override
+    public int updateTagsById(Tags tags) {
+        return tagsMapper.updateTagsById(tags);
+    }
+
+    @Override
+    public int deleteTagsById(Tags tags) {
+        return tagsMapper.deleteTagsById(tags);
+    }
+
+    @Override
+    public int addTags(Tags tags) {
+        return tagsMapper.addTags(tags);
+    }
 }

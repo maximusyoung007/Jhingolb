@@ -12,4 +12,10 @@ public interface TagsMapper {
     List<Tags> selectByExample(TagsExample example);
 
     List<Tags> getTagsListInUse();
+
+    int updateTagsById(Tags tags);
+
+    int deleteTagsById(Tags tags);
+
+    int addTags(Tags tags);
 }

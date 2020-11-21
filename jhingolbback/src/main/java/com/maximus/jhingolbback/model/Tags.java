@@ -11,4 +11,8 @@ public class Tags implements Serializable {
     private String name;
 
     private Integer useCounts;
+
+    private Integer edit;
+
+    private String inputName;
 }

@@ -48,6 +48,7 @@ export default {
       navList: [
         {name:'articleList',navItem:'文章管理',activeClass: "el-icon-edit"},
         {name:'manageTags',navItem:'标签管理',activeClass: "el-icon-collection-tag"},
+        {name:'manageCategory',navItem: '分类管理',activeClass: 'el-icon-folder-opened'}
       ]
     }
   },

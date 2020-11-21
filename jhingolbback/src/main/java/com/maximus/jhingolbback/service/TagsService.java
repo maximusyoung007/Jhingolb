@@ -8,4 +8,10 @@ public interface TagsService {
     public List<Tags> getTagList();
 
     List<Tags> getTagsListInUse();
+
+    int updateTagsById(Tags tags);
+
+    int deleteTagsById(Tags tags);
+
+    int addTags(Tags tags);
 }
