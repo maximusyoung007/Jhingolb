@@ -14,6 +14,10 @@ public class Category implements Serializable {
 
     private Integer useCounts;
 
+    private String inputName;
+
+    private Integer edit;
+
     private static final long serialVersionUID = 1L;
 
 }

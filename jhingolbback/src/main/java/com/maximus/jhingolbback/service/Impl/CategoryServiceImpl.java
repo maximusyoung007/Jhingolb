@@ -17,6 +17,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public List<Category> getCategory() {
         CategoryExample example = new CategoryExample();
+        example.setOrderByClause("update_time desc");
         List<Category> list = categoryMapper.selectByExample(example);
         return list;
     }
