@@ -41,6 +41,14 @@ export default new Router({
           },
         },
         {
+          path: '/manageCategory',
+          name: 'manageCategory',
+          component: () => import("@/views/management/manageCategory/manageCategory"),
+          meta: {
+            requireAuth: true
+          }
+        },
+        {
           path: '/articleList',
           name: 'articleList',
           component: () => import("@/views/management/manageArticle/articleList"),
