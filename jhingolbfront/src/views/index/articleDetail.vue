@@ -1,50 +1,56 @@
 <template>
   <div>
-    <el-card shadow="never" v-model="article">
-      <div slot="header" class="clearfix">
-        <div style="font-size: 24px">{{ article.title }}</div>
-        <div class="time">
-          <i class="el-icon-time"></i>
-          <time>{{ article.modifiedTime }}</time>
-          &nbsp;
-          <i class="el-icon-folder-opened"></i>
-          <span>分类</span>
-        </div>
-      </div>
-      <div v-html="article.articleBody">
-      </div>
-<!--      <div button="buttonGroup" style="text-align: center">-->
-<!--        <a-button type="primary" icon="like" @click="addThumbsUp()">赞成({{this.comments.thumbsUp}})</a-button>-->
-<!--        <a-button type="danger" icon="dislike" @click="addOppose()">反对({{this.comments.oppose}})</a-button>-->
-<!--      </div>-->
-      <el-divider></el-divider>
-      <div>
-        <el-form :rules="rules" class="demo-ruleForm"
-                 :model="comments" ref="comments" label-width="70px">
-          <el-row>
-            <el-col :span="12">
-              <el-form-item label="昵称：" prop="petName">
-                <el-input placeholder="请输入一个昵称" v-model="comments.petName"></el-input>
+    <el-row>
+      <el-col :span="3"><span style="color: white">hello</span></el-col>
+      <el-col :span="18">
+        <el-card shadow="never" v-model="article">
+          <div slot="header" class="clearfix">
+            <div style="font-size: 24px">{{ article.title }}</div>
+            <div class="time">
+              <i class="el-icon-time"></i>
+              <time>{{ article.modifiedTime }}</time>
+              &nbsp;
+              <i class="el-icon-folder-opened"></i>
+              <span>分类</span>
+            </div>
+          </div>
+          <div v-html="article.articleBody">
+          </div>
+          <!--      <div button="buttonGroup" style="text-align: center">-->
+          <!--        <a-button type="primary" icon="like" @click="addThumbsUp()">赞成({{this.comments.thumbsUp}})</a-button>-->
+          <!--        <a-button type="danger" icon="dislike" @click="addOppose()">反对({{this.comments.oppose}})</a-button>-->
+          <!--      </div>-->
+          <el-divider></el-divider>
+          <div>
+            <el-form :rules="rules" class="demo-ruleForm"
+                     :model="comments" ref="comments" label-width="70px">
+              <el-row>
+                <el-col :span="12">
+                  <el-form-item label="昵称：" prop="petName">
+                    <el-input placeholder="请输入一个昵称" v-model="comments.petName"></el-input>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                  <el-form-item label="邮箱：" prop="email">
+                    <el-input placeholder="请输入邮箱" v-model="comments.email"></el-input>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+              <el-form-item>
+                <el-input type="textarea" :rows="10" placeholder="请输入评论" v-model="comments.textarea"></el-input>
               </el-form-item>
-            </el-col>
-            <el-col :span="12">
-              <el-form-item label="邮箱：" prop="email">
-                <el-input placeholder="请输入邮箱" v-model="comments.email"></el-input>
+              <el-form-item>
+                <a-button type="primary" @click="addComments('comments')">发表</a-button>
               </el-form-item>
-            </el-col>
-          </el-row>
-          <el-form-item>
-            <el-input type="textarea" :rows="10" placeholder="请输入评论" v-model="comments.textarea"></el-input>
-          </el-form-item>
-          <el-form-item>
-            <a-button type="primary" @click="addComments('comments')">发表</a-button>
-          </el-form-item>
-        </el-form>
-      </div>
-      {{this.comments.commentCounts}}条评论
-      <comments v-for="item in commentList" :key="item.id" v-bind:parent-comments="item"></comments>
-      <div id="elementAfterComment"></div>
-    </el-card>
+            </el-form>
+          </div>
+          {{this.comments.commentCounts}}条评论
+          <comments v-for="item in commentList" :key="item.id" v-bind:parent-comments="item"></comments>
+          <div id="elementAfterComment"></div>
+        </el-card>
+      </el-col>
+      <el-col :span="3"><span style="color: white">hello</span></el-col>
+    </el-row>
     <br/>
   </div>
 </template>
