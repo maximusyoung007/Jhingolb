@@ -39,7 +39,7 @@ public class ArticleController {
         try {
             Article article = new Article();
             int currentPage = 1,pageSize = 5;
-            PageHelper.startPage(1,5);
+            PageHelper.startPage(currentPage,pageSize);
             List<Article> list = articleService.getArticleList(article);
             PageInfo<Article> page = new PageInfo<>(list);
             return Result.success(page,"获取列表成功");

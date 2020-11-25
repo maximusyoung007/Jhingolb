@@ -31,8 +31,8 @@ public class TagsController {
         if(map.get("pageSize") != null) {
             pageSize = (Integer) map.get("pageSize");
         }
-        PageHelper.startPage(currentPage,pageSize);
-        List<Tags> list = tagsService.getTagList();
+        //PageHelper.startPage(currentPage,pageSize);
+        List<Tags> list = tagsService.getTagList(map);
         list.stream().forEach(item->{
             item.setEdit(0);
             item.setInputName("");

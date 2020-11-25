@@ -3,9 +3,10 @@ package com.maximus.jhingolbback.service;
 import com.maximus.jhingolbback.model.Tags;
 
 import java.util.List;
+import java.util.Map;
 
 public interface TagsService {
-    public List<Tags> getTagList();
+    public List<Tags> getTagList(Map<String,Object> map);
 
     List<Tags> getTagsListInUse();
 

@@ -1,5 +1,6 @@
 package com.maximus.jhingolbback.service.Impl;
 
+import com.github.pagehelper.PageHelper;
 import com.maximus.jhingolbback.dao.TagsMapper;
 import com.maximus.jhingolbback.model.Tags;
 import com.maximus.jhingolbback.model.TagsExample;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class TagsServiceImpl implements TagsService {
@@ -15,9 +17,11 @@ public class TagsServiceImpl implements TagsService {
     private TagsMapper tagsMapper;
 
     @Override
-    public List<Tags> getTagList() {
+    public List<Tags> getTagList(Map<String,Object> map) {
         TagsExample example = new TagsExample();
-        return tagsMapper.selectByExample(example);
+        PageHelper.startPage((int)map.get("currentPage"),(int)map.get("pageSize"));
+        List<Tags> list = tagsMapper.selectByExample(example);
+        return list;
     }
 
     @Override

@@ -94,7 +94,7 @@ export default {
   },
   methods: {
     handleCurrentChange:function (val) {
-      this.getArticleList();
+      this.getTagsList();
     },
     handleSizeChange:function (val) {
 
@@ -109,7 +109,7 @@ export default {
         }
       }).then(response => {
         this.tagsTable = response.data.data.list;
-        this.currentPage = response.data.data.pages;
+        this.currentPage = response.data.data.pageNum;
         this.total = response.data.data.total;
       })
     },
