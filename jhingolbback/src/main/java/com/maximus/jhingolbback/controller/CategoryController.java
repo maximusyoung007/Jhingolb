@@ -41,6 +41,16 @@ public class CategoryController {
         return Result.error("失败");
     }
 
+    @GetMapping("getCategoryShow")
+    @ResponseBody
+    public Result<List<Category>> getCategoryShow() {
+        List<Category> result = categoryService.getCategory();
+        if(result.size() > 0) {
+            return Result.success(result,"成功");
+        }
+        return Result.error("失败");
+    }
+
     @PostMapping("addCategory")
     @ResponseBody
     public Result<String> addCategory(@RequestBody Category category) {
