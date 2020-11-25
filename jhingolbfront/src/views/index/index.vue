@@ -23,10 +23,13 @@
         </div>
         <div class="item-content" v-html="item.articleBody">
         </div>
-        <div class="bottom clearfix">
-          <el-button @click="readMore(item.id)" type="text" class="button" style="float: right">阅读更多<i class="el-icon-d-arrow-right"></i></el-button>
-        </div>
+<!--        <div class="bottom clearfix">-->
+<!--          <el-button @click="readMore(item.id)" type="text" class="button" style="float: right">阅读更多<i class="el-icon-d-arrow-right"></i></el-button>-->
+<!--        </div>-->
       </el-card>
+    <div class="bottom clearfix">
+      <el-button @click="readMore()" class="button" style="float: right">更多文章<i class="el-icon-d-arrow-right"></i></el-button>
+    </div>
   </div>
 </template>
 
@@ -47,11 +50,11 @@ export default {
         method: "get",
         url:"article/getFirstPageArticleList"
       }).then((response) => {
-        this.firstPageArticle = response.data.data.list;
+        this.firstPageArticle = response.data.data;
       })
     },
-    readMore: function (id) {
-      this.$router.push({name: "articleDetail",params: {id: id}})
+    readMore: function () {
+      this.$router.push({name: "article"})
     },
     showArticleListByTags : function(id) {
       this.$router.push({name: "article",params: {tagId: id}})
@@ -92,15 +95,15 @@ export default {
 >>>pre code {
   display: block;
 }
-.item-content {
-  max-width: 100%;
-  word-break: break-all;
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 5;
-  color: dimgrey;
-}
+/*.item-content {*/
+/*  max-width: 100%;*/
+/*  word-break: break-all;*/
+/*  overflow: hidden;*/
+/*  display: -webkit-box;*/
+/*  -webkit-box-orient: vertical;*/
+/*  -webkit-line-clamp: 5;*/
+/*  color: dimgrey;*/
+/*}*/
 
 .el-card{
   margin-bottom: 10px;

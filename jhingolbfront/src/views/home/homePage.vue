@@ -18,11 +18,8 @@
     <el-main style="background-color: white">
 
         <el-row>
-          <el-col :span="3"><div class="grid-content bg-purple" style="color: white">hello world</div></el-col>
-          <el-col :span="14" style="padding-right: 10px">
-            <router-view v-if="showRouterView"/>
-          </el-col>
-          <el-col :span="5">
+          <el-col :span="2"><div class="grid-content bg-purple" style="color: white">hello world</div></el-col>
+          <el-col :span="5" style="padding-right: 10px">
             <div>
               <el-input placeholder="..." v-model="searchArticle">
                 <el-button slot="append" icon="el-icon-search"></el-button>
@@ -47,7 +44,7 @@
             </div>
             <el-divider></el-divider>
             <div class="tags">
-                <h3 style="border: #222222;padding-left: 5px">标签</h3>
+              <h3 style="border: #222222;padding-left: 5px">标签</h3>
               <el-tag :key="tag.id"
                       style="cursor: pointer;padding-bottom: 10px"
                       type="success"
@@ -64,11 +61,14 @@
               <h3 style="border: #222222;padding-left: 5px">文章归档</h3>
               <ul>
                 <li
-                    v-for="item in articleArchive" :key="item.id" :index="item.id">
+                  v-for="item in articleArchive" :key="item.id" :index="item.id">
                   <el-button size="small" type="text" @click="getArticleByArchive(item.modifiedTime)">{{item.archive}}</el-button>
                 </li>
               </ul>
             </div>
+          </el-col>
+          <el-col :span="15" style="padding-right: 10px">
+            <router-view v-if="showRouterView"/>
           </el-col>
           <el-col :span="2"><div class="grid-content bg-purple" style="color: white">hello world</div></el-col>
         </el-row>

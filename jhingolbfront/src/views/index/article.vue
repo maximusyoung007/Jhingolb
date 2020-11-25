@@ -37,7 +37,7 @@ export default {
     return {
       tableData:[],
       currentPage: 1,
-      pageSize: 12,
+      pageSize: 10,
       total: 10
     }
   },
