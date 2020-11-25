@@ -17,9 +17,8 @@ public class TagsServiceImpl implements TagsService {
     private TagsMapper tagsMapper;
 
     @Override
-    public List<Tags> getTagList(Map<String,Object> map) {
+    public List<Tags> getTagList() {
         TagsExample example = new TagsExample();
-        PageHelper.startPage((int)map.get("currentPage"),(int)map.get("pageSize"));
         List<Tags> list = tagsMapper.selectByExample(example);
         return list;
     }

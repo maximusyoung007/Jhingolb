@@ -6,10 +6,7 @@ import com.maximus.jhingolbback.model.Tags;
 import com.maximus.jhingolbback.result.Result;
 import com.maximus.jhingolbback.service.TagsService;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -31,8 +28,8 @@ public class TagsController {
         if(map.get("pageSize") != null) {
             pageSize = (Integer) map.get("pageSize");
         }
-        //PageHelper.startPage(currentPage,pageSize);
-        List<Tags> list = tagsService.getTagList(map);
+        PageHelper.startPage(currentPage,pageSize);
+        List<Tags> list = tagsService.getTagList();
         list.stream().forEach(item->{
             item.setEdit(0);
             item.setInputName("");
@@ -40,6 +37,16 @@ public class TagsController {
         PageInfo<Tags> result = new PageInfo<>(list);
         if(result.getList().size() > 0) {
             return Result.success(result,"成功");
+        }
+        return Result.error("失败");
+    }
+
+    @GetMapping("getTagsListShow")
+    @ResponseBody
+    public Result<List<Tags>> getTagsListShow() {
+        List<Tags> list = tagsService.getTagList();
+        if(list.size() > 0) {
+            return Result.success(list,"成功");
         }
         return Result.error("失败");
     }

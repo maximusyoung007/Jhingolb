@@ -3,7 +3,7 @@
     <el-row>
       <el-col :span="3"><span style="color: white">hello</span></el-col>
       <el-col :span="18">
-        <div class="mainDiv" style="margin:0 auto;width: 500px">
+        <div class="mainDiv" style="margin:0 auto;">
           <h1 style="text-align: center">这里是所有的分类</h1>
           <h2 style="text-align: center">一共有{{count}}个</h2>
           <div style="text-align: center">

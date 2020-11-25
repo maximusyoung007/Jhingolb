@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface TagsService {
-    public List<Tags> getTagList(Map<String,Object> map);
+    public List<Tags> getTagList();
 
     List<Tags> getTagsListInUse();
 
