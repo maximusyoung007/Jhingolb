@@ -109,7 +109,7 @@ export default {
         }
       }).then(response => {
         this.categoryTable = response.data.data.list;
-        this.currentPage = response.data.data.pages;
+        this.currentPage = response.data.data.pageNum;
         this.total = response.data.data.total;
       })
     },
