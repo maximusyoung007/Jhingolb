@@ -2,7 +2,7 @@
   <div>
     <div>
       <div>
-        <el-button type="primary" size="small" @click="addTag()">
+        <el-button type="primary" size="small" @click="addCategory()">
           新建分类
         </el-button>
       </div>
@@ -53,11 +53,11 @@
               type="primary"
               size="mini"
               icon="el-icon-edit"
-              @click="editTags(scope.row)"
+              @click="editCategory(scope.row)"
             >
               编辑
             </el-button>
-            <el-button size="mini" type="danger" @click="deleteTag(scope.row)">删除</el-button>
+            <el-button size="mini" type="danger" @click="deleteCategory(scope.row)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -117,7 +117,7 @@ export default {
       row.edit = 0;
       this.$axios({
         method:"post",
-        url:"tags/updateTags",
+        url:"category/updateCategory",
         data: {
           name:row.inputName,
           id: row.id
@@ -126,7 +126,7 @@ export default {
         if(response.data.type == "success") {
           row.name = row.inputName;
           Message({
-            message:"标签名称修改成功",
+            message:"分类名称修改成功",
             type:"success"
           })
         }
@@ -135,25 +135,24 @@ export default {
     cancelEdit: function(row) {
       row.edit = 0;
       Message({
-        message: "标签名称没有更改",
+        message: "分类名称没有更改",
         type:"warning"
       })
     },
-    editTags: function (row) {
+    editCategory: function (row) {
       row.inputName = row.name;
       row.edit = 1;
     },
-    deleteTag: function(row) {
-      console.log(row.useCount);
+    deleteCategory: function(row) {
       if(row.useCounts == 0) {
-        MessageBox.confirm('确定要删除该标签吗?', '提示', {
+        MessageBox.confirm('确定要删除该分类吗?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
           this.$axios({
             method:"post",
-            url:"tags/deleteTags",
+            url:"category/deleteCategory",
             data:{
               id:row.id
             }
@@ -163,35 +162,35 @@ export default {
                 message:"删除成功",
                 type:"success"
               })
-              this.getTagsList();
+              this.getCategoryList();
             }
           })
         })
       } else {
         Message({
-          message: "该标签在使用中，无法删除",
+          message: "该分类在使用中，无法删除",
           type:"error"
         })
       }
     },
-    addTag: function() {
-      this.$prompt('请输入标签名称', '提示', {
+    addCategory: function() {
+      this.$prompt('请输入分类名称', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
       }).then(({ value }) => {
         this.$axios({
           method:"post",
-          url:"tags/addTag",
+          url:"category/addCategory",
           data: {
             name: value
           }
         }).then(response => {
           if(response.data.type == "success") {
             Message.success({
-              message:"成功添加标签",
+              message:"成功添加分类",
               type:"success"
             })
-            this.getTagsList();
+            this.getCategoryList();
           }
         })
       }).catch(() => {
