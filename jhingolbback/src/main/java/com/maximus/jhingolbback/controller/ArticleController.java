@@ -35,14 +35,13 @@ public class ArticleController {
 
     @GetMapping("getFirstPageArticleList")
     @ResponseBody
-    public Result<PageInfo> getFirstPageArticleList() {
+    public Result<List<Article>> getFirstPageArticleList() {
         try {
             Article article = new Article();
-            int currentPage = 1,pageSize = 5;
-            PageHelper.startPage(currentPage,pageSize);
+            article.setReleaseState(1);
             List<Article> list = articleService.getArticleList(article);
-            PageInfo<Article> page = new PageInfo<>(list);
-            return Result.success(page,"获取列表成功");
+            List<Article> limitList = list.stream().sorted(Comparator.comparing(Article::getModifiedTime)).limit(5).collect(Collectors.toList());
+            return Result.success(limitList,"获取列表成功");
         } catch(Exception e) {
             logger.error("can not find any information about ");
         }
