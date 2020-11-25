@@ -82,4 +82,17 @@
       order by ${orderByClause}
     </if>
   </select>
+
+  <insert id="addCategory" parameterType="com.maximus.jhingolbback.model.Category">
+    insert into category (id,name,use_counts,add_time,update_time)
+    values (uuid(),#{name},0,now(),now())
+  </insert>
+
+  <delete id="deleteCategory" parameterType="com.maximus.jhingolbback.model.Category">
+    delete from category where id = #{id}
+  </delete>
+
+  <update id="updateCategory" parameterType="com.maximus.jhingolbback.model.Category">
+    update category set name = #{name} where id = #{id}
+  </update>
 </mapper>

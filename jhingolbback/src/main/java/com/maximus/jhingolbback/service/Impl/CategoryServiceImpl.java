@@ -21,4 +21,20 @@ public class CategoryServiceImpl implements CategoryService {
         List<Category> list = categoryMapper.selectByExample(example);
         return list;
     }
+
+    @Override
+    public int addCategory(Category category) {
+        int count = categoryMapper.addCategory(category);
+        return count;
+    }
+
+    @Override
+    public int deleteCategory(Category category) {
+        return categoryMapper.deleteCategory(category);
+    }
+
+    @Override
+    public int updateCategory(Category category) {
+        return categoryMapper.updateCategory(category);
+    }
 }

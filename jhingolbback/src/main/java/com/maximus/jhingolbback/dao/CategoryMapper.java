@@ -10,4 +10,10 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface CategoryMapper {
     List<Category> selectByExample(CategoryExample example);
+
+    int addCategory(Category category);
+
+    int deleteCategory(Category category);
+
+    int updateCategory(Category category);
 }

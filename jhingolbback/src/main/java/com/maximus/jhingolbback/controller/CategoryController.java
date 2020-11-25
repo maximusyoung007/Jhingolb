@@ -3,7 +3,6 @@ package com.maximus.jhingolbback.controller;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.maximus.jhingolbback.model.Category;
-import com.maximus.jhingolbback.model.Tags;
 import com.maximus.jhingolbback.result.Result;
 import com.maximus.jhingolbback.service.CategoryService;
 import org.springframework.stereotype.Controller;
@@ -38,6 +37,36 @@ public class CategoryController {
         PageInfo<Category> result = new PageInfo<>(list);
         if(result.getList().size() > 0) {
             return Result.success(result,"成功");
+        }
+        return Result.error("失败");
+    }
+
+    @PostMapping("addCategory")
+    @ResponseBody
+    public Result<String> addCategory(@RequestBody Category category) {
+        int count = categoryService.addCategory(category);
+        if(count > 0) {
+            return Result.success("成功");
+        }
+        return Result.error("失败");
+    }
+
+    @PostMapping("deleteCategory")
+    @ResponseBody
+    public Result<String> deleteCategory(@RequestBody Category category) {
+        int count = categoryService.deleteCategory(category);
+        if(count > 0) {
+            return Result.success("成功");
+        }
+        return Result.error("失败");
+    }
+
+    @PostMapping("updateCategory")
+    @ResponseBody
+    public Result<String> updateCategory(@RequestBody Category category) {
+        int count = categoryService.updateCategory(category);
+        if(count > 0) {
+            return Result.success("成功");
         }
         return Result.error("失败");
     }
