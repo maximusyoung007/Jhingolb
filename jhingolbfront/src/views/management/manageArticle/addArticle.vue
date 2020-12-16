@@ -39,8 +39,7 @@
 import wangEditor from "wangeditor"
 import chooseTags from "../manageTags/chooseTags"
 import hljs from "highlight.js"
-import 'highlight.js/styles/monokai-sublime.css'
-import category from "../../index/category";
+import 'highlight.js/styles/tomorrow.css'
 export default {
   name: "editArticle.vue",
   components: {chooseTags},
