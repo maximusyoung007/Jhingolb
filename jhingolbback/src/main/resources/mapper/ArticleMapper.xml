@@ -203,7 +203,7 @@
             a.title = #{title,jdbcType=VARCHAR},
         </if>
         <if test="articleBody != null and !''.equals(articleBody)">
-            a.article_body = #{articleBody}
+            a.article_body = #{articleBody},
         </if>
         <if test="img != null and !''.equals(img)">
           a.img = #{img,jdbcType=VARCHAR},

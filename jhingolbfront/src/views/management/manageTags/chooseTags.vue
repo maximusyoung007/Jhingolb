@@ -61,10 +61,13 @@ export default {
     },
     loadTags:function() {
       this.$axios({
-        methods: "get",
-        url: "tags/getTagsList"
+        method: "post",
+        url: "tags/getTagsList",
+        data: {
+          useless:0
+        }
       }).then((response) => {
-        this.allTags = response.data.data;
+        this.allTags = response.data.data.list;
       })
     },
     clearTags: function () {

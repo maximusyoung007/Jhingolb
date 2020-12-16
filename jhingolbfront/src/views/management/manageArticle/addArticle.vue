@@ -119,10 +119,13 @@ export default {
     },
     initSelect() {
       this.$axios({
-        method:"get",
-        url:"category/getCategoryList"
+        method:"post",
+        url:"category/getCategoryList",
+        data: {
+          useless:0,
+        }
       }).then(response => {
-        this.categoryList = response.data.data;
+        this.categoryList = response.data.data.list;
         for(var i = 0;i < this.categoryList.length;i++) {
           this.categoryList[i].label = this.categoryList[i].name;
         }

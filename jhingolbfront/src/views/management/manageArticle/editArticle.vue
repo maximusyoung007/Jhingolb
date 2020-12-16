@@ -142,10 +142,13 @@ export default {
     },
     initSelect() {
       this.$axios({
-        method:"get",
-        url:"category/getCategoryList"
+        method:"post",
+        url:"category/getCategoryList",
+        data: {
+          useless:0
+        }
       }).then(response => {
-        this.categoryList = response.data.data;
+        this.categoryList = response.data.data.list;
       })
     },
     addTags() {

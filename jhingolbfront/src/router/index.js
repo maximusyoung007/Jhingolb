@@ -11,11 +11,11 @@ Router.prototype.push = function push(location) {
 
 
 export default new Router({
-  mode: 'history',
+  mode: 'hash',
   routes: [
     {
       path: '/',
-      redirect:'/login'
+      redirect:'/index'
     },
     {
       path: '/login',

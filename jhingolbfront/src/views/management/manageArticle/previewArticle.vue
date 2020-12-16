@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-row>
-      <el-col :span="4"><div class="grid-content bg-purple" style="color: #d9d9d9">hello world</div></el-col>
+      <el-col :span="4"><div class="grid-content bg-purple" style="color: white">hello world</div></el-col>
       <el-col :span="16">
         <el-card shadow="never" v-model="article">
           <div slot="header" class="clearfix">
@@ -30,7 +30,7 @@
           </div>
         </el-card>
       </el-col>
-      <el-col :span="4"><div class="grid-content bg-purple" style="color: #d9d9d9">hello world</div></el-col>
+      <el-col :span="4"><div class="grid-content bg-purple" style="color: white">hello world</div></el-col>
     </el-row>
     <br/>
   </div>
