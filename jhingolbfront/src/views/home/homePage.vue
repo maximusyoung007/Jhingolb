@@ -12,7 +12,7 @@
         <el-menu-item style="float: right" v-for="(item,i) in navList" :key="i" :index="item.name">
           {{ item.navItem }}
         </el-menu-item>
-        <span id="title" style="color: #222;float: left;padding: 20px;text-decoration: none;line-hieght:1">云溢清寒</span>
+        <div id="title" class="title" @click="backToIndex()">云溢清寒</div>
       </el-menu>
     </el-header>
     <el-main style="background-color: white">
@@ -77,6 +77,9 @@ export default {
     reload: function() {
       this.showRouterView = false;
       this.$nextTick(() => (this.showRouterView = true))
+    },
+    backToIndex: function() {
+      this.$router.push({name: "index"})
     }
   },
   mounted() {
@@ -88,9 +91,16 @@ export default {
 <style lang="scss">
 #title{
   position: absolute;
-  padding-top: 20px;
   font-size: 20px;
-  font-weight: bold
+  font-weight: bold;
+  color: #222;
+  float: left;
+  padding: 20px;
+  text-decoration: none;
+  line-hieght:1;
+  cursor: pointer;
+  /**点击div出现蓝框，是因为出现点击div时它获取了焦点，使用outline:none去除**/
+  outline:none;
 }
 el-header{
   padding:0px;

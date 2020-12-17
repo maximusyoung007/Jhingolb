@@ -37,6 +37,7 @@
 </template>
 
 <script>
+import 'highlight.js/styles/vs.css'
 export default {
   name: "previewArticle.vue",
   data() {

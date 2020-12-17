@@ -87,6 +87,7 @@
 
 <script>
 import Calendar from "vue-calendar-component"
+import 'highlight.js/styles/vs.css'
 export default {
   name: "index.vue",
   components: {
