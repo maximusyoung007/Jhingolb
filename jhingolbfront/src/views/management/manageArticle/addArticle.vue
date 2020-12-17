@@ -39,7 +39,8 @@
 import wangEditor from "wangeditor"
 import chooseTags from "../manageTags/chooseTags"
 import hljs from "highlight.js"
-import 'highlight.js/styles/tomorrow.css'
+import 'highlight.js/styles/vs.css'
+import {Message} from "element-ui";
 export default {
   name: "editArticle.vue",
   components: {chooseTags},
@@ -92,6 +93,18 @@ export default {
       this.editorData = data;
     },
     addArticle: function (releaseState) {
+      if(!this.categoryValue) {
+        Message({
+          type: 'warning',
+          message: '请选中一个分类'
+        });
+      }
+      if(this.tagList.length == 0) {
+        Message({
+          type: 'warning',
+          message: '请选择一个标签'
+        })
+      }
       this.$axios({
         method: "post",
         url:"article/addArticle",
