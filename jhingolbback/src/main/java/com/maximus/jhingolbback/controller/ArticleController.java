@@ -16,7 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import javax.swing.text.html.HTML;
+import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -241,6 +241,13 @@ public class ArticleController {
         }
         CNDate.append("月");
         return CNDate.toString();
+    }
+
+    @RequestMapping("getViewsById")
+    @ResponseBody
+    public Result<String> getViewsById(@RequestBody Article article, HttpServletRequest request) {
+        Result<String> result = articleService.getViews(article,request);
+        return result;
     }
 
     public static Date getFirstDayOfMonth(Date date) {

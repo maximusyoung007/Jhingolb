@@ -12,6 +12,9 @@
               &nbsp;
               <i class="el-icon-folder-opened"></i>
               <span>{{ article.category }}</span>
+
+              <i class="el-icon-view"></i>
+              <span>{{article.views}}</span>
             </div>
             <div>
               <el-tag :key="tag.id"

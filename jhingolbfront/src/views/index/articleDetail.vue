@@ -11,7 +11,10 @@
               <time>{{ article.modifiedTime }}</time>
               &nbsp;
               <i class="el-icon-folder-opened"></i>
-              <span>分类</span>
+              <span>{{ article.category }}</span>
+              &nbsp;
+              <i class="el-icon-view"></i>
+              <span>{{views}}</span>
             </div>
           </div>
           <div v-html="article.articleBody">
@@ -58,6 +61,7 @@
 <script>
 import {Message} from 'element-ui'
 import Comments from '../common/comments'
+import 'highlight.js/styles/vs.css'
 export default {
   name: "index.vue",
   components:{Comments},
@@ -85,11 +89,13 @@ export default {
         {username:'username1',content:'it is a test',haveLike:true,haveDisLike:true,date:'2020-01-01'},
         {username:'username2',content: 'it is a test',haveLike: true,haveDisLike: true,date:'2020-01-01'}
       ],
+      views: ""
     }
   },
   mounted:function() {
     this.getArticleById();
     this.getCommentList();
+    this.getViews();
   },
   methods: {
     getArticleById:function () {
@@ -185,8 +191,21 @@ export default {
         return this.getElementToTop(el.parentElement) + el.offsetTop
       }
       return el.offsetTop
+    },
+    //获取阅读量
+    getViews: function() {
+      this.$axios({
+        method: "post",
+        url: "article/getViewsById",
+        data: {
+          id: localStorage.getItem("id")
+        }
+      }).then((response) => {
+        this.views = response.data.data;
+      })
     }
-  }
+  },
+
 }
 </script>
 

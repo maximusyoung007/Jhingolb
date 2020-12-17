@@ -7,12 +7,15 @@ import com.maximus.jhingolbback.model.ArticleTagConnect;
 import com.maximus.jhingolbback.model.Tags;
 import com.maximus.jhingolbback.result.Result;
 import com.maximus.jhingolbback.service.ArticleService;
+import com.maximus.jhingolbback.util.IpUtil;
+import com.maximus.jhingolbback.util.RedisUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -25,6 +28,9 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Resource
     private ArticleTagConnectMapper articleTagConnectMapper;
+
+    @Resource
+    private RedisUtil redisUtil;
 
     /**
      * @author maximus
@@ -120,4 +126,22 @@ public class ArticleServiceImpl implements ArticleService {
         }
         return Result.error("失败");
     }
+
+    @Override
+    public Result<String> getViews(Article article, HttpServletRequest request) {
+        Integer views = 0;
+        if(redisUtil.get(article.getId()) != null) {
+            views = Integer.valueOf(redisUtil.get(article.getId()).toString());
+        } else {
+            //查询当前article的访问数，加1并存到redis中，并返回给前端
+            List<Article> articleList = articleMapper.getArticleList(article);
+            Article article1 = articleList.get(0);
+            views = article1.getViews();
+        }
+        views += 1;
+        redisUtil.set(article.getId(),views);
+        return Result.success(views.toString(),"成功");
+    }
+
+
 }
