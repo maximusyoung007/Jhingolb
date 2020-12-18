@@ -128,7 +128,7 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public Result<String> getViews(Article article, HttpServletRequest request) {
+    public Result<String> getViews(Article article) {
         Integer views = 0;
         if(redisUtil.get(article.getId()) != null) {
             views = Integer.valueOf(redisUtil.get(article.getId()).toString());
@@ -138,9 +138,18 @@ public class ArticleServiceImpl implements ArticleService {
             Article article1 = articleList.get(0);
             views = article1.getViews();
         }
+        return Result.success(views.toString(),"成功");
+    }
+
+    @Override
+    public void addViews(Article article,HttpServletRequest request) {
+        Integer views = 0;
+        if(redisUtil.get(article.getId()) != null) {
+            views = Integer.valueOf(redisUtil.get(article.getId()).toString());
+        }
         views += 1;
         redisUtil.set(article.getId(),views);
-        return Result.success(views.toString(),"成功");
+        log.info(redisUtil.get(article.getId()));
     }
 
 }

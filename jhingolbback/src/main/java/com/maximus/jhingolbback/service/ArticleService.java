@@ -27,5 +27,7 @@ public interface ArticleService {
 
     Result<String> deleteArticle(Article article);
 
-    Result<String> getViews(Article article, HttpServletRequest request);
+    Result<String> getViews(Article article);
+
+    void addViews(Article article,HttpServletRequest request);
 }

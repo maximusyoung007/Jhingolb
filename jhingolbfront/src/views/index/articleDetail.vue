@@ -102,7 +102,6 @@ export default {
       if(this.$route.params.id != null) {
         localStorage.setItem("id", this.$route.params.id);
       }
-      console.log("id" + localStorage.getItem("id"));
       this.$axios({
         method: "post",
         url:"article/getArticleById",
@@ -202,6 +201,21 @@ export default {
         }
       }).then((response) => {
         this.views = response.data.data;
+      })
+      setTimeout(() => {
+        this.addViews();
+      },5000)
+    },
+    //在页面停留五秒钟以上，算作阅读了一次
+    addViews: function() {
+      this.$axios({
+        method:"post",
+        url: "article/addViews",
+        data: {
+          id: localStorage.getItem("id")
+        }
+      }).then((response) => {
+
       })
     }
   },
