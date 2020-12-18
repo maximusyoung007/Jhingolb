@@ -2,8 +2,8 @@ package com.maximus.jhingolbback.dao;
 
 import com.maximus.jhingolbback.model.Article;
 import com.maximus.jhingolbback.model.ArticleExample;
-import com.maximus.jhingolbback.model.ArticleWithBLOBs;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -27,5 +27,7 @@ public interface ArticleMapper {
     int updateOppose(Article article);
 
     List<Article> getArticleList(Article article);
+
+    int updateViews(List<Map<String,String>> mapList);
 
 }

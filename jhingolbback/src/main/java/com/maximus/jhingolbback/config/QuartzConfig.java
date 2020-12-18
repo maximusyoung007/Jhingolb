@@ -24,7 +24,7 @@ public class QuartzConfig {
                 .withIdentity("myTrigger1","RedisTriggerGroup")
                 .usingJobData(new JobDataMap())
                 .startNow()
-                .withSchedule(CronScheduleBuilder.cronSchedule("0/1 * * * * ?"))
+                .withSchedule(CronScheduleBuilder.cronSchedule("0 0 3 * * ?"))
                 .build();
         return trigger;
     }

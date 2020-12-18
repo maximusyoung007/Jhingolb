@@ -287,4 +287,12 @@
     </where>
   </select>
 
+  <update id="updateViews" parameterType="list">
+    <foreach collection="list" item="item" index="index">
+      UPDATE article
+      SET views = #{item.views}
+      WHERE id = #{item.id}
+    </foreach>
+  </update>
+
 </mapper>
