@@ -1,30 +1,39 @@
 <template>
   <el-container>
-    <el-header style="background-color: #f1f1f1">
+    <el-header style="background-color: gray;height: auto">
       <el-menu
         :default-active="'index'"
         router
         mode="horizontal"
-        text-color="#222"
-        active-text-color="#409EFF"
-        background-color="#f1f1f1"
+        text-color="white"
+        active-text-color="white"
+        background-color="gray"
       >
-        <el-menu-item style="float: right" v-for="(item,i) in navList" :key="i" :index="item.name">
+        <el-menu-item style="float: right;border-bottom-color: transparent" v-for="(item,i) in navList" :key="i" :index="item.name">
           {{ item.navItem }}
         </el-menu-item>
-        <div id="title" class="title" @click="backToIndex()">云溢清寒</div>
+        <div id="title" class="title" @click="backToIndex()" style="color: white">云溢清寒</div>
       </el-menu>
+      <div style="width: 100%; background-color: gray">
+        <div class="contain">
+          <div class="row">
+            <div class="site-heading">
+              <h1 style="color: white">云溢清寒</h1>
+              <span class="subheading">放弃幻想，准备战斗</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
     </el-header>
     <el-main style="background-color: white">
 
         <el-row>
-          <el-col :span="2"><div class="grid-content bg-purple" style="color: white">hello world</div></el-col>
-          <el-col :span="20" style="padding-right: 10px">
+          <el-col :span="24" style="padding-right: 10px">
             <router-view v-if="showRouterView"/>
           </el-col>
-          <el-col :span="2"><div class="grid-content bg-purple" style="color: white">hello world</div></el-col>
         </el-row>
-      </el-main>
+    </el-main>
   </el-container>
 
 </template>
@@ -106,6 +115,7 @@ el-header{
   padding:0px;
   margin:0px;
   border:0px;
+  line-height: 500px;
 }
 .el-tag.el-tag--success {
   margin:3px
@@ -164,6 +174,56 @@ el-header{
   height: 20px;
   width: 20px
 }
-
+@media (min-width: 768px) {
+  .contain {
+    width: 750px;
+  }
+}
+@media (min-width: 992px) {
+  .contain {
+    width: 970px;
+  }
+}
+@media (min-width: 1200px) {
+  .contain {
+    width: 1170px;
+  }
+}
+.contain {
+  padding-left: 15px;
+  padding-right: 15px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.contain:before {
+  display: table;
+}
+.site-heading {
+  text-align: center;
+}
+@media only screen and (min-width: 768px) {
+  .site-heading {
+    padding: 150px 0;
+  }
+  h1 {
+    font-size: 80px;
+  }
+}
+.site-heading {
+  padding: 95px 0 70px;
+}
+.subheading {
+  line-height: 1.7;
+  font-size: 18px;
+  display: block;
+  font-weight: 300;
+  margin: 10px 0 0;
+  color: white;
+}
+h1 {
+  font-family: -apple-system,"Helvetica Neue",Arial,"PingFang SC","Hiragino Sans GB",STHeiti,"Microsoft YaHei","Microsoft JhengHei","Source Han Sans SC","Noto Sans CJK SC","Source Han Sans CN","Noto Sans SC","Source Han Sans TC","Noto Sans CJK TC","WenQuanYi Micro Hei",SimSun,sans-serif;
+  line-height: 1.1;
+  font-weight: 700;
+}
 
 </style>

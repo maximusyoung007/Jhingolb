@@ -1,32 +1,41 @@
 <template>
   <div>
-    <el-row>
-      <el-col :span="6" style="padding-right: 10px">
+    <el-row class="indexContainer">
+      <el-col :lg="16" :offset="2" :md="15" :sm="12" class="articleList" style="padding-right: 5%">
+        <div v-for="(item,i) in firstPageArticle" :key="i"
+             :index="item.id">
+          <h2 class="post-title">{{ item.title }}</h2>
+          <div class="post-content-preview">
+            这里是这篇文章的摘要
+          </div>
+          <p class="post-meta">
+            Posted by maximus <time>{{ item.modifiedTime }}</time>
+          </p>
+          <div>
+            <el-tag :key="tag.id"
+                    style="cursor: pointer"
+                    v-for="tag in item.tags"
+                    :disable-transitions="true"
+                    size="mini"
+                    @click="showArticleListByTags(tag.id)"
+            >{{tag.name}}</el-tag>
+          </div>
+          <hr>
+        </div>
+        <div class="bottom clearfix">
+          <el-button v-show="firstPageArticle.length > 5" @click="readMore()" class="button" style="float: right;margin-right: 20px">more<i class="el-icon-d-arrow-right"></i></el-button>
+        </div>
+      </el-col>
+      <el-col :lg="6" :md="6" :sm="12" style="padding-right: 10px">
+        <hr style="padding-top: 20px">
         <div>
           <el-input placeholder="..." v-model="searchArticle">
             <el-button slot="append" icon="el-icon-search"></el-button>
           </el-input>
         </div>
         <el-divider></el-divider>
-        <div class="weather">
-          <span class="weatherInfo">{{temp}}</span> &nbsp
-          <span class="weatherInfo">{{city}}</span>&nbsp
-          <span class="weatherInfo">{{situation}}</span>
-          <img :src="image" class="weatherImg">
-          <span v-if="airCondition == '优'" style="color: limegreen" class="weatherInfo">{{airCondition}}</span>
-          <span v-if="airCondition == '良'" style="color: orange" class="weatherInfo">{{airCondition}}</span>
-          <span v-if="airCondition == '轻度污染'" style="color: darkorange" class="weatherInfo">{{airCondition}}</span>
-          <span v-if="airCondition == '中度污染'" style="color: red" class="weatherInfo">{{airCondition}}</span>
-          <span v-if="airCondition == '重度污染'" style="color: purple" class="weatherInfo">{{airCondition}}</span>
-          <span v-if="airCondition == '严重污染'" style="color: darkred" class="weatherInfo">{{airCondition}}</span>
-        </div>
-        <el-divider></el-divider>
-        <div class="mainBox">
-          <Calendar></Calendar>
-        </div>
-        <el-divider></el-divider>
         <div class="tags">
-          <h3 style="border: #222222;padding-left: 5px">标签</h3>
+          <h5>标签</h5>
           <el-tag :key="tag.id"
                   style="cursor: pointer;padding-bottom: 10px"
                   type="success"
@@ -40,7 +49,7 @@
         </div>
         <el-divider></el-divider>
         <div class="archive">
-          <h3 style="border: #222222;padding-left: 5px">文章归档</h3>
+          <h5>文章归档</h5>
           <ul>
             <li
               v-for="item in articleArchive" :key="item.id" :index="item.id">
@@ -48,38 +57,6 @@
             </li>
           </ul>
         </div>
-      </el-col>
-      <el-col :span="18">
-      <el-card shadow="never" v-for="(item,i) in firstPageArticle" :key="i"
-                 :index="item.id">
-          <div slot="header" class="clearfix">
-            <div style="font-size: 24px">{{ item.title }}</div>
-            <div class="time">
-              <i class="el-icon-time"></i>
-              <time>{{ item.modifiedTime }}</time>
-              &nbsp;
-              <i class="el-icon-folder-opened"></i>
-              <span>{{ item.category }}</span>
-            </div>
-            <div>
-              <el-tag :key="tag.id"
-                      style="cursor: pointer"
-                      v-for="tag in item.tags"
-                      :disable-transitions="true"
-                      size="mini"
-                      @click="showArticleListByTags(tag.id)"
-              >{{tag.name}}</el-tag>
-            </div>
-          </div>
-          <div class="item-content" v-html="item.articleBody">
-          </div>
-  <!--        <div class="bottom clearfix">-->
-  <!--          <el-button @click="readMore(item.id)" type="text" class="button" style="float: right">阅读更多<i class="el-icon-d-arrow-right"></i></el-button>-->
-  <!--        </div>-->
-        </el-card>
-      <div class="bottom clearfix">
-        <el-button @click="readMore()" class="button" style="float: right">更多文章<i class="el-icon-d-arrow-right"></i></el-button>
-      </div>
       </el-col>
     </el-row>
   </div>
@@ -139,51 +116,6 @@ export default {
     },
     mouseDownColor: function () {
       this.activeColor = "dodgerblue"
-    },
-    getWhether: function() {
-      var locationId = this.locationId;
-      this.$axios({
-        methods: "get",
-        url:"https://devapi.qweather.com/v7/weather/now?location=" + locationId + "&key=c777ad6141464ba4bee5675ed13ed0ed"
-      }).then((response) => {
-        var data = response.data.now;
-        this.temp = data.temp + "℃";
-        this.situation = data.text;
-        this.icon = data.icon;
-        this.image = require("../../common/static/img/weatherIcon/" + this.icon + ".png");
-        this.getAirCondition();
-      })
-    },
-    getAirCondition: function() {
-      var locationId = this.locationId;
-      this.$axios({
-        methods: "get",
-        url: "https://devapi.qweather.com/v7/air/now?location=" + locationId + "&key=c777ad6141464ba4bee5675ed13ed0ed"
-      }).then((response) => {
-        this.airCondition = response.data.now.category;
-      })
-    },
-    getLocationID: function () {
-      var city = this.city;
-      if(city.charAt(city.length) == '市') {
-        city = city.substring(0,city.length - 1);
-      }
-      this.$axios({
-        methods:"get",
-        url:"https://geoapi.qweather.com/v2/city/lookup?location=" + city + "&key=c777ad6141464ba4bee5675ed13ed0ed"
-      }).then((response) => {
-        this.locationId = response.data.location[0].id;
-        this.getWhether();
-      })
-    },
-    getLocation: function() {
-      this.$axios({
-        methods:"get",
-        url:"https://restapi.amap.com/v3/ip?key=779959b6cd7d724db94bbfbef33d15a8"
-      }).then((response) => {
-        this.city = response.data.city;
-        this.getLocationID();
-      })
     },
     loadTags:function() {
       this.$axios({
@@ -253,5 +185,82 @@ export default {
 .el-tag {
   margin-top:3px;
   margin-right: 3px
+}
+.post-title {
+  font-size: 21px;
+  line-height: 1.3;
+  margin-top: 30px;
+  margin-bottom: 8px;
+}
+@media only screen and (min-width: 768px) {
+  .post-title {
+    font-size: 26px;
+    line-height: 1.3;
+    margin-bottom: 10px;
+  }
+}
+h2 {
+  font-family: -apple-system,"Helvetica Neue",Arial,"PingFang SC","Hiragino Sans GB",STHeiti,"Microsoft YaHei","Microsoft JhengHei","Source Han Sans SC","Noto Sans CJK SC","Source Han Sans CN","Noto Sans SC","Source Han Sans TC","Noto Sans CJK TC","WenQuanYi Micro Hei",SimSun,sans-serif;
+  font-weight: 700;
+  margin: 30px 0 10px;
+}
+.post-content-preview {
+  font-size: 13px;
+  font-style: italic;
+  color: #a3a3a3;
+}
+@media only screen and (min-width: 768px) {
+  .post-content-preview {
+    font-size: 14px;
+  }
+}
+.post-meta {
+  font-family: Lora,'Times New Roman',serif;
+  color: gray;
+  font-size: 16px;
+  font-style: italic;
+  margin-top: 0;
+}
+@media only screen and (min-width: 768px) {
+  .post-meta {
+    font-size: 18px;
+  }
+}
+p {
+  margin: 30px 0;
+}
+hr {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border: 0;
+  border-top: 1px solid #eee
+}
+@media (min-width: 768px) {
+  .indexContainer {
+    width: 750px;
+  }
+}
+@media (min-width: 992px) {
+  .indexContainer {
+    width: 970px;
+  }
+}
+@media (min-width: 1200px) {
+  .indexContainer {
+    width: 1170px;
+  }
+}
+.indexContainer {
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-left: auto;
+  margin-right: auto;
+}
+h5 {
+  color: gray;
+  padding-bottom: 1em;
+  font-family: -apple-system,"Helvetica Neue",Arial,"PingFang SC","Hiragino Sans GB",STHeiti,"Microsoft YaHei","Microsoft JhengHei","Source Han Sans SC","Noto Sans CJK SC","Source Han Sans CN","Noto Sans SC","Source Han Sans TC","Noto Sans CJK TC","WenQuanYi Micro Hei",SimSun,sans-serif;
+  font-size: 14px;
+  font-weight: 700;
 }
 </style>

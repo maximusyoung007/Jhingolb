@@ -30,10 +30,10 @@ public class LoginController {
     public Result<String> login(@RequestBody AuthUser user) {
         String username = user.getUsername();
         String password = user.getPassword();
-        Subject subject = SecurityUtils.getSubject();
-        UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(username,password);
+        //Subject subject = SecurityUtils.getSubject();
+        //UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(username,password);
         try{
-            subject.login(usernamePasswordToken);
+            //subject.login(usernamePasswordToken);
             return Result.success("登录成功");
         } catch (IncorrectCredentialsException exception) {
             logger.error("密码错误",exception);
