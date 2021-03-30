@@ -1,6 +1,6 @@
 <template>
   <el-container>
-    <el-header style="background-color: gray;height: auto">
+    <el-header style="background-color: gray;height: auto;position: fixed; top: 0;width: 100%;z-index: 1">
       <el-menu
         :default-active="'index'"
         router
@@ -9,11 +9,13 @@
         active-text-color="white"
         background-color="gray"
       >
-        <el-menu-item style="float: right;border-bottom-color: transparent" v-for="(item,i) in navList" :key="i" :index="item.name">
+        <el-menu-item style="float: right;border-bottom-color: transparent;" v-for="(item,i) in navList" :key="i" :index="item.name">
           {{ item.navItem }}
         </el-menu-item>
         <div id="title" class="title" @click="backToIndex()" style="color: white">云溢清寒</div>
       </el-menu>
+    </el-header>
+    <div class="scrollBox">
       <div style="width: 100%; background-color: gray">
         <div class="contain">
           <div class="row">
@@ -23,17 +25,15 @@
             </div>
           </div>
         </div>
-
       </div>
-    </el-header>
     <el-main style="background-color: white">
-
         <el-row>
           <el-col :span="24" style="padding-right: 10px">
             <router-view v-if="showRouterView"/>
           </el-col>
         </el-row>
     </el-main>
+    </div>
   </el-container>
 
 </template>
@@ -117,6 +117,7 @@ el-header{
   border:0px;
   line-height: 500px;
 }
+
 .el-tag.el-tag--success {
   margin:3px
 }
@@ -225,5 +226,11 @@ h1 {
   line-height: 1.1;
   font-weight: 700;
 }
-
+.scrollBox {
+  position: absolute;
+  padding: 0!important;
+  left: 0;
+  right: 0;
+  top: 60px;
+}
 </style>
