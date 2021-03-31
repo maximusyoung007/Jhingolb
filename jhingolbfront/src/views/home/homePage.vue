@@ -16,7 +16,7 @@
       </el-menu>
     </el-header>
     <div class="scrollBox">
-      <div style="width: 100%; background-color: gray">
+      <div style="width: 100%; background: url('static/image/test.jpg')">
         <div class="contain">
           <div class="row">
             <div class="site-heading">
