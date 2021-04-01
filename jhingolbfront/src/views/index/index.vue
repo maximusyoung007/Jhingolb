@@ -287,12 +287,6 @@ h5 {
   font-size: 14px;
   font-weight: 700;
 }
-.head2 {
-  background: url('https://i.loli.net/2017/02/08/589ac29fe230a.jpg');
-  background-repeat: no-repeat;
-  background-size: cover;
-  height: 400px;
-}
 @media (min-width: 768px) {
   .contain {
     width: 750px;
@@ -308,6 +302,12 @@ h5 {
     width: 1170px;
   }
 }
+.head2 {
+  background: url('/static/image/index.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 400px;
+}
 @media (max-width: 800px) {
   .head2 {
     height: 240px;
@@ -322,8 +322,8 @@ h5 {
 .titleH1 {
   font-family: -apple-system,"Helvetica Neue",Arial,"PingFang SC","Hiragino Sans GB",STHeiti,"Microsoft YaHei","Microsoft JhengHei","Source Han Sans SC","Noto Sans CJK SC","Source Han Sans CN","Noto Sans SC","Source Han Sans TC","Noto Sans CJK TC","WenQuanYi Micro Hei",SimSun,sans-serif;
   line-height: 1.1;
-  font-weight: 700;
-  font-size: 80px;
+  font-weight: 300;
+  font-size: 60px;
 }
 .site-heading {
   text-align: center;
