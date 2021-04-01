@@ -11,7 +11,7 @@
       </div>
     </div>
     <el-row class="indexContainer">
-      <el-col :lg="16" :md="16" :sm="12" class="articleList" style="padding-right: 5%">
+      <el-col :lg="16" :offset="1" :md="16" :sm="12" class="articleList" style="padding-right: 5%">
         <div v-for="(item,i) in firstPageArticle" :key="i"
              :index="item.id">
           <h2 class="post-title">{{ item.title }}</h2>
@@ -36,23 +36,50 @@
           <el-button v-show="firstPageArticle.length > 5" @click="readMore()" class="button" style="float: right;margin-right: 20px">more<i class="el-icon-d-arrow-right"></i></el-button>
         </div>
       </el-col>
-      <el-col :lg="6" :md="6" :sm="12">
-        <hr style="padding-top: 20px">
-        <div>
-          <el-input placeholder="..." v-model="searchArticle">
-            <el-button slot="append" icon="el-icon-search"></el-button>
-          </el-input>
+      <el-col :lg="6" :md="6" :sm="12" style="padding-right: 3%">
+        <el-divider></el-divider>
+        <div class="personInfo">
+          <h5>关于我</h5>
+          <a>
+            <img class="avatar" src="/static/image/avatar.jpg">
+          </a>
+          <p style="color: #bfbfbf; font-size: 14px;">一只逐渐开始喜欢写代码的菜鸡</p>
+          <nav class="state">
+            <div class="item posts">
+              <a>
+                <span class="count">47</span>
+                <span class="name">文章</span>
+              </a>
+            </div>
+            <div class="item categories">
+              <a>
+                <span class="count">47</span>
+                <span class="name">分类</span>
+              </a>
+            </div>
+            <div class="item tags">
+            <a>
+              <span class="count">15</span>
+              <span class="name">标签</span>
+            </a>
+            </div>
+          </nav>
+          <div class="socialList">
+            <a class="social zhihu" style="padding: 0" target="_blank" href="https://www.zhihu.com/people/vincent-young-82">ZHIHU</a>
+            <a class="social github" target="blank" href="https://github.com/maximusyoung007">GITHUB</a>
+            <a class="social email" target="_blank" href="mailto:yangwenjun1996@foxmail.com">EMAIL</a>
+          </div>
         </div>
         <el-divider></el-divider>
         <div class="tags">
           <h5>标签</h5>
           <el-tag :key="tag.id"
                   style="cursor: pointer;padding-bottom: 10px"
-                  type="success"
+                  type="info"
                   v-for="tag in allTags"
                   :disable-transitions="true"
                   @click="showArticleList(tag)"
-                  size="small"
+                  size="large"
           >
             {{tag.name}}
           </el-tag>
@@ -97,7 +124,6 @@ export default {
     this.getFirstPageArticleList();
     this.loadTags();
     this.loadArticleDate();
-    this.getLocation();
   },
   methods: {
     getFirstPageArticleList:function () {
@@ -244,14 +270,14 @@ hr {
 }
 @media (min-width: 1200px) {
   .indexContainer {
-    width: 1200px;
+    width: 1170px;
   }
 }
 .indexContainer {
   padding-right: 15px;
   padding-left: 15px;
   margin-left: auto;
-  /*margin-right: auto;*/
+  margin-right: auto;
   /*width: 100%;*/
 }
 h5 {
@@ -318,4 +344,48 @@ h5 {
   margin: 10px 0 0;
   color: white;
 }
+.avatar {
+  width: 80%;
+  display: block;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+.state {
+  display: flex;
+  /*justify-content: center;*/
+  line-height: 1.4;
+  color: rgb(102, 102, 102);
+}
+.item {
+  padding: 0 .9375em;
+}
+.state .item:not(:first-child) {
+  border-left: .0625rem solid rgb(204,204,204);
+}
+a {
+  border: none;
+  color: currentColor;
+  outline: 0;
+}
+.state .item .count {
+  display: block;
+  font-size: 1.5em;
+  font-weight: 600;
+  text-align: center;
+}
+.state .item .name {
+  color: inherit;
+  font-size: 1.2em;
+}
+.socialList {
+  padding: 20px .9375em 0px .9375em
+}
+.socialList a {
+  font-size: 13px;
+  padding: 0 10px;
+  text-decoration: none;
+  color: #5f5f5f;
+  outline: 0;
+}
+
 </style>
