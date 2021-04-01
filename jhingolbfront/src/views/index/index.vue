@@ -11,7 +11,7 @@
       </div>
     </div>
     <el-row class="indexContainer">
-      <el-col :lg="16" :offset="1" :md="16" :sm="12" class="articleList" style="padding-right: 5%">
+      <el-col :lg="16" :offset="2" :md="16" :sm="12" class="articleList" style="padding-right: 3%">
         <div v-for="(item,i) in firstPageArticle" :key="i"
              :index="item.id">
           <h2 class="post-title">{{ item.title }}</h2>
