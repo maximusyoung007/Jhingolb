@@ -1,7 +1,17 @@
 <template>
   <div>
+    <div class="head2" style="width: 100%;">
+      <div class="contain">
+        <div class="row">
+          <div class="site-heading">
+            <h1 class='titleH1' style="color: white">云溢清寒</h1>
+            <span class="subheading">放弃幻想，准备战斗</span>
+          </div>
+        </div>
+      </div>
+    </div>
     <el-row class="indexContainer">
-      <el-col :lg="16" :offset="2" :md="15" :sm="12" class="articleList" style="padding-right: 5%">
+      <el-col :lg="16" :md="16" :sm="12" class="articleList" style="padding-right: 5%">
         <div v-for="(item,i) in firstPageArticle" :key="i"
              :index="item.id">
           <h2 class="post-title">{{ item.title }}</h2>
@@ -26,7 +36,7 @@
           <el-button v-show="firstPageArticle.length > 5" @click="readMore()" class="button" style="float: right;margin-right: 20px">more<i class="el-icon-d-arrow-right"></i></el-button>
         </div>
       </el-col>
-      <el-col :lg="6" :md="6" :sm="12" style="padding-right: 10px">
+      <el-col :lg="6" :md="6" :sm="12">
         <hr style="padding-top: 20px">
         <div>
           <el-input placeholder="..." v-model="searchArticle">
@@ -138,10 +148,6 @@ export default {
 </script>
 
 <style scoped>
-.time{
-  font-size: 13px;
-  color:#999;
-}
 .bottom {
   margin-top: 13px;
   line-height: 12px;
@@ -169,15 +175,6 @@ export default {
 >>>pre code {
   display: block;
 }
-/*.item-content {*/
-/*  max-width: 100%;*/
-/*  word-break: break-all;*/
-/*  overflow: hidden;*/
-/*  display: -webkit-box;*/
-/*  -webkit-box-orient: vertical;*/
-/*  -webkit-line-clamp: 5;*/
-/*  color: dimgrey;*/
-/*}*/
 
 .el-card{
   margin-bottom: 10px;
@@ -247,14 +244,15 @@ hr {
 }
 @media (min-width: 1200px) {
   .indexContainer {
-    width: 1170px;
+    width: 1200px;
   }
 }
 .indexContainer {
   padding-right: 15px;
   padding-left: 15px;
   margin-left: auto;
-  margin-right: auto;
+  /*margin-right: auto;*/
+  /*width: 100%;*/
 }
 h5 {
   color: gray;
@@ -262,5 +260,62 @@ h5 {
   font-family: -apple-system,"Helvetica Neue",Arial,"PingFang SC","Hiragino Sans GB",STHeiti,"Microsoft YaHei","Microsoft JhengHei","Source Han Sans SC","Noto Sans CJK SC","Source Han Sans CN","Noto Sans SC","Source Han Sans TC","Noto Sans CJK TC","WenQuanYi Micro Hei",SimSun,sans-serif;
   font-size: 14px;
   font-weight: 700;
+}
+.head2 {
+  background: url('https://i.loli.net/2017/02/08/589ac29fe230a.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 400px;
+}
+@media (min-width: 768px) {
+  .contain {
+    width: 750px;
+  }
+}
+@media (min-width: 992px) {
+  .contain {
+    width: 970px;
+  }
+}
+@media (min-width: 1200px) {
+  .contain {
+    width: 1170px;
+  }
+}
+@media (max-width: 800px) {
+  .head2 {
+    height: 240px;
+  }
+}
+.contain {
+  padding-left: 15px;
+  padding-right: 15px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.titleH1 {
+  font-family: -apple-system,"Helvetica Neue",Arial,"PingFang SC","Hiragino Sans GB",STHeiti,"Microsoft YaHei","Microsoft JhengHei","Source Han Sans SC","Noto Sans CJK SC","Source Han Sans CN","Noto Sans SC","Source Han Sans TC","Noto Sans CJK TC","WenQuanYi Micro Hei",SimSun,sans-serif;
+  line-height: 1.1;
+  font-weight: 700;
+  font-size: 80px;
+}
+.site-heading {
+  text-align: center;
+}
+@media only screen and (min-width: 768px) {
+  .site-heading {
+    padding: 150px 0;
+  }
+}
+.site-heading {
+  padding: 150px 0 70px;
+}
+.subheading {
+  line-height: 1.7;
+  font-size: 18px;
+  display: block;
+  font-weight: 300;
+  margin: 10px 0 0;
+  color: white;
 }
 </style>

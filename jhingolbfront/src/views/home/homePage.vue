@@ -1,39 +1,26 @@
 <template>
   <el-container>
-    <el-header style="background-color: gray;height: auto;position: fixed; top: 0;width: 100%;z-index: 1">
+    <el-header class="mainHeading">
       <el-menu
         :default-active="'index'"
         router
         mode="horizontal"
-        text-color="white"
-        active-text-color="white"
-        background-color="gray"
+        text-color="rgb(102,102,102)"
+        active-text-color="rgb(102,102,102)"
+        background-color="white"
+        style="width: 100%;height: auto"
       >
         <el-menu-item style="float: right;border-bottom-color: transparent;" v-for="(item,i) in navList" :key="i" :index="item.name">
           {{ item.navItem }}
         </el-menu-item>
-        <div id="title" class="title" @click="backToIndex()" style="color: white">云溢清寒</div>
+        <div id="title" class="title" @click="backToIndex()" style="rgb(70,70,70)">云溢清寒</div>
       </el-menu>
     </el-header>
-    <div class="scrollBox">
-      <div style="width: 100%; background: url('static/image/test.jpg')">
-        <div class="contain">
-          <div class="row">
-            <div class="site-heading">
-              <h1 style="color: white">云溢清寒</h1>
-              <span class="subheading">放弃幻想，准备战斗</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    <el-main style="background-color: white">
-        <el-row>
-          <el-col :span="24" style="padding-right: 10px">
-            <router-view v-if="showRouterView"/>
-          </el-col>
-        </el-row>
-    </el-main>
-    </div>
+    <el-row>
+      <el-col :span="24">
+        <router-view v-if="showRouterView"/>
+      </el-col>
+    </el-row>
   </el-container>
 
 </template>
@@ -60,14 +47,6 @@ export default {
       searchArticle: "",
       activeColor:"dodgerblue",
       pointer:"pointer",
-      city:"",
-      locationId:"",
-      //温度
-      temp:"",
-      //天气状况
-      situation:"",
-      //空气质量
-      airCondition:"",
       //天气图标编号
       icon:"",
       image:"",
@@ -110,6 +89,9 @@ export default {
   cursor: pointer;
   /**点击div出现蓝框，是因为出现点击div时它获取了焦点，使用outline:none去除**/
   outline:none;
+}
+.mainHeading {
+  background-color: white;height: auto;position: fixed; top: 0;width: 100%;z-index: 1;padding: 0 0 0 0;opacity: 0.9
 }
 el-header{
   padding:0px;
@@ -175,62 +157,32 @@ el-header{
   height: 20px;
   width: 20px
 }
-@media (min-width: 768px) {
-  .contain {
-    width: 750px;
-  }
-}
-@media (min-width: 992px) {
-  .contain {
-    width: 970px;
-  }
-}
-@media (min-width: 1200px) {
-  .contain {
-    width: 1170px;
-  }
-}
-.contain {
-  padding-left: 15px;
-  padding-right: 15px;
-  margin-left: auto;
-  margin-right: auto;
-}
-.contain:before {
-  display: table;
-}
-.site-heading {
-  text-align: center;
-}
-@media only screen and (min-width: 768px) {
-  .site-heading {
-    padding: 150px 0;
-  }
-  h1 {
-    font-size: 80px;
-  }
-}
-.site-heading {
-  padding: 95px 0 70px;
-}
-.subheading {
-  line-height: 1.7;
-  font-size: 18px;
-  display: block;
-  font-weight: 300;
-  margin: 10px 0 0;
-  color: white;
-}
-h1 {
-  font-family: -apple-system,"Helvetica Neue",Arial,"PingFang SC","Hiragino Sans GB",STHeiti,"Microsoft YaHei","Microsoft JhengHei","Source Han Sans SC","Noto Sans CJK SC","Source Han Sans CN","Noto Sans SC","Source Han Sans TC","Noto Sans CJK TC","WenQuanYi Micro Hei",SimSun,sans-serif;
-  line-height: 1.1;
-  font-weight: 700;
-}
-.scrollBox {
-  position: absolute;
-  padding: 0!important;
-  left: 0;
-  right: 0;
-  top: 60px;
-}
+//.head2 {
+//  background: url('https://i.loli.net/2017/02/08/589ac29fe230a.jpg');
+//  background-repeat: no-repeat;
+//  background-size: cover;
+//  height: 400px;
+//}
+//@media (min-width: 768px) {
+//  .contain {
+//    width: 750px;
+//  }
+//}
+//@media (min-width: 992px) {
+//  .contain {
+//    width: 970px;
+//  }
+//}
+//@media (min-width: 1200px) {
+//  .contain {
+//    width: 1170px;
+//  }
+//}
+//.contain {
+//  padding-left: 15px;
+//  padding-right: 15px;
+//  margin-left: auto;
+//  margin-right: auto;
+//}
+
 </style>
