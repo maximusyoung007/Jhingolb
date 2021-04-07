@@ -59,6 +59,8 @@ public class Article extends Page implements Serializable {
 
     private Integer isManage;
 
+    private String summary;
+
     private static final long serialVersionUID = 1L;
 
 }

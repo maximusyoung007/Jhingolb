@@ -130,14 +130,9 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public Result<String> getViews(Article article) {
         Integer views = 0;
-        if(redisUtil.get(article.getId()) != null) {
-            views = Integer.valueOf(redisUtil.get(article.getId()).toString());
-        } else {
-            //查询当前article的访问数，加1并存到redis中，并返回给前端
-            List<Article> articleList = articleMapper.getArticleList(article);
-            Article article1 = articleList.get(0);
-            views = article1.getViews();
-        }
+        List<Article> articleList = articleMapper.getArticleList(article);
+        Article article1 = articleList.get(0);
+        views = article1.getViews();
         return Result.success(views.toString(),"成功");
     }
 
