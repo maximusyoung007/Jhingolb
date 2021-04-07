@@ -49,7 +49,8 @@ export default {
       editor:null,
       editorData:'',
       article: {
-        title: ""
+        title: "",
+        summary: ""
       },
       tagList: [],
       categoryList:[],

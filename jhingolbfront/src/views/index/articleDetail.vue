@@ -4,63 +4,34 @@
       <div class="contain">
         <div class="row">
           <div class="site-heading">
-            <h1 class='titleH1' style="color: white">{{article.title}}</h1>
-            <span class="subheading">放弃幻想，准备战斗</span>
+            <h1 class='titleH1' style="color: white"></h1>
+            <span class="subheading"></span>
           </div>
         </div>
       </div>
     </div>
-      <el-col :span="18">
-        <el-card shadow="never" v-model="article">
-          <div slot="header" class="clearfix">
-            <div style="font-size: 24px">{{ article.title }}</div>
-            <div class="time">
-              <i class="el-icon-time"></i>
-              <time>{{ article.modifiedTime }}</time>
-              &nbsp;
-              <i class="el-icon-folder-opened"></i>
-              <span>{{ article.category }}</span>
-              &nbsp;
-              <i class="el-icon-view"></i>
-              <span>{{views}}</span>
-            </div>
-          </div>
-          <div v-html="article.articleBody">
-          </div>
-          <!--      <div button="buttonGroup" style="text-align: center">-->
-          <!--        <a-button type="primary" icon="like" @click="addThumbsUp()">赞成({{this.comments.thumbsUp}})</a-button>-->
-          <!--        <a-button type="danger" icon="dislike" @click="addOppose()">反对({{this.comments.oppose}})</a-button>-->
-          <!--      </div>-->
-          <el-divider></el-divider>
-          <div>
-            <el-form :rules="rules" class="demo-ruleForm"
-                     :model="comments" ref="comments" label-width="70px">
-              <el-row>
-                <el-col :span="12">
-                  <el-form-item label="昵称：" prop="petName">
-                    <el-input placeholder="请输入一个昵称" v-model="comments.petName"></el-input>
-                  </el-form-item>
-                </el-col>
-                <el-col :span="12">
-                  <el-form-item label="邮箱：" prop="email">
-                    <el-input placeholder="请输入邮箱" v-model="comments.email"></el-input>
-                  </el-form-item>
-                </el-col>
-              </el-row>
-              <el-form-item>
-                <el-input type="textarea" :rows="10" placeholder="请输入评论" v-model="comments.textarea"></el-input>
-              </el-form-item>
-              <el-form-item>
-                <a-button type="primary" @click="addComments('comments')">发表</a-button>
-              </el-form-item>
-            </el-form>
-          </div>
-          {{this.comments.commentCounts}}条评论
-          <comments v-for="item in commentList" :key="item.id" v-bind:parent-comments="item"></comments>
-          <div id="elementAfterComment"></div>
-        </el-card>
-      </el-col>
-    <br/>
+    <el-col :lg="16" :md="16" :sm="12" class="articleList" style="padding-top:25px;width: 100%">
+      <div class="indexContainer articleHead">
+        <div class="articleTitle">
+          <h1 style="font-weight: 400; font-size: 1.5em; color: #795548">{{article.title}}</h1>
+        </div>
+        <div class="articleInfo">
+          <i class="el-icon-time"></i>
+          <time>{{ article.modifiedTime }}</time>
+          &nbsp;
+          <i class="el-icon-folder-opened"></i>
+          <span>{{ article.category }}</span>
+          &nbsp;
+          <i class="el-icon-view"></i>
+          <span>{{views}}</span>
+        </div>
+      </div>
+      <article class="indexContainer">
+        <div>
+          <div v-html="article.articleBody"></div>
+        </div>
+      </article>
+    </el-col>
   </div>
 </template>
 
@@ -116,7 +87,6 @@ export default {
         }
       }).then((response) => {
         this.article = response.data.data;
-        this.comments.thumbsUp = response.data.data.thumbsUp;
         this.comments.oppose = response.data.data.oppose;
         this.comments.commentCounts = response.data.data.commentCounts;
       })
@@ -199,6 +169,9 @@ export default {
     },
     //获取阅读量
     getViews: function() {
+      if(this.$route.params.id != null) {
+        localStorage.setItem("id", this.$route.params.id);
+      }
       this.$axios({
         method: "post",
         url: "article/getViewsById",
@@ -261,9 +234,13 @@ export default {
 >>>pre code {
   display: block;
 }
-p {
-  margin-left: 0;
-
+>>>p font{
+  line-height: 1.8;
+  text-align: justify;
+  font-size: 15px;
+  font-family: Fira Mono,"Noto Serif SC",-apple-system,Roboto,Helvetica Neue,sans-serif;
+  font-weight: 400;
+  color: #444;
 }
 @media (min-width: 768px) {
   .indexContainer {
@@ -272,19 +249,20 @@ p {
 }
 @media (min-width: 992px) {
   .indexContainer {
-    width: 970px;
+    width: 900px;
   }
 }
 @media (min-width: 1200px) {
   .indexContainer {
-    width: 1170px;
+    width: 900px;
   }
 }
 .indexContainer {
-  padding-right: 15px;
-  padding-left: 15px;
+  padding: 25px 15px 0 15px;
   margin-left: auto;
   margin-right: auto;
+  background-color: hsla(0,0%,100%,.8);
+  box-shadow: 0 1.6px 3.6px 0 rgba(0,0,0,0.132),0 0.3px 0.9px 0 rgba(0,0,0,0.108);;
 }
 .head2 {
   background: url('/static/image/articleDetail.jpeg');
@@ -327,5 +305,9 @@ p {
   font-weight: 300;
   margin: 10px 0 0;
   color: white;
+}
+.articleInfo {
+  color: #795548;
+
 }
 </style>

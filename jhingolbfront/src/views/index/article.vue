@@ -97,7 +97,7 @@ export default {
 }
 @media (min-width: 1200px) {
   .indexContainer {
-    width: 1170px;
+    width: 980px;
   }
 }
 .indexContainer {
