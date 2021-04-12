@@ -181,9 +181,9 @@ export default {
       }).then((response) => {
         this.views = response.data.data;
       })
-      setTimeout(() => {
-        this.addViews();
-      },5000)
+      // setTimeout(() => {
+      //   this.addViews();
+      // },5000)
     },
     //在页面停留五秒钟以上，算作阅读了一次
     addViews: function() {

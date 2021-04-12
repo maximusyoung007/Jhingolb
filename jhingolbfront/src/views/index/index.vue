@@ -14,7 +14,7 @@
       <el-col :lg="16" :offset="2" :md="16" :sm="12" class="articleList" style="padding-right: 3%">
         <div v-for="(item,i) in firstPageArticle" :key="i"
              :index="item.id">
-          <h2 class="post-title">{{ item.title }}</h2>
+          <h2 class="post-title" @click="toArticleDetail(item.id)"><span class="titleWord">{{ item.title }}</span></h2>
           <div class="post-content-preview">
             这里是这篇文章的摘要
           </div>
@@ -169,6 +169,9 @@ export default {
         this.articleArchive = response.data.data;
       })
     },
+    toArticleDetail: function (id) {
+      this.$router.push({name:"articleDetail",params: {id:id}})
+    }
   }
 }
 </script>
@@ -214,6 +217,10 @@ export default {
   line-height: 1.3;
   margin-top: 30px;
   margin-bottom: 8px;
+  cursor: pointer;
+}
+.titleWord:hover {
+  color: #2f54eb;
 }
 @media only screen and (min-width: 768px) {
   .post-title {
