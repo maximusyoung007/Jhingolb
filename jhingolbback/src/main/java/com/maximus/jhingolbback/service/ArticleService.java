@@ -29,5 +29,5 @@ public interface ArticleService {
 
     Result<String> getViews(Article article);
 
-    void addViews(Article article,HttpServletRequest request);
+    //void addViews(Article article,HttpServletRequest request);
 }

@@ -89,7 +89,12 @@
   </select>
 
   <update id="updateTagsById" parameterType="com.maximus.jhingolbback.model.Tags">
-    update tags set name = #{name},update_time = now()
+    update
+        tags
+    set
+        name = #{name},
+        update_time = now(),
+        use_counts = use_counts + 1,
     where id = #{id}
   </update>
 

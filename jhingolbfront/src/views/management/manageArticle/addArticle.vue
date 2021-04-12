@@ -6,6 +6,7 @@
         <div class="home">
           <el-form class="inputItem">
             <el-input class="inputItem" v-model="article.title" placeholder="请输入文章标题" style="padding-bottom: 10px"></el-input>
+            <el-input class="inputItem" v-model="article.summary" placeholder="请输入文章内容"></el-input>
           </el-form>
           <div>
             <el-select  v-model="categoryValue" placeholder="选择分类" size="small" style="display: inline;float: left;padding-right: 5px">
@@ -111,6 +112,7 @@ export default {
         url:"article/addArticle",
         data: {
           title:this.article.title,
+          summary: this.article.summary,
           articleBody:this.editorData,
           releaseState: releaseState,
           allTags:this.tagList,

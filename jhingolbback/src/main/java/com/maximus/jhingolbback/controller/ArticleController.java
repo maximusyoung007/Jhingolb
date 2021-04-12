@@ -93,6 +93,8 @@ public class ArticleController {
         article.setTitle(map.get("title").toString());
         article.setArticleBody(map.get("articleBody").toString());
         article.setReleaseState((Integer)map.get("releaseState"));
+        String summary = map.get("summary").toString();
+        article.setSummary(map.get("summary").toString());
         List<Tags> tagsList = new ArrayList<>();
         List<LinkedHashMap> hashMapList = new ArrayList<>();
         Object obj = map.get("allTags");

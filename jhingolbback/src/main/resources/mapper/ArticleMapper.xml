@@ -150,7 +150,10 @@
         article_body,
       </if>
       <if test="releaseState != null">
-        release_state
+        release_state,
+      </if>
+      <if test="summary != null">
+        summary
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -184,7 +187,10 @@
         #{articleBody,jdbcType=LONGVARCHAR},
       </if>
       <if test="releaseState != null">
-        #{releaseState,jdbcType=INTEGER}
+        #{releaseState,jdbcType=INTEGER},
+      </if>
+      <if test="summary != null">
+        #{summary, jdbcType=VARCHAR}
       </if>
     </trim>
   </insert>

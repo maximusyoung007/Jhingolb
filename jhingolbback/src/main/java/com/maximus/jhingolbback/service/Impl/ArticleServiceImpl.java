@@ -2,6 +2,7 @@ package com.maximus.jhingolbback.service.Impl;
 
 import com.maximus.jhingolbback.dao.ArticleMapper;
 import com.maximus.jhingolbback.dao.ArticleTagConnectMapper;
+import com.maximus.jhingolbback.dao.TagsMapper;
 import com.maximus.jhingolbback.model.Article;
 import com.maximus.jhingolbback.model.ArticleTagConnect;
 import com.maximus.jhingolbback.model.Tags;
@@ -30,7 +31,7 @@ public class ArticleServiceImpl implements ArticleService {
     private ArticleTagConnectMapper articleTagConnectMapper;
 
     @Resource
-    private RedisUtil redisUtil;
+    private TagsMapper tagsMapper;
 
     /**
      * @author maximus
@@ -134,17 +135,6 @@ public class ArticleServiceImpl implements ArticleService {
         Article article1 = articleList.get(0);
         views = article1.getViews();
         return Result.success(views.toString(),"成功");
-    }
-
-    @Override
-    public void addViews(Article article,HttpServletRequest request) {
-        Integer views = 0;
-        if(redisUtil.get(article.getId()) != null) {
-            views = Integer.valueOf(redisUtil.get(article.getId()).toString());
-        }
-        views += 1;
-        redisUtil.set(article.getId(),views);
-        log.info(redisUtil.get(article.getId()));
     }
 
 }
