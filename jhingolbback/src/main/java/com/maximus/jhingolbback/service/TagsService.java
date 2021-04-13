@@ -17,4 +17,6 @@ public interface TagsService {
     int addTags(Tags tags);
 
     int updateTags(List<Tags> tags);
+
+    int updateTagsUseCount(List<Tags> tags);
 }

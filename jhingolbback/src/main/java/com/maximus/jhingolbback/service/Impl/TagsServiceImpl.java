@@ -47,4 +47,9 @@ public class TagsServiceImpl implements TagsService {
     public int updateTags(List<Tags> tags) {
         return tagsMapper.updateTags(tags);
     }
+
+    @Override
+    public int updateTagsUseCount(List<Tags> tags) {
+        return tagsMapper.updateTagsUseCount(tags);
+    }
 }
