@@ -18,4 +18,6 @@ public interface TagsMapper {
     int deleteTagsById(Tags tags);
 
     int addTags(Tags tags);
+
+    int updateTags(List<Tags> tags);
 }

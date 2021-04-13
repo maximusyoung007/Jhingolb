@@ -15,4 +15,6 @@ public interface TagsService {
     int deleteTagsById(Tags tags);
 
     int addTags(Tags tags);
+
+    int updateTags(List<Tags> tags);
 }

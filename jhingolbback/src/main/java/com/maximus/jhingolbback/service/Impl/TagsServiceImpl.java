@@ -42,4 +42,9 @@ public class TagsServiceImpl implements TagsService {
     public int addTags(Tags tags) {
         return tagsMapper.addTags(tags);
     }
+
+    @Override
+    public int updateTags(List<Tags> tags) {
+        return tagsMapper.updateTags(tags);
+    }
 }

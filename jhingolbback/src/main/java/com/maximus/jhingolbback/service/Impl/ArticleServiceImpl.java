@@ -5,9 +5,12 @@ import com.maximus.jhingolbback.dao.ArticleTagConnectMapper;
 import com.maximus.jhingolbback.dao.TagsMapper;
 import com.maximus.jhingolbback.model.Article;
 import com.maximus.jhingolbback.model.ArticleTagConnect;
+import com.maximus.jhingolbback.model.Category;
 import com.maximus.jhingolbback.model.Tags;
 import com.maximus.jhingolbback.result.Result;
 import com.maximus.jhingolbback.service.ArticleService;
+import com.maximus.jhingolbback.service.CategoryService;
+import com.maximus.jhingolbback.service.TagsService;
 import com.maximus.jhingolbback.util.IpUtil;
 import com.maximus.jhingolbback.util.RedisUtil;
 import org.apache.logging.log4j.LogManager;
@@ -31,7 +34,10 @@ public class ArticleServiceImpl implements ArticleService {
     private ArticleTagConnectMapper articleTagConnectMapper;
 
     @Resource
-    private TagsMapper tagsMapper;
+    private TagsService tagsService;
+
+    @Resource
+    private CategoryService categoryService;
 
     /**
      * @author maximus
@@ -55,6 +61,12 @@ public class ArticleServiceImpl implements ArticleService {
         article.setId(uuid);
 
         int count = articleMapper.insertSelective(article);
+        //更新分类使用次数
+        String categoryId = article.getCategoryId();
+        Category category = new Category();
+        category.setId(categoryId);
+        category.setUseCounts(1);
+        categoryService.updateCategory(category);
         List<Tags> tagsList = article.getTags();
         List<ArticleTagConnect> atcList = new ArrayList<>();
 
@@ -68,12 +80,16 @@ public class ArticleServiceImpl implements ArticleService {
         //添加标签和文章关系
         int count1 = articleTagConnectMapper.addArticleTagConnect(atcList);
         if(count > 0 && count1 > 0) {
-            if(releaseState == 0) {
-                return Result.success(uuid,"保存文章成功");
-            } else if(releaseState == 1) {
-                return Result.success(uuid,"发布文章成功");
-            } else {
-                return Result.error("请保存或发布文章");
+            //更新标签使用次数
+            int count2 = tagsService.updateTags(tagsList);
+            if (count2 > 0) {
+                if (releaseState == 0) {
+                    return Result.success(uuid, "保存文章成功");
+                } else if (releaseState == 1) {
+                    return Result.success(uuid, "发布文章成功");
+                } else {
+                    return Result.error("请保存或发布文章");
+                }
             }
         }
 

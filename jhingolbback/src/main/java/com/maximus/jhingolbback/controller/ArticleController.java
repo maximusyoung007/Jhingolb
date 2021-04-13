@@ -252,12 +252,12 @@ public class ArticleController {
         return result;
     }
 
-    @RequestMapping("addViews")
-    @ResponseBody
-    public Result addViews(@RequestBody Article article,HttpServletRequest request) {
-        articleService.addViews(article,request);
-        return Result.success("1");
-    }
+//    @RequestMapping("addViews")
+//    @ResponseBody
+//    public Result addViews(@RequestBody Article article,HttpServletRequest request) {
+//        articleService.addViews(article,request);
+//        return Result.success("1");
+//    }
 
     public static Date getFirstDayOfMonth(Date date) {
         Calendar cal = Calendar.getInstance();

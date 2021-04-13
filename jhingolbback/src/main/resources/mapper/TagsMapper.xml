@@ -105,4 +105,15 @@
   <insert id="addTags" parameterType="com.maximus.jhingolbback.model.Tags">
     insert into tags (id,name,use_counts,add_time,update_time) values (uuid(),#{name},#{useCounts},now(),now())
   </insert>
+
+  <update id="updateTags" parameterType="list">
+    <foreach collection="list" item="item" index="index" open="" close="" separator=";">
+      UPDATE
+        tags
+      SET
+        use_counts = use_counts + 1
+      WHERE
+        id = #{item.id}
+    </foreach>
+  </update>
 </mapper>
