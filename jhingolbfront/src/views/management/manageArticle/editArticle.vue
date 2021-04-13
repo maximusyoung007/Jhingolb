@@ -7,6 +7,7 @@
           <div class="home">
             <el-form class="inputItem">
               <el-input class="inputItem" v-model="article.title" placeholder="请输入文章标题" style="padding-bottom: 10px"></el-input>
+              <el-input class="inputItem" v-model="article.summary" placeholder="请输入文章摘要"></el-input>
             </el-form>
             <div>
               <el-select  v-model="categoryValue" placeholder="选择分类" size="small" style="display: inline;float: left;padding-right: 5px">
@@ -125,7 +126,8 @@ export default {
           releaseState: releaseState,
           allTags:this.tagList,
           category:this.categoryValue,
-          articleId: localStorage.getItem("mArticleId")
+          articleId: localStorage.getItem("mArticleId"),
+          summary: this.article.summary
         }
       }).then((response) => {
         var type = response.data.type;
@@ -138,6 +140,8 @@ export default {
       })
     },
     updateTags: function (e) {
+      console.log("tagList");
+      console.log(e);
       this.tagList = e;
     },
     initSelect() {

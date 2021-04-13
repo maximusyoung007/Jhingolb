@@ -126,7 +126,10 @@ public class ArticleServiceImpl implements ArticleService {
         if(list.size() > 0) {
             count2 = articleTagConnectMapper.addArticleTagConnect(list);
         }
-        if(count > 0 && count1 > 0 && count2 > 0) {
+        //更新标签使用次数
+        int count3 = tagsService.updateTagsUseCount(tagsList);
+
+        if(count > 0 && count1 > 0 && count2 > 0 && count3 > 0) {
             return Result.success("成功","成功");
         } else {
             return Result.error("失败");

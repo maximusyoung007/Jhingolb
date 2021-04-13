@@ -209,6 +209,7 @@ public class ArticleController {
         article.setCategory(map.get("category").toString());
         article.setReleaseState((Integer) map.get("releaseState"));
         article.setId(map.get("articleId").toString());
+        article.setSummary(map.get("summary").toString());
         return articleService.updateArticleInfo(article);
     }
 

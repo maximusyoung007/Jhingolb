@@ -51,13 +51,14 @@ export default {
   props:['chosenTag'],
   //监听异步传过来的数据
   watch:{
-    chosenTag:function (newVal,oldVal) {
+    chosenTag: function (newVal,oldVal) {
       this.dynamicTags = newVal;
     }
   },
   methods:{
     handleClose(tag) {
       this.dynamicTags.splice(this.dynamicTags.indexOf(tag), 1);
+      this.$emit("tagsChange", this.dynamicTags);
     },
     loadTags:function() {
       this.$axios({
