@@ -113,6 +113,8 @@ export default {
         this.article = response.data.data;
         this.categoryValue = this.article.category;
         this.chosenTag = this.article.tags;
+        this.tagList = this.article.tags;
+        console.log(this.tagList);
         this.editor.txt.append(this.article.articleBody);
       })
     },
@@ -140,8 +142,6 @@ export default {
       })
     },
     updateTags: function (e) {
-      console.log("tagList");
-      console.log(e);
       this.tagList = e;
     },
     initSelect() {
